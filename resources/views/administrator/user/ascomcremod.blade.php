@@ -55,41 +55,97 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="card card-outline card-danger p-2">
-                                <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
-                                    @csrf
-                                    <div class="card-header p-2">
-                                        <h3 class="card-title">
-                                            <i class="fa-solid fa-users"></i>
-                                            </i>&nbsp;Program/Commodity Assignment</span>
-                                        </h3>
 
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-
-                                            @foreach ($program as $programItem)
-                                                <div class="col-md-3">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexSwitchCheckChecked" name="commodity[]"
-                                                            value="{{ $programItem->program_id }}">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                            {{ $programItem->program_name }}</label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                            @error('commodity')
-                                                <span class="text-red"><small>{{ $message }}</small></span>
-                                            @enderror
+                                @if ($countProgram->count() == 0)
+                                    <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
+                                        @csrf
+                                        <div class="card-header p-2">
+                                            <h3 class="card-title">
+                                                <i class="fa-solid fa-users"></i>
+                                                </i>&nbsp;Add Program/Commodity Assignment</span>
+                                            </h3>
 
                                         </div>
+                                        <div class="card-body">
+                                            <div class="row">
 
-                                    </div>
-                                    <div class="card-footer">
-                                        <input type="submit" name="submit" id="submit"
-                                            class="float-right btn btn-sm btn-success" value="Save Program Assignment">
-                                    </div>
-                                </form>
+                                                @foreach ($program as $programItem)
+                                                    <div class="col-md-3">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckChecked" name="commodity[]"
+                                                                value="{{ $programItem->program_id }}">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                                {{ $programItem->program_name }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                                @error('commodity')
+                                                    <span class="text-red"><small>{{ $message }}</small></span>
+                                                @enderror
+
+                                            </div>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <input type="submit" name="submit" id="submit"
+                                                class="float-right btn btn-sm btn-success" value="Save Program Assignment">
+                                        </div>
+                                    </form>
+                                @else
+                                    <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
+                                        @csrf
+                                        <div class="card-header p-2">
+                                            <h3 class="card-title">
+                                                <i class="fa-solid fa-users"></i>
+                                                </i>&nbsp;Update Program/Commodity Assignment</span>
+                                            </h3>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                {{-- @php
+                                                    $dataArray = json_decode($asPro);
+                                                @endphp --}}
+                                                {{-- {{ $asPro }} --}}
+
+                                                @foreach ($program as $programItem)
+                                                    <div class="col-md-3">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckChecked" name="commodity[]"
+                                                                value="{{ $programItem->program_id }} 
+                                                         {{-- {{ in_array( $programItem->program_id, $asPro) ? 'checked' : '' }}" --}}
+                                                     ">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                                {{ $programItem->program_name }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <input type="submit" name="submit" id="submit"
+                                                class="float-right btn btn-sm btn-danger" value="Update Program Assignment">
+                                        </div>
+                                    </form>
+                                @endif
+
+
+
+
+
+
+
+
+
+                                <div style="position: absolute; top:0; right:0; z-index:10">
+                                    @include('_message')
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -115,11 +171,12 @@
 
 
                     </div>
+
+
+
                 </div>
 
-                <div style="position: absolute; top:0; right:0; z-index:10">
-                    @include('_message')
-                </div>
+
 
 
 
