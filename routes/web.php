@@ -53,6 +53,7 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     //create and modify
     Route::get('user/assignment/crmo/{id}', [AssignmentController::class, 'ascomCreMod'])->name('user.ascomcremod');
     Route::post('user/assignment/crmo/{id}', [AssignmentController::class, 'getcom'])->name('user.getcommodity');
+    Route::get('user/assignment/updatestatus/{id}', [AssignmentController::class, 'updatestatus'])->name('user.updatestatus');
     //
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {

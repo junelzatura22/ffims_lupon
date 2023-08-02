@@ -84,4 +84,21 @@ $(document).ready(function () {
 
     //mask the contact number
     $("[data-mask]").inputmask();
+
+    //DATA
+    // $("#editProgramRow").hide();
+
+    $("#ascomcremod #ac_status").on("change", function () {
+        let value = $(this).val();
+        let id = $(this).parents("tr").attr("id");
+        $("#editProgramRow").removeClass("d-none");
+
+        $("#editProgramRow #ac_program_id option[value=" + id + "]").prop('selected', true);
+        $("#editProgramRow #ac_status option[value=" + value + "]").prop('selected', true);
+        // $('#editProgramRow #ac_program_id').val(value).attr("selected", "selected");
+        $("#editProgramRow").show(function () {
+            $("#addProgramRow").hide();
+        });
+       
+    });
 });

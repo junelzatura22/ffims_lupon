@@ -56,86 +56,136 @@
                         <div class="row">
                             <div class="card card-outline card-danger p-2">
 
-                                @if ($countProgram->count() == 0)
-                                    <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
-                                        @csrf
-                                        <div class="card-header p-2">
-                                            <h3 class="card-title">
-                                                <i class="fa-solid fa-users"></i>
-                                                </i>&nbsp;Add Program/Commodity Assignment</span>
-                                            </h3>
 
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
 
-                                                @foreach ($program as $programItem)
-                                                    <div class="col-md-3">
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" name="commodity[]"
-                                                                value="{{ $programItem->program_id }}">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                                {{ $programItem->program_name }}</label>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                                @error('commodity')
-                                                    <span class="text-red"><small>{{ $message }}</small></span>
-                                                @enderror
+                                @csrf
+                                <div class="card-header p-2">
+                                    <h3 class="card-title">
+                                        <i class="fa-solid fa-users"></i>
+                                        </i>&nbsp;Add Program/Commodity Assignment</span>
+                                    </h3>
 
+                                </div>
+                                <div class="card-body">
+
+                                    <form>
+                                        <div class="row d-none" id="editProgramRow">
+                                            <div class="col-md-6 d-flex justify-content-between align-items-center gap-2">
+                                                <label for="program">Program</label>
+                                                <select name="ac_program_id" id="ac_program_id" class="form-select form-select-sm">
+                                                    <option value="">[Select]</option>
+                                                    @foreach ($program as $item)
+                                                        <option value="{{ $item->program_id }}"
+                                                            {{ Request::get('ac_program_id') == $item->program_id ? 'selected' : '' }}>
+                                                            {{ $item->program_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 d-flex justify-content-between align-items-center gap-2">
+                                                <label for="program">Status</label>
+                                                <select name="ac_status" id="ac_status" class="form-select form-select-sm">
+                                                    <option value="">[Select]</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="submit" name="submit" id="submit"
+                                                    class="btn btn-sm btn-danger" value="Update Assignment">
                                             </div>
 
                                         </div>
-                                        <div class="card-footer">
-                                            <input type="submit" name="submit" id="submit"
-                                                class="float-right btn btn-sm btn-success" value="Save Program Assignment">
-                                        </div>
+
                                     </form>
-                                @else
+
                                     <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
-                                        @csrf
-                                        <div class="card-header p-2">
-                                            <h3 class="card-title">
-                                                <i class="fa-solid fa-users"></i>
-                                                </i>&nbsp;Update Program/Commodity Assignment</span>
-                                            </h3>
+                                        <div class="row" id="addProgramRow">
 
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-
-                                                {{-- @php
-                                                    $dataArray = json_decode($asPro);
-                                                @endphp --}}
-                                                {{-- {{ $asPro }} --}}
-
-                                                @foreach ($program as $programItem)
-                                                    <div class="col-md-3">
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" name="commodity[]"
-                                                                value="{{ $programItem->program_id }} 
-                                                         {{-- {{ in_array( $programItem->program_id, $asPro) ? 'checked' : '' }}" --}}
-                                                     ">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                                {{ $programItem->program_name }}</label>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-
+                                            <div class="col-md-10 d-flex justify-content-between align-items-center gap-2">
+                                                <label for="program">Program</label>
+                                                <select name="ac_program_id" class="form-select form-select-sm">
+                                                    <option value="">[Select]</option>
+                                                    @foreach ($program as $item)
+                                                        <option value="{{ $item->program_id }}"
+                                                            {{ Request::get('ac_program_id') == $item->program_id ? 'selected' : '' }}>
+                                                            {{ $item->program_name }}</option>
+                                                    @endforeach
+                                                </select>
 
                                             </div>
 
+                                            <div class="col-md-2">
+                                                <input type="submit" name="submit" id="submit"
+                                                    class="btn btn-sm btn-success" value="Add Assignment">
+                                            </div>
                                         </div>
-                                        <div class="card-footer">
-                                            <input type="submit" name="submit" id="submit"
-                                                class="float-right btn btn-sm btn-danger" value="Update Program Assignment">
-                                        </div>
+                                        @error('ac_program_id')
+                                            <span class="text-red"><small>{{ $message }}</small></span>
+                                        @enderror
                                     </form>
-                                @endif
 
-
+                                </div>
+                                <div class="card-footer">
+                                    <div class="table-responsive">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title"><small>
+                                                        <strong>List of Assigned Programs</strong>
+                                                    </small>
+                                                    &nbsp;<span class="badge badge-primary ">{{ $asPro->count() }}</span>
+                                                </h3>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body p-0">
+                                                <table class="table table-sm" id="ascomcremod">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 10px" class="text-sm">#</th>
+                                                            <th class="text-sm">Program</th>
+                                                            <th class="text-sm">Status</th>
+                                                            <th style="width: 40px">
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    @php
+                                                        $counter = 1;
+                                                    @endphp
+                                                    <tbody>
+                                                        @foreach ($asPro as $assignedProgram)
+                                                            <tr id="{{ $assignedProgram->ac_program_id }}"
+                                                                class="{{ $assignedProgram->program_name }}">
+                                                                <td class="text-sm">{{ $counter++ }}.</td>
+                                                                <td class="text-sm">{{ $assignedProgram->program_name }}
+                                                                </td>
+                                                                <td class="text-sm">
+                                                                    <select name="ac_status" id="ac_status"
+                                                                        class="form-select form-select-sm">
+                                                                        <option value="Active"
+                                                                            {{ $assignedProgram->ac_status == 'Active' ? 'selected' : '' }}>
+                                                                            Active
+                                                                        </option>
+                                                                        <option value="Inactive"
+                                                                            {{ $assignedProgram->ac_status == 'Inactive' ? 'selected' : '' }}>
+                                                                            Inactive
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteProgramModal"
+                                                                        class="deleteProgramModal"><i
+                                                                            class="fa-solid fa-trash-can-arrow-up bg-danger p-1"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
