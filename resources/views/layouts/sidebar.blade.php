@@ -19,11 +19,10 @@
                        @php
                            $userName = Auth()->user()->name . ' ' . Auth()->user()->lastname;
                        @endphp
-                       <a href="#" class="d-block">{{ $userName }}</a>
+                       <a href="#" class="d-block">{{ $userName }} </a>
                    </div>
                </div>
-
-
+            
 
 
                @switch(Auth::user()->role)
@@ -104,19 +103,19 @@
                                    </a>
                                </li>
                                <li class="nav-header">Settings</li>
-                               <li class="nav-item @if (Request::segment(2) == 'usessr') menu-open @endif">
-                                   <a href="#" class="nav-link @if (Request::segment(2) == 'ufddser') active @endif">
-                                    <i class="fa-solid fa-users-gear nav-icon"></i>
+                               <li class="nav-item @if (Request::segment(2) == 'location') menu-open @endif">
+                                   <a href="#" class="nav-link @if (Request::segment(2) == 'location') active @endif">
+                                       <i class="fa-solid fa-users-gear nav-icon"></i>
                                        <p>
-                                           User
+                                           User Settings
                                            <i class="fas fa-angle-left right"></i>
                                            <span class="badge badge-primary right">4</span>
                                        </p>
                                    </a>
                                    <ul class="nav nav-treeview">
                                        <li class="nav-item">
-                                           <a href="{{ route('user.index') }}"
-                                               class="nav-link @if (Request::segment(3) == 'dsds') active @endif">
+                                           <a href="{{ route('location.index') }}"
+                                               class="nav-link @if (Request::segment(2) == 'location') active @endif">
                                                <i class="fa-solid fa-map-location-dot nav-icon"></i>
                                                <p>Fixed Location</p>
                                            </a>
@@ -139,17 +138,142 @@
                    @break
 
                    @case('Technician')
+                   <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('administrator.dashboard') }}"
+                                class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                                <i class="fa-solid fa-gauge-high nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-header">Accounts</li>
+
+
+                        <li class="nav-item">
+                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                <i class="fa-solid fa-user-tie nav-icon"></i>
+                                <p>My Account</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-header">Settings</li>
+                       
+
+                        <li class="nav-item">
+                            <a href="{{ route('auth.logout') }}" class="nav-link">
+                             <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                <p>Fixed Location</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('auth.logout') }}" class="nav-link">
+                                <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
+                                <p>Logout</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
                    @break
 
-                   @case('OfficeHead')
+                   @case('Office Head')
+                       <nav class="mt-2">
+                           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                               data-accordion="false">
+                               <li class="nav-item">
+                                   <a href="{{ route('administrator.dashboard') }}"
+                                       class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                                       <i class="fa-solid fa-gauge-high nav-icon"></i>
+                                       <p>Dashboard</p>
+                                   </a>
+                               </li>
+
+
+                               <li class="nav-header">Accounts</li>
+
+
+                               <li class="nav-item">
+                                   <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                       <i class="fa-solid fa-user-tie nav-icon"></i>
+                                       <p>My Account</p>
+                                   </a>
+                               </li>
+
+                               <li class="nav-header">Settings</li>
+                              
+
+                               <li class="nav-item">
+                                   <a href="" class="nav-link">
+                                    <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <p>Fixed Location</p>
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="" class="nav-link">
+                                    <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <p>Message Request</p>
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('auth.logout') }}" class="nav-link">
+                                       <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
+                                       <p>Logout</p>
+                                   </a>
+                               </li>
+
+                           </ul>
+                       </nav>
                    @break
 
                    @default
-                       {{-- this is for guest menu  --}}
+                   <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('administrator.dashboard') }}"
+                                class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                                <i class="fa-solid fa-gauge-high nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-header">Accounts</li>
+
+
+                        <li class="nav-item">
+                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                <i class="fa-solid fa-user-tie nav-icon"></i>
+                                <p>My Account</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-header">Settings</li>
+                       
+
+                        <li class="nav-item">
+                            <a href="{{ route('auth.logout') }}" class="nav-link">
+                             <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                <p>Fixed Location</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('auth.logout') }}" class="nav-link">
+                                <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
+                                <p>Logout</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
                @endswitch
 
 
 
-           </div>
+           </>
            <!-- /.sidebar -->
        </aside>

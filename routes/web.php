@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,7 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('user/assignment/updatestatus/{id}', [AssignmentController::class, 'updatestatus'])->name('user.updatestatus');
     Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
+    Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
     //technician

@@ -129,7 +129,6 @@
 
 
 
-
                                     @foreach ($users as $item)
                                         <div class="col-md-3">
                                             <div class="card card-success card-outline">
@@ -147,14 +146,17 @@
 
                                                     <ul class="list-group list-group-unbordered mb-3">
                                                         <li class="list-group-item">
-                                                            <small><strong>Assigned to Commodity?</strong></small>  
-                                                            <a class="float-right btn-warning p-1 pr-2 pl-2 rounded-lg" href="{{ route('user.ascomcremod',['id'=>$item->id]) }}">NO</a>
+                                                            <small><strong>Assigned to
+                                                                    Commodity?</strong>&nbsp;</small><span class="badge badge-danger">{{ $item->totalCommodity != 0 ? 'YES' : 'NO' }}</span>
+                                                            <a class="float-right p-1 pr-2 pl-2 rounded-lg {{ $item->totalCommodity != 0 ? 'btn-primary' : 'btn-warning' }}"
+                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}">{{ $item->totalCommodity }}</a>
                                                         </li>
                                                         <li class="list-group-item">
                                                             <small><strong>Assigned to Barangay?</strong></small>
-                                                             <a class="float-right btn-warning p-1 pr-2 pl-2 rounded-lg" href="{{ route('user.ascomcremod',['id'=>$item->id]) }}">NO</a>
+                                                            <a class="float-right btn-warning p-1 pr-2 pl-2 rounded-lg"
+                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}">NO</a>
                                                         </li>
-                                                       
+
                                                     </ul>
 
                                                 </div>

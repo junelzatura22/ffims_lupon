@@ -19,7 +19,7 @@ class OfficeHead
     {
        // if not empty then proceed 
         //should login as admin base on role
-        if (Auth::check() && Auth::user()->role == 'OfficeHead') {
+        if (Auth::check() && Auth::user()->role == 'Office Head') {
             return $next($request);
         } else {
             Auth::logout();

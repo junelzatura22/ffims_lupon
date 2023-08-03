@@ -63,4 +63,28 @@ class User extends Authenticatable
 
         return $userData;
     }
+
+//     SELECT *, (select count(*) from assigned_program a where a.ac_userd_id = u.id ) as totalCommodity
+// FROM users u
+    public static function userHard()
+    {
+        // $userData = DB::table('users')->select(DB::RAW('SELECT *, IFNULL((select count(*) from assigned_program a where a.ac_userd_id = u.id group by a.ac_userd_id),0) as totalCommodity
+        // FROM users u'));
+        $userData = DB::table('users')->select('users.*',DB::raw('IFNULL((select count(*) 
+        from assigned_program a where a.ac_userd_id = users.id group by a.ac_userd_id),0) as totalCommodity'))
+            ->where('id', '!=', Auth::user()->id);
+        if (!empty(Request::get('nameKey'))) {
+            $userData = $userData->where(DB::raw('concat(name," ",lastname)'), 'like', '%' . Request::get('nameKey') . '%');
+        }
+        if (!empty(Request::get('roleKey'))) {
+            $userData = $userData->where('role', 'like', '%' . Request::get('roleKey') . '%');
+        }
+        if (!empty(Request::get('desKey'))) {
+            $userData = $userData->where('designation', 'like', '%' . Request::get('desKey') . '%');
+        }
+        // $userData = $userData->join('assigned_program','users.id','assigned_program.ac_userd_id')->get();
+        $userData = $userData->orderBy('created_at', 'desc')->get();
+
+        return $userData;
+    }
 }

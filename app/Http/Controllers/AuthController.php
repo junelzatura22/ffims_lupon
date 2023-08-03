@@ -20,9 +20,10 @@ class AuthController extends Controller
                 $identifier = "DASHBOARD";
                 $data = "FFIMS | Technician Dashboard";
                 return view('technician.dashboard', compact('data', 'identifier'));
-            } else if (Auth::user()->role == "OfficeHead") {
+            } else if (Auth::user()->role == "Office Head") {
+                $data = "FFIMS | Head Office Dashboard";
                 $identifier = "DASHBOARD";
-                return view('ho.dashboard', compact('data', 'identifier'));
+                return view('officehead.dashboard', compact('data', 'identifier'));
             } else {
                 $identifier = "DASHBOARD";
                 $data = "FFIMS | Guest Dashboard";
@@ -49,8 +50,8 @@ class AuthController extends Controller
                 return redirect('administrator/dashboard');
             } else if (Auth::user()->role == "Technician") {
                 return redirect('technician/dashboard');
-            } else if (Auth::user()->role == "OfficeHead") {
-                return redirect('ho/dashboard');
+            } else if (Auth::user()->role == "Office Head") {
+                return redirect('officehead/dashboard');
             } else {
                 return redirect('guest/dashboard');
             }

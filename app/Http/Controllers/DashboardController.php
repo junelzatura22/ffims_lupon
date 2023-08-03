@@ -26,8 +26,9 @@ class DashboardController extends Controller
         } else if (Auth::user()->role == "Technician") {
             $data = "FFIMS | Technician Dashboard";
             return view('technician.dashboard', compact('data'));
-        } else if(Auth::user()->role == "OfficeHead"){
-            return view('ho.dashboard', compact('data'));
+        } else if(Auth::user()->role == "Office Head"){
+            $data = "FFIMS | Office Head";
+            return view('officehead.dashboard', compact('data'));
         }else {
             $data = "FFIMS | Guest Dashboard";
             return view('guest.dashboard', compact('data'));
