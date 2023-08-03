@@ -85,20 +85,57 @@ $(document).ready(function () {
     //mask the contact number
     $("[data-mask]").inputmask();
 
-    //DATA
-    // $("#editProgramRow").hide();
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
 
+    //AJAX
     $("#ascomcremod #ac_status").on("change", function () {
-        let value = $(this).val();
-        let id = $(this).parents("tr").attr("id");
-        $("#editProgramRow").removeClass("d-none");
-
-        $("#editProgramRow #ac_program_id option[value=" + id + "]").prop('selected', true);
-        $("#editProgramRow #ac_status option[value=" + value + "]").prop('selected', true);
-        // $('#editProgramRow #ac_program_id').val(value).attr("selected", "selected");
-        $("#editProgramRow").show(function () {
-            $("#addProgramRow").hide();
+        var uri = $(this).parents("table tr").attr("class");
+        $.ajax({
+            url: uri,
+            type: "get",
+            dataType: "json",
+            success: function (response) {
+                swal("Good Job!", response.success, "success");
+            },
+            error: function () {
+                swal("OPPS!", "Error changing status", "error");
+            },
         });
-       
+    });
+
+    $("#ascomcremod #deleteProgram").on("click", function () {
+        var trObj = $(this);
+        var userURL = $(this).data("url");
+        var prograCount = $("#programCount").html();
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, the user will no longer access the program.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: userURL,
+                    type: "get",
+                    dataType: "json",
+                    success: function (response) {
+                        swal("Poof! Successfully removed!", {
+                            icon: "success",
+                        });
+                        trObj.parents("tr").remove();
+                        prograCount -= 1;
+                        $("#programCount").html(prograCount);
+                    },
+                    error: function () {
+                        swal("OPPS!", "Error changing status", "error");
+                    },
+                });
+            }
+        });
     });
 });

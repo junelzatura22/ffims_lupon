@@ -25,7 +25,7 @@ class AssignmentController extends Controller
         if (!empty($userData)) {
             $data['program'] = Program::loadProgram();
             $data['asPro'] = AssignedProgram::showAllProgram($id);
-          
+
             $data['users'] = $userData;
             $data['identifier'] = "User | Add or Update user assignment";
             return view('administrator.user.ascomcremod', $data);
@@ -36,20 +36,34 @@ class AssignmentController extends Controller
 
     public function updatestatus($id)
     {
-
         $userData = AssignedProgram::find($id);
-        $userData->ac_status = "";
-        return response()->json(['status'=>200]);
+        $getCurrentStatus = $userData->ac_status;
+        $status = "";
+        if ($getCurrentStatus == "Active") {
+            $status = "Inactive";
+        } else {
+            $status = "Active";
+        }
+        $userData->ac_status = $status;
+        $userData->touch();
+        return response()->json(['success' => 'Status was successfully modified to '.$status]);
+    }
+
+    public function deletestatus($id)
+    {
+        $userData = AssignedProgram::find($id);
+        $userData->delete();
+        return response()->json(['success' => 'Status was successfully removed!']);
     }
 
     public function getcom(Request $request, $id)
     {
         $request->validate([
             'ac_program_id' => "required|unique:assigned_program",
-        ],[
-            'ac_program_id' => "This program was already added to you!",
+        ], [
+            'ac_program_id.required' => "Select Program!",
+            'ac_program_id.unique' => 'This program was already added to you! Note: you can delete or remove',
         ]);
-
 
         $assignedCom = new AssignedProgram();
         $assignedCom->ac_userd_id = $id;

@@ -54,6 +54,7 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('user/assignment/crmo/{id}', [AssignmentController::class, 'ascomCreMod'])->name('user.ascomcremod');
     Route::post('user/assignment/crmo/{id}', [AssignmentController::class, 'getcom'])->name('user.getcommodity');
     Route::get('user/assignment/updatestatus/{id}', [AssignmentController::class, 'updatestatus'])->name('user.updatestatus');
+    Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {

@@ -68,38 +68,10 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <form>
-                                        <div class="row d-none" id="editProgramRow">
-                                            <div class="col-md-6 d-flex justify-content-between align-items-center gap-2">
-                                                <label for="program">Program</label>
-                                                <select name="ac_program_id" id="ac_program_id" class="form-select form-select-sm">
-                                                    <option value="">[Select]</option>
-                                                    @foreach ($program as $item)
-                                                        <option value="{{ $item->program_id }}"
-                                                            {{ Request::get('ac_program_id') == $item->program_id ? 'selected' : '' }}>
-                                                            {{ $item->program_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 d-flex justify-content-between align-items-center gap-2">
-                                                <label for="program">Status</label>
-                                                <select name="ac_status" id="ac_status" class="form-select form-select-sm">
-                                                    <option value="">[Select]</option>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
-                                                    
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="submit" name="submit" id="submit"
-                                                    class="btn btn-sm btn-danger" value="Update Assignment">
-                                            </div>
 
-                                        </div>
-
-                                    </form>
 
                                     <form action="{{ route('user.getcommodity', ['id' => $users->id]) }}" method="POST">
+                                        @csrf
                                         <div class="row" id="addProgramRow">
 
                                             <div class="col-md-10 d-flex justify-content-between align-items-center gap-2">
@@ -133,7 +105,7 @@
                                                 <h3 class="card-title"><small>
                                                         <strong>List of Assigned Programs</strong>
                                                     </small>
-                                                    &nbsp;<span class="badge badge-primary ">{{ $asPro->count() }}</span>
+                                                    &nbsp;<span id="programCount" class="badge badge-primary ">{{ $asPro->count() }}</span>
                                                 </h3>
                                             </div>
                                             <!-- /.card-header -->
@@ -153,8 +125,8 @@
                                                     @endphp
                                                     <tbody>
                                                         @foreach ($asPro as $assignedProgram)
-                                                            <tr id="{{ $assignedProgram->ac_program_id }}"
-                                                                class="{{ $assignedProgram->program_name }}">
+                                                            <tr id="{{ $assignedProgram->ac_id }}"
+                                                                class="{{ route('user.updatestatus', $assignedProgram->ac_id) }}">
                                                                 <td class="text-sm">{{ $counter++ }}.</td>
                                                                 <td class="text-sm">{{ $assignedProgram->program_name }}
                                                                 </td>
@@ -171,10 +143,11 @@
                                                                         </option>
                                                                     </select>
                                                                 </td>
+                                                                
                                                                 <td>
-                                                                    <a href="#" data-bs-toggle="modal"
+                                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
                                                                         data-bs-target="#deleteProgramModal"
-                                                                        class="deleteProgramModal"><i
+                                                                        class="deleteProgram" data-url="{{ route('user.deletestatus', $assignedProgram->ac_id) }}" id="deleteProgram"><i
                                                                             class="fa-solid fa-trash-can-arrow-up bg-danger p-1"></i></a>
                                                                 </td>
                                                             </tr>

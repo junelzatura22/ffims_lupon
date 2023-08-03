@@ -18,7 +18,7 @@ class AssignedProgram extends Model
         $data = DB::table('assigned_program')->select('assigned_program.*','program.program_name')
         ->join('program','program.program_id','ac_program_id')
         ->join('users','users.id','ac_userd_id')
-        ->where(['users.id'=>$id,'ac_status'=>'Active'])->get();//the program will not exceed to 10
+        ->where(['users.id'=>$id])->get();//the program will not exceed to 10
         return $data;
     }
     public static function countProgram($id){
