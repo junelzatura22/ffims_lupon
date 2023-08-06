@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'getLogin'])->name('auth.login');
 Route::post('/', [AuthController::class, 'login'])->name('auth.log');
+
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], function () {
@@ -58,6 +59,8 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
     Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
+    Route::get('location/showprovince/{regid}', [LocationController::class, 'showProvinceByRegion'])->name('location.showprovincebyregion');
+    Route::get('location/showcitymun/{provid}', [LocationController::class, 'showCityMunByProvince'])->name('location.showcitymunbyprovince');
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
     //technician

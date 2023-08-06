@@ -70,6 +70,63 @@
 
 {{-- validations  --}}
 <script src="{{ asset('val_script/auth.js') }}"></script>
+<script>
+    //load province through region id
+    $("#region").on("change", function() {
+        var uri = $("#region option:selected").attr("id"); //get the value
+        var id = $(this).val();
+        $("#province").html('');
+        $("#citymun").html('');
+        var provinceUrl = '{{ route('location.showcitymunbyprovince', 'param') }}';
+        $.ajax({
+            url: uri,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                $("#province").html(
+                    '<option value="">[Select Province]</option>'
+                );
+                $.each(response.provinceData, function(key, value) {
+                    $("#province").append(
+                        '<option value="' +
+                        value.id + '" id="' + provinceUrl.replaceAll('param', value
+                            .id) + '">' +
+                        value.provDesc +
+                        "</option>"
+                    );
+                });
+            },
+            error: function() {
+                swal("OPPS!", "Error Loading Region ", "error");
+            },
+        });
+    });
+    $("#province").on("change", function() {
+        var uri = $("#province option:selected").attr("id"); //get the value
+        $("#citymun").html('');
+        $.ajax({
+            url: uri,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                $("#citymun").html(
+                    '<option value="">[Select City/Municipality]</option>'
+                );
+                $.each(response.citymunData, function(key, value) {
+                    $("#citymun").append(
+                        '<option value="' +
+                        value.id + ' ">' +
+                        value.citymunDesc +
+                        "</option>"
+                    );
+                });
+            },
+            error: function() {
+                swal("OPPS!", "Error Loading Province", "error");
+            },
+        });
+    });
+</script>
 
 
 </body>

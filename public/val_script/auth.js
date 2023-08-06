@@ -138,4 +138,19 @@ $(document).ready(function () {
             }
         });
     });
+
+    // validate form fixed position
+    $("#fixedlocationForm").validate({
+        rules: {
+            region: "",
+            province: "",
+            citymun: "",
+        },
+        messages: {
+            region: "",
+            province: "",
+            citymun: "",
+        }
+    });
+    
 });

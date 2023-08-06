@@ -33,32 +33,37 @@
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="POST">
+                                    <form action="" method="post" id="fixedlocationForm">
                                         @csrf
                                         <div class="row" id="addProgramRow">
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="" class="form-label">*&nbsp;Region</label>
                                                     <select name="region" id="region" class="form-select">
-                                                        <option>[Select]</option>
-                                                    </select> 
+                                                        <option value="">[Select]</option>
+                                                        @foreach ($region as $rItem)
+                                                            <option value="{{ $rItem->id }}"
+                                                                id="{{ route('location.showprovincebyregion', $rItem->id) }}">
+                                                                {{ $rItem->regDesc }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="" class="form-label">*&nbsp;Province</label>
-                                                    <select name="region" id="region" class="form-select">
-                                                        <option>[Select]</option>
-                                                    </select> 
+                                                    <select name="province" id="province" class="form-select">
+                                                        <option value="">[Select]</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="" class="form-label">*&nbsp;Municipality</label>
-                                                    <select name="region" id="region" class="form-select">
-                                                        <option>[Select]</option>
-                                                    </select> 
+                                                    <select name="citymun" id="citymun" class="form-select">
+                                                        <option value="">[Select]</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +90,7 @@
                                                 <h3 class="card-title"><small>
                                                         <strong>Your Fixed Location</strong>
                                                     </small>
-                                                    
+
                                                 </h3>
                                             </div>
                                             <!-- /.card-header -->

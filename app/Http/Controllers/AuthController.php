@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -11,6 +13,9 @@ class AuthController extends Controller
 
     public function getLogin()
     {
+
+
+
         if (!empty(Auth::check())) {
             if (Auth::user()->role == "Administrator") {
                 $data = "FFIMS | Administrator Dashboard";
@@ -36,28 +41,38 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => "required|email",
-            'password' => "required",
-        ]);
 
-        $credentials = ['email' => $request->email, 'password' => $request->password];
-        $remember_token = $request->remembertoken;
+        try {
+            DB::connection()->getPDO();
+           
+            $request->validate([
+                'email' => "required|email",
+                'password' => "required",
+            ]);
 
-        if (Auth::attempt($credentials, $remember_token)) {
+            $credentials = ['email' => $request->email, 'password' => $request->password];
+            $remember_token = $request->remembertoken;
 
-            if (Auth::user()->role == "Administrator") {
-                return redirect('administrator/dashboard');
-            } else if (Auth::user()->role == "Technician") {
-                return redirect('technician/dashboard');
-            } else if (Auth::user()->role == "Office Head") {
-                return redirect('officehead/dashboard');
+            if (Auth::attempt($credentials, $remember_token)) {
+
+                if (Auth::user()->role == "Administrator") {
+                    return redirect('administrator/dashboard');
+                } else if (Auth::user()->role == "Technician") {
+                    return redirect('technician/dashboard');
+                } else if (Auth::user()->role == "Office Head") {
+                    return redirect('officehead/dashboard');
+                } else {
+                    return redirect('guest/dashboard');
+                }
             } else {
-                return redirect('guest/dashboard');
+                return redirect('/')->with('error', 'Invalid Username/Password!');
             }
-        } else {
-            return redirect('/')->with('error', 'Invalid Username/Password!');
+        } catch (Exception $e) {
+            echo 'Database connection failed...';
+          
         }
+        
+
     }
     public function logout()
     {

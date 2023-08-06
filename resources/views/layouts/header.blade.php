@@ -53,7 +53,7 @@
             border-top-color: #0f5328 !important;
         }
 
-        .main-sidebar {
+        /* .main-sidebar {
 
             /* background-image: linear-gradient(to top, #1a1a1f, #191a30,
                     #171a42, #121953, #0c1764) !important; */
@@ -61,17 +61,17 @@
             /*
 * Created with https://www.css-gradient.com
 * Gradient link: https://www.css-gradient.com/?c1=2b5921&c2=054d1f&gt=l&gd=dbb
-*/
+/* 
             background: #2B5921 !important;
             background: linear-gradient(0deg, #2B5921, #054D1F) !important;
-        }
+        } */ */
 
 
-        .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
+        /* .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
         .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
             background-color: #014119;
             color: #fff;
-        }
+        } */
 
         .form-check-label,
         .form-check-input {
