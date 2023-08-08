@@ -61,6 +61,8 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
     Route::get('location/showprovince/{regid}', [LocationController::class, 'showProvinceByRegion'])->name('location.showprovincebyregion');
     Route::get('location/showcitymun/{provid}', [LocationController::class, 'showCityMunByProvince'])->name('location.showcitymunbyprovince');
+    Route::post('location/location', [LocationController::class, 'store'])->name('location.store');
+    Route::post('location/update/', [LocationController::class, 'update'])->name('location.update');
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
     //technician

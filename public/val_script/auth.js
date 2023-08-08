@@ -142,14 +142,14 @@ $(document).ready(function () {
     // validate form fixed position
     $("#fixedlocationForm").validate({
         rules: {
-            region: "",
-            province: "",
-            citymun: "",
+            region_id: "required",
+            province_id: "required",
+            citymun_id: "required",
         },
         messages: {
-            region: "",
-            province: "",
-            citymun: "",
+            region_id: "Region is required",
+            province_id: "Province is required",
+            citymun_id: "City/Municipality is required",
         }
     });
     

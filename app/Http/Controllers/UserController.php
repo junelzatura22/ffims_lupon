@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FixedLocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,14 @@ class UserController extends Controller
 
     public function index()
     {
+      
         $data['users'] = User::showAllUsers();
         $data['identifier'] = "User | List";
         return view('administrator.user.index', $data);
     }
     public function createUser()
     {
+        $data['mylocation'] = FixedLocation::myLocation();
         $data['identifier'] = "User | Create User";
         return view('administrator.user.addnew', $data);
     }
@@ -100,7 +103,22 @@ class UserController extends Controller
         $user->contact = $contact;
         $user->designation = $request->designation;
         $user->save();
+
+        //get the user id
+        $userId =  User::where('email',$email)->first();
+        $location = new FixedLocation();
+        $location->region_id = $request->region_id;
+        $location->province_id = $request->province_id;
+        $location->citymun_id = $request->citymun_id;
+        $location->user_id = $userId->id;
+        $location->save();
+
+
         return redirect()->route('user.index')->with('success', $name . ' was successfully added!');
+
+
+
+
     }
     public function updateUser(Request $request, $id)
     {

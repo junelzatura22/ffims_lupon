@@ -65,7 +65,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row mt-1 mb-1">
                                         <div class="col-md-4">
                                             <label for="role">*&nbsp;Role</label>
@@ -128,6 +128,14 @@
                                             @error('contact')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
+                                            {{-- this is for the hidden fixed location  --}}
+                                            <input type="hidden" value="{{ $mylocation->region_id }}" name="region_id" />
+                                            <input type="hidden" value="{{ $mylocation->province_id }}"
+                                                name="province_id" />
+                                            <input type="hidden" value="{{ $mylocation->citymun_id }}"
+                                                name="citymun_id" />
+
+
                                         </div>
                                     </div>
                                     <div class="row mt-1 mb-1">

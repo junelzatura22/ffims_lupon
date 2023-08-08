@@ -72,22 +72,22 @@
 <script src="{{ asset('val_script/auth.js') }}"></script>
 <script>
     //load province through region id
-    $("#region").on("change", function() {
-        var uri = $("#region option:selected").attr("id"); //get the value
+    $("#region_id").on("change", function() {
+        var uri = $("#region_id option:selected").attr("id"); //get the value
         var id = $(this).val();
-        $("#province").html('');
-        $("#citymun").html('');
+        $("#province_id").html('');
+        $("#citymun_id").html('');
         var provinceUrl = '{{ route('location.showcitymunbyprovince', 'param') }}';
         $.ajax({
             url: uri,
             type: "get",
             dataType: "json",
             success: function(response) {
-                $("#province").html(
+                $("#province_id").html(
                     '<option value="">[Select Province]</option>'
                 );
                 $.each(response.provinceData, function(key, value) {
-                    $("#province").append(
+                    $("#province_id").append(
                         '<option value="' +
                         value.id + '" id="' + provinceUrl.replaceAll('param', value
                             .id) + '">' +
@@ -101,19 +101,19 @@
             },
         });
     });
-    $("#province").on("change", function() {
-        var uri = $("#province option:selected").attr("id"); //get the value
-        $("#citymun").html('');
+    $("#province_id").on("change", function() {
+        var uri = $("#province_id option:selected").attr("id"); //get the value
+        $("#citymun_id").html('');
         $.ajax({
             url: uri,
             type: "get",
             dataType: "json",
             success: function(response) {
-                $("#citymun").html(
+                $("#citymun_id").html(
                     '<option value="">[Select City/Municipality]</option>'
                 );
                 $.each(response.citymunData, function(key, value) {
-                    $("#citymun").append(
+                    $("#citymun_id").append(
                         '<option value="' +
                         value.id + ' ">' +
                         value.citymunDesc +

@@ -33,54 +33,140 @@
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post" id="fixedlocationForm">
-                                        @csrf
-                                        <div class="row" id="addProgramRow">
 
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label for="" class="form-label">*&nbsp;Region</label>
-                                                    <select name="region" id="region" class="form-select">
-                                                        <option value="">[Select]</option>
-                                                        @foreach ($region as $rItem)
-                                                            <option value="{{ $rItem->id }}"
-                                                                id="{{ route('location.showprovincebyregion', $rItem->id) }}">
-                                                                {{ $rItem->regDesc }}</option>
-                                                        @endforeach
-                                                    </select>
+                                    @if (empty($mylocation->region))
+                                        <form action="" method="post" id="fixedlocationForm">
+                                            @csrf
+                                            <div class="row" id="addProgramRow">
+
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Region</label>
+                                                        <select name="region_id" id="region_id" class="form-select">
+                                                            <option value="">[Select]</option>
+                                                            @foreach ($region as $rItem)
+                                                                <option value="{{ $rItem->id }}"
+                                                                    id="{{ route('location.showprovincebyregion', $rItem->id) }}">
+                                                                    {{ $rItem->regDesc }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('region_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Province</label>
+                                                        <select name="province_id" id="province_id" class="form-select">
+                                                            <option value="">[Select]</option>
+                                                        </select>
+                                                    </div>
+                                                    @error('province_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Municipality</label>
+                                                        <select name="citymun_id" id="citymun_id" class="form-select">
+                                                            <option value="">[Select]</option>
+                                                        </select>
+                                                    </div>
+                                                    @error('citymun_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="" class="form-label">*&nbsp;Province</label>
-                                                    <select name="province" id="province" class="form-select">
-                                                        <option value="">[Select]</option>
-                                                    </select>
+                                            {{-- not used  --}}
+
+
+
+                                            <div class="row">
+
+                                                <div class="col-md">
+                                                    <input type="submit" name="submit" id="submit"
+                                                        class="float-right btn btn-md btn-success"
+                                                        value="Book Mark Location">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="" class="form-label">*&nbsp;Municipality</label>
-                                                    <select name="citymun" id="citymun" class="form-select">
-                                                        <option value="">[Select]</option>
-                                                    </select>
+
+                                        </form>
+                                    @else
+                                        <form action="{{ route('location.update') }}" method="post" id="">
+                                            @csrf
+                                            <div class="row" id="">
+
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Region</label>
+                                                        <select name="region_id" id="region_id" class="form-select">
+                                                            <option value="">[Select]</option>
+                                                            @foreach ($region as $rItem)
+                                                                <option value="{{ $rItem->id }}"
+                                                                    {{ $mylocation->region_id == $rItem->id ? 'selected' : '' }}>
+                                                                    {{ $rItem->regDesc }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('region_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Province</label>
+                                                        <select name="province_id" id="province_id" class="form-select">
+                                                            <option value="">[Select]</option>
+
+                                                            @foreach ($provinceData as $pItem)
+                                                                <option value="{{ $pItem->id }}"
+                                                                    {{ $mylocation->province_id == $pItem->id ? 'selected' : '' }}>
+                                                                    {{ $pItem->provDesc }}</option>
+                                                            @endforeach
+
+                                                        </select>
+                                                        {{-- hiding the location id  --}}
+                                                        <input type="hidden" value="{{ $mylocation->l_id }}"
+                                                            name="l_id" />
+                                                    </div>
+                                                    @error('province_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label">*&nbsp;Municipality</label>
+                                                        <select name="citymun_id" id="citymun_id" class="form-select">
+                                                            <option value="">[Select]</option>
+                                                            @foreach ($citymunData as $citymunItem)
+                                                                <option value="{{ $citymunItem->id }}"
+                                                                    {{ $mylocation->citymun_id == $citymunItem->id ? 'selected' : '' }}>
+                                                                    {{ $citymunItem->citymunDesc }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('citymun_id')
+                                                        <span class="text-red"><small>{{ $message }}</small></span>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                        </div>
-                                        @error('ac_program_id')
-                                            <span class="text-red"><small>{{ $message }}</small></span>
-                                        @enderror
+                                            {{-- not used  --}}
 
 
-                                        <div class="row">
 
-                                            <div class="col-md">
-                                                <input type="submit" name="submit" id="submit"
-                                                    class="float-right btn btn-md btn-success" value="Book Mark Location">
+                                            <div class="row">
+
+                                                <div class="col-md">
+                                                    <input type="submit" name="submit" id="submit"
+                                                        class="float-right btn btn-md btn-danger" value="Update Location">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    </form>
+                                        </form>
+                                    @endif
+
+
 
                                 </div>
                                 <div class="card-footer">
@@ -98,16 +184,24 @@
                                                 <table class="table table-sm" id="ascomcremod">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 10px" class="text-sm">#</th>
-                                                            <th class="text-sm">Program</th>
-                                                            <th class="text-sm">Status</th>
-                                                            <th style="width: 40px">
-                                                            </th>
+
+                                                            <th class="text-sm">Region</th>
+                                                            <th class="text-sm">Province</th>
+                                                            <th class="text-sm">City/Municipality </th>
+
+
                                                         </tr>
                                                     </thead>
 
                                                     <tbody>
-
+                                                        <tr>
+                                                            <td>{{ empty($mylocation->region) ? 'Not Set' : $mylocation->region }}
+                                                            </td>
+                                                            <td>{{ empty($mylocation->province) ? 'Not Set' : $mylocation->province }}
+                                                            </td>
+                                                            <td>{{ empty($mylocation->citymun) ? 'Not Set' : $mylocation->citymun }}
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
