@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignedBarangay;
 use App\Models\AssignedProgram;
+use App\Models\Barangay;
+use App\Models\FixedLocation;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +29,14 @@ class AssignmentController extends Controller
         if (!empty($userData)) {
             $data['program'] = Program::loadProgram();
             $data['asPro'] = AssignedProgram::showAllProgram($id);
+            $data['asBar'] = AssignedBarangay::showBarangaAssignment($id);
+
+            $data['region'] = FixedLocation::showLocationByUserId($id)->region;
+            $data['province'] = FixedLocation::showLocationByUserId($id)->province;
+            $data['citymun'] = FixedLocation::showLocationByUserId($id)->citymun; 
+            $citymun_id = FixedLocation::showLocationByUserId($id)->citymun_id;
+            //load all the barangays from this municipality
+            $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
 
             $data['users'] = $userData;
             $data['identifier'] = "User | Add or Update user assignment";
@@ -57,6 +68,8 @@ class AssignmentController extends Controller
         return response()->json(['success' => 'Status was successfully removed!']);
     }
 
+
+
     public function getcom(Request $request, $id)
     {
         $request->validate([
@@ -76,6 +89,29 @@ class AssignmentController extends Controller
             return redirect()->route('user.getcommodity', ['id' => $id])->with('success', 'Program successfully assigned!');
         } else {
             return redirect()->route('user.getcommodity', ['id' => $id])->with('error', 'Program Already in the list!');
+        }
+    }
+
+
+    //Store barangay assignment data
+    public function storeBarAssigned(Request $request, $id)
+    {
+        $request->validate([
+            'ab_bar_id' => "required",
+        ], [
+            'ab_bar_id.required' => "Select Barangay!",
+        ]);
+
+        $data = AssignedBarangay::where(['ab_user_id' => $id, 'ab_bar_id' => $request->ab_bar_id])->first();
+        if ($data === null) {
+            $assignedBarangay = new AssignedBarangay();
+            $assignedBarangay->ab_user_id = $id;
+            $assignedBarangay->ab_bar_id = $request->ab_bar_id;
+            $assignedBarangay->ab_createdby = Auth::user()->id;
+            $assignedBarangay->save();
+            return redirect()->route('user.getcommodity', ['id' => $id])->with('success', 'Barangay successfully assigned!');
+        } else {
+            return redirect()->route('user.getcommodity', ['id' => $id])->with('error', 'Barangay Already in the list!');
         }
     }
 }

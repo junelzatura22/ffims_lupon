@@ -31,13 +31,33 @@ class FixedLocation extends Model
         return $data;
     }
 
+
+    //it will get the data of the assigned user
+    public static function showLocationByUserId($id)
+    {
+        $data = DB::table('fixedlocation')->select(
+            'fixedlocation.*',
+            DB::RAW('CONCAT(users.name," ",users.lastname) as fname'),
+            DB::RAW('refregion.regDesc as region'),
+            DB::RAW('refprovince.provDesc as province'),
+            DB::RAW('refcitymun.citymunDesc as citymun')
+        )
+            ->join('users', 'user_id', 'users.id')
+            ->join('refregion', 'region_id', 'refregion.id')
+            ->join('refprovince', 'province_id', 'refprovince.id')
+            ->join('refcitymun', 'citymun_id', 'refcitymun.id')
+            ->where('user_id', '=', $id)->first();
+        return $data;
+    }
+
+
+    //load the location
     public static function myLocation()
     {
         $data = DB::table('fixedlocation')->select('fixedlocation.*')
             ->join('users', 'user_id', 'users.id')
             ->where('user_id', '=', Auth::user()->id)
             ->first();
-
         return $data;
     }
 }

@@ -58,6 +58,8 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('user/assignment/updatestatus/{id}', [AssignmentController::class, 'updatestatus'])->name('user.updatestatus');
     Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
+    Route::post('user/assignment/crba/{id}', [AssignmentController::class, 'storeBarAssigned'])->name('user.storebarassigned');
+    //
     Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
     Route::get('location/showprovince/{regid}', [LocationController::class, 'showProvinceByRegion'])->name('location.showprovincebyregion');
     Route::get('location/showcitymun/{provid}', [LocationController::class, 'showCityMunByProvince'])->name('location.showcitymunbyprovince');
