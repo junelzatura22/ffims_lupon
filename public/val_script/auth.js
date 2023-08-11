@@ -139,6 +139,53 @@ $(document).ready(function () {
         });
     });
 
+    $("#ascomcremod_barstatus #ab_status").on("change", function () {
+        var uri = $(this).parents("table tr").attr("class");
+        $.ajax({
+            url: uri,
+            type: "get",
+            dataType: "json",
+            success: function (response) {
+                swal("Good Job!", response.success, "success");
+            },
+            error: function () {
+                swal("OPPS!", "Error changing status", "error");
+            },
+        });
+    });
+
+    $("#ascomcremod_barstatus #deleteBarangay").on("click", function () {
+        var trObj = $(this);
+        var userURL = $(this).data("url");
+        var prograCount = $("#barangayCount").html();
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, the user will no longer access the barangay.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: userURL,
+                    type: "get",
+                    dataType: "json",
+                    success: function (response) {
+                        swal("Poof! Successfully removed!", {
+                            icon: "success",
+                        });
+                        trObj.parents("tr").remove();
+                        prograCount -= 1;
+                        $("#barangayCount").html(prograCount);
+                    },
+                    error: function () {
+                        swal("OPPS!", "Error changing status", "error");
+                    },
+                });
+            }
+        });
+    });
+
     // validate form fixed position
     $("#fixedlocationForm").validate({
         rules: {
@@ -150,7 +197,6 @@ $(document).ready(function () {
             region_id: "Region is required",
             province_id: "Province is required",
             citymun_id: "City/Municipality is required",
-        }
+        },
     });
-    
 });

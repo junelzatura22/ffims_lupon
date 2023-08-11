@@ -119,15 +119,12 @@
                                                 {{ $users->count() }} </span>
                                         </h3>
                                     </div>
-
                                 </div>
                             </div>
 
                             <!-- /.card-header -->
                             <div class="card-body p-2">
                                 <div class="row">
-
-
 
                                     @foreach ($users as $item)
                                         <div class="col-md-3">
@@ -147,14 +144,24 @@
                                                     <ul class="list-group list-group-unbordered mb-3">
                                                         <li class="list-group-item">
                                                             <small><strong>Assigned to
-                                                                    Commodity?</strong>&nbsp;</small><span class="badge badge-danger">{{ $item->totalCommodity != 0 ? 'YES' : 'NO' }}&nbsp;&nbsp;a total of&nbsp;{{$item->totalCommodity}}</span>
+                                                                    Commodity?</strong>&nbsp;</small>
+                                                            <span class="badge badge-danger">
+                                                                {{ $item->totalCommodity != 0 ? 'YES' : 'NO' }}
+                                                                &nbsp;a total
+                                                                of&nbsp;{{ $item->totalCommodity }}&nbsp;Program(s)</span>
                                                             <a class="float-right p-1 pr-2 pl-2 rounded-lg {{ $item->totalCommodity != 0 ? 'btn-primary' : 'btn-warning' }}"
-                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}">Add&nbsp;</a>
+                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}"><small>Add/View</small></a>
                                                         </li>
                                                         <li class="list-group-item">
                                                             <small><strong>Assigned to Barangay?</strong></small>
-                                                            <a class="float-right btn-warning p-1 pr-2 pl-2 rounded-lg"
-                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}">Add&nbsp;NO</a>
+                                                            <span class="badge badge-danger">
+                                                                {{ $item->totalBarangay != 0 ? 'YES' : 'NO' }}
+                                                                &nbsp;a total
+                                                                of&nbsp;{{ $item->totalBarangay }}&nbsp;Barangay(s)</span>
+                                                            <a class="float-right p-1 pr-2 pl-2 rounded-lg 
+                                                            {{ $item->totalBarangay != 0 ? 'btn-primary' : 'btn-warning' }}"
+                                                                href="{{ route('user.ascomcremod', ['id' => $item->id]) }}"><small>Add/View</small></a>
+
                                                         </li>
 
                                                     </ul>

@@ -61,11 +61,33 @@ class AssignmentController extends Controller
         return response()->json(['success' => 'Status was successfully modified to ' . $status]);
     }
 
+    public function updateBarStatus($id)
+    {
+        $barangayData = AssignedBarangay::find($id);
+        $getCurrentStatus = $barangayData->ab_status;
+        $status = "";
+        if ($getCurrentStatus == "Active") {
+            $status = "Inactive";
+        } else {
+            $status = "Active";
+        }
+        $barangayData->ab_status = $status;
+        $barangayData->touch();
+        return response()->json(['success' => 'Barangay was successfully modified to ' . $status]);
+    }
+
     public function deletestatus($id)
     {
         $userData = AssignedProgram::find($id);
         $userData->delete();
-        return response()->json(['success' => 'Status was successfully removed!']);
+        return response()->json(['success' => 'Program was successfully removed!']);
+    }
+
+    public function deleteBar($id)
+    {
+        $userData = AssignedBarangay::find($id);
+        $userData->delete();
+        return response()->json(['success' => 'Barangay was successfully removed!']);
     }
 
 

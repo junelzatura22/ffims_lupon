@@ -22,7 +22,7 @@
                        <a href="#" class="d-block">{{ $userName }} </a>
                    </div>
                </div>
-            
+
 
 
                @switch(Auth::user()->role)
@@ -58,11 +58,42 @@
                                        <li class="nav-item">
                                            <a href="{{ route('management.programcategory') }}"
                                                class="nav-link @if (Request::segment(3) == 'pc') active @endif">
-                                               <i class="fa-solid fa-folder nav-icon"></i>
+                                               <i class="fa-solid fa-diagram-project nav-icon"></i>
                                                <p>Program Category</p>
                                            </a>
                                        </li>
+                                       {{-- Start Multiple level dropdown   --}}
+                                       <li class="nav-item @if (Request::segment(3) == 'rbo') menu-open @endif">
+                                           <a href="#" class="nav-link @if (Request::segment(3) == 'rbo') active @endif">
+                                               <i class="fa-solid fa-house-user nav-icon"></i>
+                                               <p>
+                                                   RBO
+                                                   <i class="right fas fa-angle-left"></i>
+                                               </p>
+                                           </a>
+                                           <ul class="nav nav-treeview">
+                                               <li class="nav-item">
+                                                   <a href="{{ route('rbo.index') }}" class="nav-link @if (Request::segment(4) == 'list') active @endif">
+                                                       <i class="fa-solid fa-highlighter nav-icon"></i>
+                                                       <p>List</p>
+                                                   </a>
+                                               </li>
+                                               <li class="nav-item">
+                                                <a href="{{ route('rbo.cluster') }}" class="nav-link @if (Request::segment(4) == 'cluster') active @endif">
+                                                       <i class="fa-solid fa-highlighter nav-icon"></i>
+                                                       <p>Cluster</p>
+                                                   </a>
+                                               </li>
+                                               <li class="nav-item">
+                                                    <a href="{{ route('rbo.association') }}" class="nav-link @if (Request::segment(4) == 'association') active @endif">
+                                                       <i class="fa-solid fa-highlighter nav-icon"></i>
+                                                       <p>Association</p>
+                                                   </a>
+                                               </li>
 
+                                           </ul>
+                                       </li>
+                                       {{-- End Multiple level dropdown   --}}
                                    </ul>
                                </li>
 
@@ -138,46 +169,46 @@
                    @break
 
                    @case('Technician')
-                   <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route('administrator.dashboard') }}"
-                                class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
-                                <i class="fa-solid fa-gauge-high nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
+                       <nav class="mt-2">
+                           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                               data-accordion="false">
+                               <li class="nav-item">
+                                   <a href="{{ route('administrator.dashboard') }}"
+                                       class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                                       <i class="fa-solid fa-gauge-high nav-icon"></i>
+                                       <p>Dashboard</p>
+                                   </a>
+                               </li>
 
 
-                        <li class="nav-header">Accounts</li>
+                               <li class="nav-header">Accounts</li>
 
 
-                        <li class="nav-item">
-                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                <i class="fa-solid fa-user-tie nav-icon"></i>
-                                <p>My Account</p>
-                            </a>
-                        </li>
+                               <li class="nav-item">
+                                   <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                       <i class="fa-solid fa-user-tie nav-icon"></i>
+                                       <p>My Account</p>
+                                   </a>
+                               </li>
 
-                        <li class="nav-header">Settings</li>
-                       
+                               <li class="nav-header">Settings</li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('auth.logout') }}" class="nav-link">
-                             <i class="fa-solid fa-map-location-dot nav-icon"></i>
-                                <p>Fixed Location</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('auth.logout') }}" class="nav-link">
-                                <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
-                                <p>Logout</p>
-                            </a>
-                        </li>
 
-                    </ul>
-                </nav>
+                               <li class="nav-item">
+                                   <a href="{{ route('auth.logout') }}" class="nav-link">
+                                       <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <p>Fixed Location</p>
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('auth.logout') }}" class="nav-link">
+                                       <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
+                                       <p>Logout</p>
+                                   </a>
+                               </li>
+
+                           </ul>
+                       </nav>
                    @break
 
                    @case('Office Head')
@@ -204,17 +235,17 @@
                                </li>
 
                                <li class="nav-header">Settings</li>
-                              
+
 
                                <li class="nav-item">
                                    <a href="" class="nav-link">
-                                    <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <i class="fa-solid fa-map-location-dot nav-icon"></i>
                                        <p>Fixed Location</p>
                                    </a>
                                </li>
                                <li class="nav-item">
                                    <a href="" class="nav-link">
-                                    <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <i class="fa-solid fa-map-location-dot nav-icon"></i>
                                        <p>Message Request</p>
                                    </a>
                                </li>
@@ -230,50 +261,50 @@
                    @break
 
                    @default
-                   <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route('administrator.dashboard') }}"
-                                class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
-                                <i class="fa-solid fa-gauge-high nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
+                       <nav class="mt-2">
+                           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                               data-accordion="false">
+                               <li class="nav-item">
+                                   <a href="{{ route('administrator.dashboard') }}"
+                                       class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+                                       <i class="fa-solid fa-gauge-high nav-icon"></i>
+                                       <p>Dashboard</p>
+                                   </a>
+                               </li>
 
 
-                        <li class="nav-header">Accounts</li>
+                               <li class="nav-header">Accounts</li>
 
 
-                        <li class="nav-item">
-                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                <i class="fa-solid fa-user-tie nav-icon"></i>
-                                <p>My Account</p>
-                            </a>
-                        </li>
+                               <li class="nav-item">
+                                   <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                       <i class="fa-solid fa-user-tie nav-icon"></i>
+                                       <p>My Account</p>
+                                   </a>
+                               </li>
 
-                        <li class="nav-header">Settings</li>
-                       
+                               <li class="nav-header">Settings</li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('auth.logout') }}" class="nav-link">
-                             <i class="fa-solid fa-map-location-dot nav-icon"></i>
-                                <p>Fixed Location</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('auth.logout') }}" class="nav-link">
-                                <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
-                                <p>Logout</p>
-                            </a>
-                        </li>
 
-                    </ul>
-                </nav>
+                               <li class="nav-item">
+                                   <a href="{{ route('auth.logout') }}" class="nav-link">
+                                       <i class="fa-solid fa-map-location-dot nav-icon"></i>
+                                       <p>Fixed Location</p>
+                                   </a>
+                               </li>
+                               <li class="nav-item">
+                                   <a href="{{ route('auth.logout') }}" class="nav-link">
+                                       <i class="fa-solid fa-arrow-right-from-bracket nav-icon"></i>
+                                       <p>Logout</p>
+                                   </a>
+                               </li>
+
+                           </ul>
+                       </nav>
                @endswitch
 
 
 
-           </>
-           <!-- /.sidebar -->
+               </>
+               <!-- /.sidebar -->
        </aside>

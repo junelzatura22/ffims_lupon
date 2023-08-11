@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\RBOController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,12 +60,18 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
     Route::post('user/assignment/crba/{id}', [AssignmentController::class, 'storeBarAssigned'])->name('user.storebarassigned');
+    Route::get('user/assignment/updatebarstatus/{id}', [AssignmentController::class, 'updateBarStatus'])->name('user.updatebarstatus');    
+    Route::get('user/assignment/deletebar/{id}', [AssignmentController::class, 'deleteBar'])->name('user.deletebar');
     //
     Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
     Route::get('location/showprovince/{regid}', [LocationController::class, 'showProvinceByRegion'])->name('location.showprovincebyregion');
     Route::get('location/showcitymun/{provid}', [LocationController::class, 'showCityMunByProvince'])->name('location.showcitymunbyprovince');
     Route::post('location/location', [LocationController::class, 'store'])->name('location.store');
     Route::post('location/update/', [LocationController::class, 'update'])->name('location.update');
+    //for the RBO - List
+    Route::get('management/rbo/list', [RBOController::class, 'index'])->name('rbo.index');
+    Route::get('management/rbo/cluster', [RBOController::class, 'cluster'])->name('rbo.cluster');
+    Route::get('management/rbo/association', [RBOController::class, 'association'])->name('rbo.association');
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
     //technician

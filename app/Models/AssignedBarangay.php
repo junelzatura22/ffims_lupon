@@ -18,7 +18,7 @@ class AssignedBarangay extends Model
         $data = DB::table('assigned_barangay')->select('assigned_barangay.*','refbrgy.brgyDesc')
         ->join('refbrgy','refbrgy.id','ab_bar_id')
         ->join('users','users.id','ab_user_id')
-        ->where(['users.id'=>$id])->get();//its and array form--but no need
+        ->where(['users.id'=>$id])->paginate(10);//its and array form--but no need
         return $data;
     }
     public static function countBarangayAssignment($id){

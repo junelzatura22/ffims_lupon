@@ -216,13 +216,13 @@
                                                 <h3 class="card-title"><small>
                                                         <strong>List of Assigned Barangay(s)</strong>
                                                     </small>
-                                                    &nbsp;<span id="programCount"
-                                                        class="badge badge-primary ">{{ $asBar->count() }}</span>
+                                                    &nbsp;<span id="barangayCount"
+                                                        class="badge badge-primary ">{{ $asBar->total() }}</span>
                                                 </h3>
                                             </div>
                                             <!-- /.card-header -->
                                             <div class="card-body p-0">
-                                                <table class="table table-sm" id="ascomcremod">
+                                                <table class="table table-sm" id="ascomcremod_barstatus">
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 10px" class="text-sm">#</th>
@@ -238,7 +238,7 @@
                                                     <tbody>
                                                         @foreach ($asBar as $assignedBarangay)
                                                             <tr id="{{ $assignedBarangay->ab_id }}"
-                                                                class="{{ route('user.updatestatus', $assignedBarangay->ab_id) }}">
+                                                                class="{{ route('user.updatebarstatus', $assignedBarangay->ab_id) }}">
                                                                 <td class="text-sm">{{ $counter++ }}.</td>
                                                                 <td class="text-sm">{{ $assignedBarangay->brgyDesc }}
                                                                 </td>
@@ -260,14 +260,21 @@
                                                                     <a href="javascript:void(0)" data-bs-toggle="modal"
                                                                         data-bs-target="#deleteProgramModal"
                                                                         class="deleteProgram"
-                                                                        data-url="{{ route('user.deletestatus', $assignedBarangay->ab_id) }}"
-                                                                        id="deleteProgram"><i
+                                                                        data-url="{{ route('user.deletebar', $assignedBarangay->ab_id) }}"
+                                                                        id="deleteBarangay"><i
                                                                             class="fa-solid fa-trash-can-arrow-up bg-danger p-1"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+
+                                                
+                                            </div>
+                                            <div class="card-footer clearfix">
+                                                <ul class="pagination pagination-md m-0 float-right">
+                                                    {!! $asBar->links() !!}
+                                                </ul>
                                             </div>
                                             <!-- /.card-body -->
                                         </div>

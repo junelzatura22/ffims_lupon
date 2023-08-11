@@ -71,7 +71,9 @@ class User extends Authenticatable
         // $userData = DB::table('users')->select(DB::RAW('SELECT *, IFNULL((select count(*) from assigned_program a where a.ac_userd_id = u.id group by a.ac_userd_id),0) as totalCommodity
         // FROM users u'));
         $userData = DB::table('users')->select('users.*',DB::raw('IFNULL((select count(*) 
-        from assigned_program a where a.ac_userd_id = users.id group by a.ac_userd_id),0) as totalCommodity'))
+        from assigned_program a where a.ac_userd_id = users.id group by a.ac_userd_id),0) as totalCommodity'),
+        DB::raw('IFNULL((select count(*) 
+        from assigned_barangay a where a.ab_user_id = users.id group by a.ab_user_id),0) as totalBarangay'))
             ->where('id', '!=', Auth::user()->id);
         if (!empty(Request::get('nameKey'))) {
             $userData = $userData->where(DB::raw('concat(name," ",lastname)'), 'like', '%' . Request::get('nameKey') . '%');
