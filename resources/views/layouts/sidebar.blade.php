@@ -37,14 +37,14 @@
                                        <p>Dashboard</p>
                                    </a>
                                </li>
-                               <li class="nav-header">Tools</li>
+                               <li class="nav-header">Functions</li>
                                <li class="nav-item @if (Request::segment(2) == 'management') menu-open @endif">
                                    <a href="#" class="nav-link @if (Request::segment(2) == 'management') active @endif">
                                        <i class="nav-icon fas fa-copy"></i>
                                        <p>
                                            Management
                                            <i class="fas fa-angle-left right"></i>
-                                           <span class="badge badge-primary right">6</span>
+
                                        </p>
                                    </a>
                                    <ul class="nav nav-treeview">
@@ -73,19 +73,22 @@
                                            </a>
                                            <ul class="nav nav-treeview">
                                                <li class="nav-item">
-                                                   <a href="{{ route('rbo.index') }}" class="nav-link @if (Request::segment(4) == 'list') active @endif">
+                                                   <a href="{{ route('rbo.index') }}"
+                                                       class="nav-link @if (Request::segment(4) == 'list') active @endif">
                                                        <i class="fa-solid fa-highlighter nav-icon"></i>
                                                        <p>List</p>
                                                    </a>
                                                </li>
                                                <li class="nav-item">
-                                                <a href="{{ route('rbo.cluster') }}" class="nav-link @if (Request::segment(4) == 'cluster') active @endif">
+                                                   <a href="{{ route('rbo.cluster') }}"
+                                                       class="nav-link @if (Request::segment(4) == 'cluster') active @endif">
                                                        <i class="fa-solid fa-highlighter nav-icon"></i>
                                                        <p>Cluster</p>
                                                    </a>
                                                </li>
                                                <li class="nav-item">
-                                                    <a href="{{ route('rbo.association') }}" class="nav-link @if (Request::segment(4) == 'association') active @endif">
+                                                   <a href="{{ route('rbo.association') }}"
+                                                       class="nav-link @if (Request::segment(4) == 'association') active @endif">
                                                        <i class="fa-solid fa-highlighter nav-icon"></i>
                                                        <p>Association</p>
                                                    </a>
@@ -97,6 +100,32 @@
                                    </ul>
                                </li>
 
+                               <li class="nav-item  @if (Request::segment(2) == 'f2') menu-open @endif">
+                                   <a href="#" class="nav-link @if (Request::segment(2) == 'f2') active @endif">
+                                       <i class="fa-solid fa-users nav-icon"></i>
+                                       <p>
+                                           Farmer/Fisherfolk
+                                           <i class="fas fa-angle-left right"></i>
+
+                                       </p>
+                                   </a>
+                                   <ul class="nav nav-treeview">
+                                       <li class="nav-item">
+                                           <a href="{{ route('f2.index') }}"
+                                               class="nav-link @if (Request::segment(3) == 'list') active @endif">
+                                               <i class="fa-solid fa-users-between-lines nav-icon"></i>
+                                               <p>List</p>
+                                           </a>
+                                       </li>
+                                       <li class="nav-item">
+                                           <a href="" class="nav-link">
+                                               <i class="fa-solid fa-users-between-lines nav-icon"></i>
+                                               <p>Activity</p>
+                                           </a>
+                                       </li>
+                                   </ul>
+                               </li>
+
                                <li class="nav-header">Accounts</li>
                                <li class="nav-item @if (Request::segment(2) == 'user') menu-open @endif">
                                    <a href="#" class="nav-link @if (Request::segment(2) == 'user') active @endif">
@@ -104,7 +133,6 @@
                                        <p>
                                            User
                                            <i class="fas fa-angle-left right"></i>
-                                           <span class="badge badge-primary right">4</span>
                                        </p>
                                    </a>
                                    <ul class="nav nav-treeview">
@@ -140,7 +168,7 @@
                                        <p>
                                            User Settings
                                            <i class="fas fa-angle-left right"></i>
-                                           <span class="badge badge-primary right">4</span>
+
                                        </p>
                                    </a>
                                    <ul class="nav nav-treeview">
@@ -156,6 +184,28 @@
 
                                    </ul>
                                </li>
+
+
+                               <li class="nav-item">
+                                   <a href="#" class="nav-link">
+                                       <i class="fa-solid fa-users nav-icon"></i>
+                                       <p>
+                                           Template Node 1
+                                           <i class="fas fa-angle-left right"></i>
+
+                                       </p>
+                                   </a>
+                                   <ul class="nav nav-treeview">
+                                       <li class="nav-item">
+                                           <a href="" class="nav-link">
+                                               <i class="fa-solid fa-users-between-lines nav-icon"></i>
+                                               <p>Template Node 2</p>
+                                           </a>
+                                       </li>
+                                   </ul>
+                               </li>
+
+
 
                                <li class="nav-item">
                                    <a href="{{ route('auth.logout') }}" class="nav-link">

@@ -72,6 +72,14 @@ $(document).ready(function () {
         var node = $(this);
         node.val(node.val().replace(/[0-9]/, ""));
     });
+    //for the association validation
+    $("#associationForm #nameabbr,#associationForm #namedesc").bind(
+        "keyup blur",
+        function () {
+            var node = $(this);
+            node.val(node.val().replace(/[0-9]/, ""));
+        }
+    );
 
     // for the program form validation
 
@@ -92,6 +100,30 @@ $(document).ready(function () {
     });
 
     //AJAX
+    $("#associationTable #as_status").on("change", function () {
+        var uri = $(this).parents("table tr").attr("id");
+        swal({
+            title: "Are you sure?",
+            text: "Inactive association will no longer be accessable!",
+            icon: "warning",
+            buttons: true,
+            warningMode: true,
+        }).then((isUpdate) => {
+            if (isUpdate) {
+                $.ajax({
+                    url: uri,
+                    type: "get",
+                    dataType: "json",
+                    success: function (response) {
+                        swal("Good Job!", response.success, "success");
+                    },
+                    error: function () {
+                        swal("OPPS!", "Error changing status", "error");
+                    },
+                });
+            }
+        });
+    });
     $("#ascomcremod #ac_status").on("change", function () {
         var uri = $(this).parents("table tr").attr("class");
         $.ajax({

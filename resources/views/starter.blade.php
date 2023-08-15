@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col">
-                        <h4 class="m-0 text-gray " ><strong>{{ !empty($identifier) ? $identifier : 'Dashboard' }}</strong></h4>
+                        <h4 class="m-0 text-gray " >{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
                     </div><!-- /.col -->
                     {{-- <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">

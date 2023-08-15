@@ -26,7 +26,7 @@
                             <h3 class="card-title">Search</h3>
                         </div>
                         <div class="card-body">
-                            
+
 
                         </div>
 
@@ -34,79 +34,109 @@
                 </div>
 
                 <div class="row">
-                    <div class="card">
+                    <div class="card card-outline card-success">
                         <div class="card-header">
-                            <h3 class="card-title">Simple Full Width Table</h3>
 
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-danger">55%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td>Clean database</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar bg-warning" style="width: 70%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-warning">70%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Cron job running</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-primary" style="width: 30%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-primary">30%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td>Fix and squish bugs</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-success" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-success">90%</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <h3 class="card-title">
+                                        <i class="fa-solid fa-users"></i>
+                                        </i>&nbsp;List of Association&nbsp; <span class="badge badge-success p-2"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Total Association">
+                                            {{ $association->total() }} </span>
+                                    </h3>
+                                </div>
+                                <div class="card-tools">
+                                    <a href="{{ route('rbo.createassociation') }}" class="btn btn-sm btn-success"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Register New Association">
+                                        <i class="fa-solid fa-user-plus"></i>&nbsp;New Association</a>
+                                </div>
 
-                            <div class="card-tools">
-                                <ul class="pagination pagination-sm float-right">
-                                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-1">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="associationTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center text-sm bg-gradient-green font-weight-bold">#</th>
+                                                <th class="text-sm">Name</th>
+                                                <th class="text-sm">Description</th>
+                                                <th class="text-sm">President</th>
+
+                                                <th width="130px" class="text-center text-sm">Status</th>
+                                                <th class="text-sm">Program</th>
+                                                <th class="text-center text-sm">Members</th>
+                                                <th class="text-sm">Barangay</th>
+                                                <th width="130px"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($association as $index => $item)
+                                                <tr id="{{ route('rbo.updatestatus', $item->as_id) }}">
+                                                    <td class="text-center text-sm bg-gradient-green font-weight-bold">
+                                                        {{ $association->firstItem() + $index }}
+                                                    </td>
+                                                    <td class="text-sm"> {{ $item->nameabbr }} </td>
+                                                    <td class="text-sm"> {{ $item->namedesc }} </td>
+                                                    <td class="text-sm"></td>
+
+                                                    <td class="text-center text-sm">
+                                                        <select name="as_status" id="as_status"
+                                                            class="form-select form-select-sm">
+                                                            <option value="Active"
+                                                                {{ $item->as_status == 'Active' ? 'selected' : '' }}>
+                                                                Active</option>
+                                                            <option value="Inactive"
+                                                                {{ $item->as_status == 'Inactive' ? 'selected' : '' }}>
+                                                                Inactive</option>
+                                                        </select>
+
+                                                    </td>
+                                                    <td class="text-sm">{{ $item->pName }}</td>
+                                                    <td class="text-center text-sm"><a href=""
+                                                            class="text-danger text-lg">0</a></td>
+                                                    <td class="text-sm">{{ $item->barName }}</td>
+                                                    <td width="130px">
+                                                        <a href="" class="btn btn-sm btn-primary "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Add Member">
+                                                            <i class="fa-solid fa-user-plus"></i>
+                                                        </a>
+                                                        <a href="{{ route('rbo.update', $item->as_id) }}"
+                                                            class="btn btn-sm btn-warning " data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="Edit Association">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </a>
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-md m-0 float-right">
+                                    {!! $association->links() !!}
                                 </ul>
+                            </div>
+                            <div style="position: absolute; top:0; right:0; z-index:10">
+                                @include('_message')
                             </div>
                         </div>
                     </div>
+
+                    {{-- display message in this row  --}}
+
+
+
                 </div>
         </section>
 

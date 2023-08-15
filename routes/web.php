@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmerFisherFolkController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RBOController;
@@ -72,6 +73,15 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::get('management/rbo/list', [RBOController::class, 'index'])->name('rbo.index');
     Route::get('management/rbo/cluster', [RBOController::class, 'cluster'])->name('rbo.cluster');
     Route::get('management/rbo/association', [RBOController::class, 'association'])->name('rbo.association');
+    Route::get('management/rbo/association/create', [RBOController::class, 'createAssociation'])->name('rbo.createassociation');
+    Route::post('management/rbo/association/create', [RBOController::class, 'storeAssociation'])->name('rbo.storeassociation');
+    Route::get('management/rbo/association/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
+    Route::get('management/rbo/association/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
+    Route::post('management/rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
+    //farmer and fisherfolk
+    Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
+    Route::get('f2/list/dashboard', [FarmerFisherFolkController::class, 'dashboard'])->name('f2.dashboard');
+    Route::get('f2/list/create', [FarmerFisherFolkController::class, 'create'])->name('f2.create');
 });
 Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
     //technician
