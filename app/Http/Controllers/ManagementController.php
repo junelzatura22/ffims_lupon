@@ -13,13 +13,15 @@ class ManagementController extends Controller
     {
         $data['identifier'] = "Management | Program";
         $data['programData'] = Program::showAllPrograms();
+        $data['data'] = "Program - FFIMS Systems";
         return view('administrator.management.program', $data);
     }
 
     public function createprogram()
     {
         $identifier = "Management | Program | Create Program";
-        return view('administrator.management.createprogram', compact('identifier'));
+        $data['data'] = "Register Program - FFIMS Systems";
+        return view('administrator.management.createprogram',$data);
     }
 
     public function getdtoupdate($id)
@@ -28,6 +30,7 @@ class ManagementController extends Controller
         if (!empty($prog)) {
             $data['programData'] = Program::where('program_id', '=', $id)->first();
             $data['identifier'] = "Management | Program | Update Program";
+            $data['data'] = "Update Program - FFIMS Systems";
             return view('administrator.management.updateprogram',  $data);
         } else {
             return back();
@@ -74,10 +77,11 @@ class ManagementController extends Controller
     // Program Category ************************************************************************
     public function programCatIndex()
     {
-        $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])
+        $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
             ->orderBy('program.created_at', 'desc')->get();
         $data['identifier'] = "Management | Program Category";
         $data['programCatData'] = ProgamCategory::loadAndSearchProgramCategory();
+        $data['data'] = "Program Category - FFIMS Systems";
         return view('administrator.management.programcat', $data);
     }
     public function createprogramCat()
@@ -85,19 +89,20 @@ class ManagementController extends Controller
 
         $data['identifier'] = "Management | Program Category | Create Category";
 
-        $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])
+        $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
             ->orderBy('program.created_at', 'desc')->get();
-
+        $data['data'] = "Register Category - FFIMS Systems";
         return view('administrator.management.createprogramcat',  $data);
     }
     public function getProgramCategory($id)
     {
         $programCategory = ProgamCategory::find($id);
         if (!empty($programCategory)) {
-            $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])
+            $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
                 ->orderBy('program.created_at', 'desc')->get();
             $data['programCategory'] = ProgamCategory::where('pc_id', '=', $id)->first();
             $data['identifier'] = "Management | Program Category | Update Category";
+            $data['data'] = "Update Category - FFIMS Systems";
             return view('administrator.management.updateprogramcat',  $data);
         } else {
 

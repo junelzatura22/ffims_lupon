@@ -23,6 +23,7 @@ class Program extends Model
             DB::raw('concat(users.name," ",users.lastname) as name')
         )
             ->where(['program_status' => 'Active', 'program.is_deleted' => '0'])
+            ->where('program_id','!=',37)
             ->join('users', 'program.created_by', 'users.id')
             ->orderBy('program.created_at', 'desc')->paginate(10);
         return $data;
@@ -32,6 +33,7 @@ class Program extends Model
         $data = DB::table("program")->select(
             "program.*")
             ->where(['program_status' => 'Active', 'is_deleted' => '0'])
+            ->where('program_id','!=',37)
             ->orderBy('program_name', 'asc')->get();
         return $data;
     }

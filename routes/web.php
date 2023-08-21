@@ -26,7 +26,7 @@ Route::post('/', [AuthController::class, 'login'])->name('auth.log');
 
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], function () {
+Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'administrator'], function () {
     //administrator
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('administrator.dashboard');
     //progam
@@ -80,18 +80,21 @@ Route::group(['middleware' => 'administrator', 'prefix' => 'administrator'], fun
     Route::post('management/rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
-    Route::get('f2/list/dashboard', [FarmerFisherFolkController::class, 'dashboard'])->name('f2.dashboard');
+    Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');
     Route::get('f2/list/create', [FarmerFisherFolkController::class, 'create'])->name('f2.create');
+    Route::post('f2/list/create', [FarmerFisherFolkController::class, 'store'])->name('f2.store');
+    Route::get('f2/list/details/{id}', [FarmerFisherFolkController::class, 'details'])->name('f2.details');
+    
 });
-Route::group(['middleware' => 'technician', 'prefix' => 'technician'], function () {
+Route::group(['middleware' => ['nohistory','technician'], 'prefix' => 'technician'], function () {
     //technician
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('technician.dashboard');
 });
-Route::group(['middleware' => 'guest', 'prefix' => 'guest'], function () {
+Route::group(['middleware' => ['nohistory','guest'], 'prefix' => 'guest'], function () {
     //guest
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('guest.dashboard');
 });
-Route::group(['middleware' => 'officehead', 'prefix' => 'officehead'], function () {
+Route::group(['middleware' => ['nohistory','officehead'], 'prefix' => 'officehead'], function () {
     //officehead
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('ho.dashboard');
 });

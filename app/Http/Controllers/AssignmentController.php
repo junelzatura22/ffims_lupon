@@ -19,6 +19,7 @@ class AssignmentController extends Controller
         $data['users'] = User::userHard();
         // $data['users'] = User::showAllUsers();
         $data['identifier'] = "User | User Assignment";
+        
         return view('administrator.user.ascom', $data);
     }
 

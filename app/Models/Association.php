@@ -19,7 +19,17 @@ class Association extends Model
         $data = DB::table('association')->select('association.*', 'refbrgy.brgyDesc as barName','program.program_name as pName')
             ->join('refbrgy', 'refbrgy.id', 'association.barangay_id')
             ->join('program', 'program.program_id', 'association.belongs_to_program')
-            ->orderBy('association.created_at', 'desc')->paginate(10);
+            ->orderBy('association.created_at', 'desc')
+            ->where('as_id','!=',14)->paginate(10);
+
+        return $data;
+    }
+    public static function showAllAssociationsWithNone()
+    {
+        $data = DB::table('association')->select('association.*', 'refbrgy.brgyDesc as barName','program.program_name as pName')
+            ->join('refbrgy', 'refbrgy.id', 'association.barangay_id')
+            ->join('program', 'program.program_id', 'association.belongs_to_program')
+            ->orderBy('association.namedesc', 'asc')->get();
 
         return $data;
     }

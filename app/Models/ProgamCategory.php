@@ -25,7 +25,7 @@ class ProgamCategory extends Model
         if (!empty(Request::get('program_id'))) {
             $query = $query->where('prog_id', '=', Request::get('program_id'));
         }
-        $query = $query->orderBy('program_category.created_at', 'desc')->paginate(10);
+        $query = $query->where('program.program_id','!=',37)->orderBy('program_category.created_at', 'desc')->paginate(10);
         return $query;
     }
 }

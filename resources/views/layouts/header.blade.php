@@ -58,15 +58,14 @@
             /* background-image: linear-gradient(to top, #1a1a1f, #191a30,
                     #171a42, #121953, #0c1764) !important; */
 
-            /*
+        /*
 * Created with https://www.css-gradient.com
 * Gradient link: https://www.css-gradient.com/?c1=2b5921&c2=054d1f&gt=l&gd=dbb
-/* 
+/*
             background: #2B5921 !important;
             background: linear-gradient(0deg, #2B5921, #054D1F) !important;
-        } */ */
-
-
+        } */
+        */
         /* .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
         .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
             background-color: #014119;
@@ -136,6 +135,10 @@
             color: #fff;
             background-color: #28a745;
             border-color: #28a745;
+        }
+
+        .form-error {
+            border: 2px solid #e74c3c;
         }
     </style>
 
@@ -207,7 +210,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+                                <img src="{{ asset("dist/img/user1-128x128.jpg") }}" alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -224,7 +227,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+                                <img src="{{ asset("dist/img/user8-128x128.jpg") }}" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -241,7 +244,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+                                <img src="{{ asset("dist/img/user8-128x128.jpg") }}" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">

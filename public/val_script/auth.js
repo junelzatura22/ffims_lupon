@@ -231,4 +231,115 @@ $(document).ready(function () {
             citymun_id: "City/Municipality is required",
         },
     });
+
+    //farmer form validation
+    $("#farmerForm #reg_type").on("change", function () {
+        $val = $(this).val();
+
+        switch ($val) {
+            case "All":
+                $(
+                    "#farmerForm #rsbsa_nat,#farmerForm #rsbsa_loc,#farmerForm #fishr_nat,#farmerForm #fishr_loc"
+                ).attr("readonly", false);
+                break;
+            case "Farmer":
+                $("#farmerForm #rsbsa_nat,#farmerForm #rsbsa_loc").attr(
+                    "readonly",
+                    false
+                );
+                $("#farmerForm #fishr_nat,#farmerForm #fishr_loc").attr(
+                    "readonly",
+                    true
+                );
+                break;
+            case "Fisherfolk":
+                $("#farmerForm #rsbsa_nat,#farmerForm #rsbsa_loc").attr(
+                    "readonly",
+                    true
+                );
+                $("#farmerForm #fishr_nat,#farmerForm #fishr_loc").attr(
+                    "readonly",
+                    false
+                );
+                break;
+            default:
+                $(
+                    "#farmerForm #rsbsa_nat,#farmerForm #rsbsa_loc,#farmerForm #fishr_nat,#farmerForm #fishr_loc"
+                ).attr("readonly", true);
+                break;
+        }
+    });
+
+    //mask the RSBSA
+    $("#farmerForm  [data-mask]").inputmask();
+
+    var farmerFormLettersOnly = [
+        "fname",
+        "mname",
+        "lname",
+        "pob",
+        "name_of_spouse",
+        "mothers_maidenname",
+    ];
+
+    jQuery.each(farmerFormLettersOnly, function (i, val) {
+        $("#farmerForm #" + val).keyup(function (e) {
+            /// ===
+            var letters = /^[A-Za-z]+$/;
+            var node = $(this);
+            if (node.val().match(letters)) {
+                node.val(node.val().toUpperCase());
+            } else {
+                // If you want to filter strings that are URL friendly and do not contain any special characters  /^[^ !"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+$/
+                node.val(
+                    node
+                        .val()
+                        .toUpperCase()
+                        .replace(/[0-9]/, "")
+                        .replace(
+                            /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
+                            ""
+                        )
+                );
+            }
+            /// ===
+        });
+    });
+
+    var farmerFormDirectUpper = ["a_purok", "a_sitio"];
+
+    $.each(farmerFormDirectUpper, function (index, value) {
+        $("#farmerForm #" + value).keyup(function () {
+            /// ===
+            var node = $(this);
+            node.val(upperCase(node));
+            
+            /// ===
+        });
+    });
+
+    // for the civil status
+    // $('input[name="civilstatus"]:checked').val();
+    $("#farmerForm #civilstatus").on("change", function () {
+        const value = $('input[name="civilstatus"]:checked').val();
+        const idQ = "#farmerForm #name_of_spouse";
+        switch (value) {
+            case "Single":
+                $(idQ).attr("readonly", true).val("N/A");
+                break;
+            case "Married":
+                $(idQ).attr("readonly", false).val("");
+                break;
+            case "Separated":
+                $(idQ).attr("readonly", false).val("");
+                break;
+            default:
+                $(idQ).attr("readonly", true).val("Deceased");
+                break;
+        }
+    });
+
+     function upperCase(input) {
+        return input.val().toUpperCase();
+    }
 });

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\Guest::class,
         'officehead' => \App\Http\Middleware\OfficeHead::class,
         'technician' => \App\Http\Middleware\Technician::class,
+        'nohistory' => \App\Http\Middleware\NoHistory::class,
     ];
 }

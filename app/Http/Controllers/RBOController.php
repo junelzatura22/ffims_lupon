@@ -15,15 +15,18 @@ class RBOController extends Controller
     public function index()
     {
         $data['identifier'] = "RBO | RBO List";
+        $data['data'] = "RBO List - FFIMS Systems";
         return view('administrator.rbo.list', $data);
     }
     public function cluster()
     {
+        $data['data'] = "Cluster - FFIMS Systems";
         $data['identifier'] = "RBO | RBO List of Cluster";
         return view('administrator.rbo.cluster', $data);
     }
     public function association()
     {
+        $data['data'] = "Association - FFIMS Systems";
         $data['association'] = Association::showAllAssociations();
         $data['identifier'] = "RBO | RBO List of Association";
         return view('administrator.rbo.association', $data);
@@ -43,6 +46,7 @@ class RBOController extends Controller
         $data['program'] = Program::loadProgram();
         // $data['location'] = FixedLocation::myLocation();
         $data['identifier'] = "RBO | Register Association";
+        $data['data'] = "Register Association - FFIMS Systems";
         return view('administrator.rbo.createass', $data);
     }
     //Creating association
@@ -104,6 +108,7 @@ class RBOController extends Controller
 
             // $data['location'] = FixedLocation::myLocation();
             $data['identifier'] = "RBO | Update Association";
+            $data['data'] = "Update Association - FFIMS Systems";
             return view('administrator.rbo.updateass', $data);
         } else {
             return redirect()->back();

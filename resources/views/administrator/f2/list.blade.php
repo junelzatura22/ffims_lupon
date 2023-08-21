@@ -35,8 +35,9 @@
 
                                     <div class="btn-group " role="group" aria-label="Basic example">
 
-                                        <a href="{{ route('f2.create') }}" class="btn btn-success shadow" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="Register Farmer/Fisherfolk">
+                                        <a href="{{ route('f2.create') }}" class="btn btn-success shadow"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Register Farmer/Fisherfolk">
                                             <i class="fa-solid fa-plus"></i>&nbsp;Register</a>
 
                                         <a href="" class="btn btn-primary shadow" data-bs-toggle="tooltip"
@@ -55,33 +56,49 @@
                             <div class="card-body p-2">
                                 <div class="row">
 
-                                    <div class="col-md-3">
-                                        <div class="card card-success card-outline">
-                                            <div class="card-body box-profile">
-                                                <div class="text-center">
-                                                    <img class="profile-user-img img-fluid img-circle"
-                                                        src="{{ asset('asset/user/' . '' . '') }}"
-                                                        alt="User profile picture">
+
+                                    @foreach ($f2 as $item)
+                                        <div class="col-md-3">
+                                            <div class="card card-success card-outline">
+                                                <div class="card-body box-profile">
+                                                    <div class="text-center">
+                                                        <img class="profile-user-img img-fluid img-circle"
+                                                            src="{{ asset('asset/f2/' . $item->picture . '') }}"
+                                                            alt="User profile picture">
+                                                    </div>
+
+                                                    @php
+                                                        $extname = ( $item->extname === '[Select]' ? '' : $item->extname);
+                                                        $mname = substr($item->mname, 0, 1) . '.';
+                                                        $fullname = $item->fname . ' ' . ($mname === '..' ? '' : $mname) . ' ' . $item->lname.' '. $extname ;
+                                                        $date = date_create($item->dob);
+                                                        $dobs = date_format($date, 'F d, Y');
+                                                    @endphp
+
+                                                    <h3 class="profile-username text-center">
+                                                        {{ $fullname }}</h3>
+                                                    <h5 class="text-center"><small><strong>
+                                                                {{ $dobs }}</strong></small></h5>
+
+                                                    <p class="text-muted text-center">{{ $item->reg_type==="All" ? "Farmer and Fisherfolk" : $item->reg_type }}&nbsp;
+                                                        <span class="badge badge-info">{{ $item->ff_status }}</span>
+                                                    </p>
+                                                    <p class="text-muted text-center">
+                                                        <a class="btn btn-md btn-primary"
+                                                            href="{{ route('f2.information', $item->ff_id) }}"
+                                                            data-bs-toggle="tooltip"
+                                                            title="Go to Farmer/Fisherfolk Dashboard">
+                                                            <i class="fa-solid fa-gauge-high"></i>&nbsp;Go to&nbsp;{{$item->fname}}'s Account</a>
+                                                    </p>
+
+
                                                 </div>
-
-                                                <h3 class="profile-username text-center">
-                                                    Sample Name</h3>
-
-                                                <p class="text-muted text-center">Farmer&nbsp;
-                                                    <span class="badge badge-info">Active</span>
-                                                </p>
-                                                <p class="text-muted text-center">
-                                                    <a class="btn btn-md btn-primary" href="{{ route('f2.dashboard') }}"
-                                                        data-bs-toggle="tooltip" 
-                                                        title="Go to Farmer/Fisherfolk Dashboard">
-                                                        <i class="fa-solid fa-gauge-high"></i>&nbsp;Dashboard</a>
-                                                </p>
-
-
+                                                <!-- /.card-body -->
                                             </div>
-                                            <!-- /.card-body -->
                                         </div>
-                                    </div>
+                                    @endforeach
+
+
 
                                 </div>
 
@@ -91,9 +108,7 @@
 
 
 
-                            <div style="position: absolute; top:0; right:0; z-index:10">
-                                @include('_message')
-                            </div>
+
 
                             <!-- /.card-body -->
                         </div>
