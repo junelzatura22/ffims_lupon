@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" method="post" enctype="multipart/form-data" id="farmerForm">
+                                <form action="" method="post" enctype="multipart/form-data" id="farmerDetails">
                                     @csrf
                                     <div class="row mb-2 mt-2 p-1">
                                         <div class="col">
@@ -327,7 +327,7 @@
                                                 value="{{ $f2_details->num_of_household }}"
                                                 placeholder="Enter No. of Household"
                                                 class="form-control form-control-sm  {{ $errors->first('num_of_household') ? 'form-error' : '' }}"
-                                                id="num_of_household" />
+                                                id="num_of_household" min="0"/>
                                             @error('num_of_household')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -338,7 +338,7 @@
                                             <input type="number" name="no_male" value="{{ $f2_details->no_male }}"
                                                 placeholder="No. of Male"
                                                 class="form-control form-control-sm  {{ $errors->first('no_male') ? 'form-error' : '' }}"
-                                                id="no_male" />
+                                                id="no_male" min="0"/>
                                             @error('no_male')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -431,7 +431,7 @@
                                             <input type="text" name="name_of_group"
                                                 value="{{ $f2_details->name_of_group }}" placeholder="Enter tribe/group"
                                                 class="form-control form-control-sm  {{ $errors->first('name_of_group') ? 'form-error' : '' }}"
-                                                id="name_of_group" readonly />
+                                                id="name_of_group"  />
                                             @error('name_of_group')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -461,7 +461,8 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-7">
-                                            <label for="with_gov_id" class="form-label">ID Type</label>
+                                            <label for="with_gov_id" class="form-label"><span
+                                                class="text-red">*</span>&nbsp;ID Type</label>
                                             <select name="id_type" id="id_type"
                                                 class="form-select form-select-sm {{ $errors->first('id_type') ? 'form-error' : '' }}">
                                                 <option value="">[Select]</option>
@@ -522,7 +523,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="id_number" class="form-label">
-                                                ID Number</label>
+                                                <span
+                                                    class="text-red">*</span>&nbsp;ID Number</label>
                                             <input type="number" name="id_number" value="{{ $f2_details->id_number }}"
                                                 placeholder="ID Number"
                                                 class="form-control form-control-sm  {{ $errors->first('id_number') ? 'form-error' : '' }}"
@@ -557,7 +559,8 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-8">
-                                            <label for="assoc_id" class="form-label">If member is Yes, Please 
+                                            <label for="assoc_id" class="form-label"><span
+                                                class="text-red">*</span>&nbsp;If member is Yes, Please 
                                                 select Association/Cooperative</label>
                                             <select name="assoc_id" id="assoc_id"
                                                 class="form-select form-select-sm {{ $errors->first('assoc_id') ? 'form-error' : '' }}">
@@ -581,7 +584,8 @@
                                     <div class="row mb-2 mt-2 p-1">
                                         <div class="col-md-4">
                                             <label for="contact_person" class="form-label">
-                                                Contact Person</label>
+                                                <span
+                                                    class="text-red">*</span>&nbsp;Contact Person</label>
                                             <input type="text" name="contact_person"
                                                 value="{{ $f2_details->contact_person }}" placeholder="Contact Person"
                                                 class="form-control form-control-sm  {{ $errors->first('contact_person') ? 'form-error' : '' }}"

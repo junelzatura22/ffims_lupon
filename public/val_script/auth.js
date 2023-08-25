@@ -306,6 +306,32 @@ $(document).ready(function () {
         });
     });
 
+    var farmerDetails = ["name_househead","others_religion","name_of_group"];
+
+    jQuery.each(farmerDetails, function (i, val) {
+        $("#farmerDetails #" + val).keyup(function (e) {
+            /// ===
+            var letters = /^[A-Za-z]+$/;
+            var node = $(this);
+            if (node.val().match(letters)) {
+                node.val(node.val().toUpperCase());
+            } else {
+                // If you want to filter strings that are URL friendly and do not contain any special characters  /^[^ !"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+$/
+                node.val(
+                    node
+                        .val()
+                        .toUpperCase()
+                        .replace(/[0-9]/, "")
+                        .replace(
+                            /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
+                            ""
+                        )
+                );
+            }
+            /// ===
+        });
+    });
+
     var farmerFormDirectUpper = ["a_purok", "a_sitio"];
 
     $.each(farmerFormDirectUpper, function (index, value) {
@@ -313,7 +339,7 @@ $(document).ready(function () {
             /// ===
             var node = $(this);
             node.val(upperCase(node));
-            
+
             /// ===
         });
     });
@@ -339,7 +365,63 @@ $(document).ready(function () {
         }
     });
 
-     function upperCase(input) {
+    $("#farmerDetails #religion").on("change", function () {
+        const value = $('input[name="religion"]:checked').val();
+        const idQ = "#farmerDetails #others_religion";
+        switch (value) {
+            case "Christianity":
+                $(idQ).attr("readonly", true).val("Christianity");
+                break;
+            case "Islam":
+                $(idQ).attr("readonly", true).val("Islam");
+                break;
+
+            default:
+                $(idQ).attr("readonly", false).val("");
+                break;
+        }
+    });
+
+    $("#farmerDetails #is_house_head").on("change", function () {
+        const value = $('input[name="is_house_head"]:checked').val();
+        const idQ = "#farmerDetails #name_househead";
+
+        if (value === "Yes") {
+            const name = $(".profile-username").html();
+            $(idQ).attr("readonly", true).val(name);
+        } else {
+            $(idQ).attr("readonly", false).val("");
+        }
+    });
+
+    //     "is_ip " => "IP is required",
+    //     "name_of_group " => "This field is required",
+
+    $("#farmerDetails #is_ip").on("change", function () {
+        const value = $('input[name="is_ip"]:checked').val();
+        const idQ = "#farmerDetails #name_of_group";
+
+        if (value === "Yes") {
+            $(idQ).attr("readonly", false).val("");
+        } else {
+            $(idQ).attr("readonly", true).val("None");
+        }
+    });
+
+    $("#farmerDetails #no_male").keyup(function () {
+        const num_of_household = $("#num_of_household").val();
+        const no_male = $(this).val();
+        // 10 >= 1
+        if (no_male <= num_of_household) {
+            $("#no_female").val(num_of_household - no_male);
+        } else {
+            $("#no_male").val("");
+            $("#no_female").val("0");
+        }
+    });
+
+    /******* FUNCTIONS *******/
+    function upperCase(input) {
         return input.val().toUpperCase();
     }
 });

@@ -81,9 +81,12 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
     Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');
+    Route::post('f2/list/information/{id}', [FarmerFisherFolkController::class, 'update'])->name('f2.update');
     Route::get('f2/list/create', [FarmerFisherFolkController::class, 'create'])->name('f2.create');
     Route::post('f2/list/create', [FarmerFisherFolkController::class, 'store'])->name('f2.store');
     Route::get('f2/list/details/{id}', [FarmerFisherFolkController::class, 'details'])->name('f2.details');
+    Route::post('f2/list/details/{id}', [FarmerFisherFolkController::class, 'updateDetails'])->name('f2.updatedetails');
+    
     
 });
 Route::group(['middleware' => ['nohistory','technician'], 'prefix' => 'technician'], function () {

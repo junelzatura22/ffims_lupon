@@ -125,7 +125,7 @@
                                 <form action="" method="post" enctype="multipart/form-data" id="farmerForm">
                                     @csrf
                                     <div class="row mb-2 mt-2 p-1">
-                                        <div class="col-md-5">
+                                        <div class="col-md-8">
                                             <label for="reg_type" class="form-label">
                                                 <span class="text-red">*</span>&nbsp;Registration Type
                                             </label>
@@ -143,6 +143,24 @@
                                                 </option>
                                             </select>
                                             @error('reg_type')
+                                                <span class="text-red"><small>{{ $message }}</small></span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="ff_status" class="form-label">
+                                                <span class="text-red">*</span>&nbsp;Status
+                                            </label>
+                                            <select name="ff_status" id="ff_status"
+                                                class="form-select form-select-sm {{ $errors->first('ff_status') ? 'form-error' : '' }}">
+                                                <option value="">[Select]</option>
+                                                <option value="Active" {{ $f2_data->ff_status == 'Active' ? 'selected' : '' }}>
+                                                    Active
+                                                </option>
+                                                <option value="Inactive"
+                                                    {{ $f2_data->ff_status == 'Inactive' ? 'selected' : '' }}>
+                                                    Inactive</option>
+                                            </select>
+                                            @error('ff_status')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
                                         </div>
@@ -366,6 +384,7 @@
                                             <input type="file" name="picture" value="{{ $f2_data->picture }}"
                                                 placeholder="Enter email" class="form-control form-control-sm"
                                                 accept="image/png, image/gif, image/jpeg" />
+                                                <input type="hidden" name="imageHolder" value="{{ $f2_data->picture }}">
                                             @error('picture')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
