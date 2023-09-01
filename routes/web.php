@@ -86,6 +86,7 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     Route::post('f2/list/create', [FarmerFisherFolkController::class, 'store'])->name('f2.store');
     Route::get('f2/list/details/{id}', [FarmerFisherFolkController::class, 'details'])->name('f2.details');
     Route::post('f2/list/details/{id}', [FarmerFisherFolkController::class, 'updateDetails'])->name('f2.updatedetails');
+    Route::get('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'livelihood'])->name('f2.livelihood');
     
     
 });

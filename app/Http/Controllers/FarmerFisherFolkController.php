@@ -10,6 +10,7 @@ use App\Models\FFDetails;
 use App\Models\FixedLocation;
 use App\Models\Province;
 use App\Models\Region;
+use App\Models\livelihood;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,21 @@ class FarmerFisherFolkController extends Controller
             $data['identifier'] = "Welcome to " . $f2_id->fname . "'s - other details";
             $data['data'] = "F2 Details - FFIMS Systems";
             return view('administrator.f2.details', $data);
+        } else {
+            return back();
+        }
+    }
+
+    // display the livelihood components 
+    public function livelihood($id)
+    {
+        $f2_id = FarmerFisherfolk::find($id);
+        if (!empty($f2_id)) {
+            $data['f2_data'] = $f2_id;
+        
+            $data['identifier'] = "Welcome to " . $f2_id->fname . "'s - Livelihood Details";
+            $data['data'] = "F2 Details - FFIMS Systems";
+            return view('administrator.f2.livelihood', $data);
         } else {
             return back();
         }
@@ -189,6 +205,27 @@ class FarmerFisherFolkController extends Controller
         $ffDetails->save();
 
 
+//auto saving the livelihood
+$livelihood =  new livelihood();
+
+$livelihood->main_livelihood="None";
+$livelihood->crops_specify="None";
+$livelihood->type_of_activity="None";
+$livelihood->livestock_specify="None";
+$livelihood->poultry_specify="None";
+$livelihood->kind_of_work="None";
+$livelihood->kind_of_work_others="None";
+$livelihood->fishing_activity="None";
+$livelihood->fishing_activity_others="None";
+$livelihood->involvement="None";
+$livelihood->involvement_others="None";
+$livelihood->income_farming="None";
+$livelihood->income_non_farming="None";
+$livelihood->created_by=Auth::user()->id;
+$livelihood->livelihoodby=$ffId;
+$livelihood->save();
+
+        
         return redirect()->route('f2.information', $ffId)->with('success', $f2->fname . ' was successfully added!');
     }
 

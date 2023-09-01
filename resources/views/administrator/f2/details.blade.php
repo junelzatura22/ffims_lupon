@@ -72,7 +72,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link mr-2 ml-2">
+                                        <a href="{{route('f2.livelihood',$f2_data->ff_id)}}" class="nav-link mr-2 ml-2 @if (Request::segment(4) == 'livelihood') active @endif ">
                                             <i class="far fa-file-alt"></i> Livelihood
                                         </a>
                                     </li>
