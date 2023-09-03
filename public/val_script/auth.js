@@ -306,7 +306,7 @@ $(document).ready(function () {
         });
     });
 
-    var farmerDetails = ["name_househead","others_religion","name_of_group"];
+    var farmerDetails = ["name_househead", "others_religion", "name_of_group"];
 
     jQuery.each(farmerDetails, function (i, val) {
         $("#farmerDetails #" + val).keyup(function (e) {
@@ -409,19 +409,58 @@ $(document).ready(function () {
     });
 
     $("#farmerDetails #no_male").keyup(function () {
-        const num_of_household = $("#num_of_household").val();
+        const num_of_household = $("#farmerDetails #num_of_household").val();
         const no_male = $(this).val();
-        // 10 >= 1
-        if (no_male <= num_of_household) {
-            $("#no_female").val(num_of_household - no_male);
+
+        const result = num_of_household - no_male;
+
+        if (result >= 0 && result <= num_of_household) {
+            $("#no_female").val(result);
         } else {
             $("#no_male").val("");
             $("#no_female").val("0");
         }
     });
 
+    // Validation on onchange event for farmers and fisherfolk type of activity
+    $("#livelihood #type_of_activity").on("change", function () {
+        const value = $(this).val();
+        switch (value) {
+            case "Crops":
+                checkingProps(this, "#livelihood #crops_specify");
+                break;
+            case "Livestock":
+                checkingProps(this, "#livelihood #livestock_specify");
+                break;
+            case "Poultry":
+                checkingProps(this, "#livelihood #poultry_specify");
+                break;
+            default:
+                //do nothing
+                break;
+        }
+    });
+
+    $("#livelihood #kind_of_work").on("change", function () {
+        checkingProps(this, "#livelihood #kind_of_work_others");
+    });
+    $("#livelihood #fishing_activity").on("change", function () {
+        checkingProps(this, "#livelihood #fishing_activity_others");
+    });
+    $("#livelihood #involvement").on("change", function () {
+        checkingProps(this, "#livelihood #involvement_others");
+    });
+
     /******* FUNCTIONS *******/
     function upperCase(input) {
         return input.val().toUpperCase();
+    }
+
+    function checkingProps(event, specify) {
+        if ($(event).prop("checked") == true) {
+            $(specify).attr("readonly", false).val("");
+        } else {
+            $(specify).attr("readonly", true).val("None");
+        }
     }
 });

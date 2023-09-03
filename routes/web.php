@@ -3,6 +3,9 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmActivityController;
+use App\Http\Controllers\FarmDetailController;
+use App\Http\Controllers\FarmDetails;
 use App\Http\Controllers\FarmerFisherFolkController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
@@ -87,7 +90,11 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     Route::get('f2/list/details/{id}', [FarmerFisherFolkController::class, 'details'])->name('f2.details');
     Route::post('f2/list/details/{id}', [FarmerFisherFolkController::class, 'updateDetails'])->name('f2.updatedetails');
     Route::get('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'livelihood'])->name('f2.livelihood');
-    
+    Route::post('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'updateLivelihood'])->name('f2.livelihoodupdate');
+    //farm details
+    Route::get('f2/list/farm/{id}', [FarmDetailController::class, 'index'])->name('f2.farm');
+    //farm activity
+    Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
     
 });
 Route::group(['middleware' => ['nohistory','technician'], 'prefix' => 'technician'], function () {

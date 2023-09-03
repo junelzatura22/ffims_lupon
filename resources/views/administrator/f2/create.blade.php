@@ -137,7 +137,9 @@
                                     </div>
                                     {{-- getting the current date in Php  --}}
                                     @php
-                                        $curDate = date('Y-m-d');
+                                        $curdates = date('Y-m-d');
+                                        $date = strtotime($curdates.' -12 year');//to accept the agri-youth
+                                        $curDate = date('Y-m-d',$date);
                                     @endphp
 
                                     <div class="row mb-2 mt-2 p-1">
@@ -373,12 +375,18 @@
                                     </div>
 
 
-                                    <div class="row mb-2 mt-2 p-1">
-                                        <div class="col ">
+                                    <div class="row mb-2 mt-2 p-1 d-flex justify-content-between">
+                                        <div class="col">
+                                            <a href="{{ route('f2.index') }}" class="btn btn-primary"><b><i
+                                                class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to List</b></a>
+
+                                        </div>
+                                        <div class="col">
                                             <input type="submit" value="Save and Continue"
                                                 class="btn btn-success float-right">
 
                                         </div>
+                                        
                                     </div>
                                 </form>
                                 {{-- end form  --}}

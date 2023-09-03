@@ -39,74 +39,18 @@
                                 @endphp
 
                                 <h3 class="profile-username text-center">{{ $fullname }}</h3>
-                                <h6 class="text-muted text-center"><strong>{{ $f2_data->reg_type==='All' ? "Farmer and Fisherfolk" : $f2_data->reg_type }}</strong></h6>
+                                <h6 class="text-muted text-center">
+                                    <strong>{{ $f2_data->reg_type === 'All' ? 'Farmer and Fisherfolk' : $f2_data->reg_type }}</strong>
+                                </h6>
                                 <a href="{{ route('f2.index') }}" class="btn btn-primary btn-block"><b><i
                                             class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to List</b></a>
                             </div>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Profile</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <ul class="nav nav-pills flex-column">
-                                    <li class="nav-item active">
-                                        <a href="{{ route('f2.information', $f2_data->ff_id) }}"
-                                            class="nav-link mr-2 ml-2 @if (Request::segment(4) == 'information') active @endif ">
-                                            <i class="fas fa-inbox"></i>&nbsp;Personal Information
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('f2.details', $f2_data->ff_id) }}"
-                                            class="nav-link mr-2 ml-2 @if (Request::segment(4) == 'details') active @endif ">
-                                            <i class="far fa-envelope"></i>&nbsp;More Details
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('f2.livelihood',$f2_data->ff_id)}}" class="nav-link mr-2 ml-2 @if (Request::segment(4) == 'livelihood') active @endif ">
-                                            <i class="far fa-file-alt"></i> Livelihood
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Activity</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <ul class="nav nav-pills flex-column">
-                                    <li class="nav-item active">
-                                        <a href="#" class="nav-link mr-2 ml-2">
-                                            <i class="fas fa-inbox"></i>&nbsp;Farm Parcel
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link mr-2 ml-2">
-                                            <i class="far fa-envelope"></i>&nbsp;Activity
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
+                        {{-- menu start  --}}
+                        @include('layouts/farmsidebar')
+                        {{-- menu end  --}}
                     </div>
 
                     <div class="col-md-9">
@@ -155,7 +99,8 @@
                                             <select name="ff_status" id="ff_status"
                                                 class="form-select form-select-sm {{ $errors->first('ff_status') ? 'form-error' : '' }}">
                                                 <option value="">[Select]</option>
-                                                <option value="Active" {{ $f2_data->ff_status == 'Active' ? 'selected' : '' }}>
+                                                <option value="Active"
+                                                    {{ $f2_data->ff_status == 'Active' ? 'selected' : '' }}>
                                                     Active
                                                 </option>
                                                 <option value="Inactive"
@@ -215,7 +160,8 @@
                                         <div class="col-md-3">
                                             <label for="mname" class="form-label">Middle Name&nbsp;<i
                                                     class="text-red"><small>Optional</small></i></label>
-                                            <input type="text" name="mname" value="{{ $f2_data->mname === "." ? "" : $f2_data->mname }}"
+                                            <input type="text" name="mname"
+                                                value="{{ $f2_data->mname === '.' ? '' : $f2_data->mname }}"
                                                 placeholder="Middle Name" class="form-control form-control-sm"
                                                 id="mname" />
 
@@ -259,13 +205,16 @@
 
                                     <div class="row mb-2 mt-2 p-1">
                                         @php
-                                            $curDate = date('Y-m-d');
+                                            $curdates = date('Y-m-d');
+                                            $date = strtotime($curdates . ' -12 year'); //to accept the agri-youth
+                                            $curDate = date('Y-m-d', $date);
                                         @endphp
                                         <div class="col-md-4">
                                             <label for="dob" class="form-label"><span
                                                     class="text-red">*</span>&nbsp;Date of Birth</label>
                                             <input type="date" name="dob" value="{{ $f2_data->dob }}"
-                                                id="dob" placeholder="" class="form-control form-control-sm  {{($errors->first('dob') ? "form-error" : "")}}"
+                                                id="dob" placeholder=""
+                                                class="form-control form-control-sm  {{ $errors->first('dob') ? 'form-error' : '' }}"
                                                 max="{{ $curDate }}" />
                                             @error('dob')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
@@ -277,7 +226,7 @@
                                                     class="text-red">*</span>&nbsp;Place of Birth</label>
                                             <input type="text" name="pob" value="{{ $f2_data->pob }}"
                                                 placeholder="Municipality, Province" id="pob"
-                                                class="form-control form-control-sm  {{($errors->first('pob') ? "form-error" : "")}}" />
+                                                class="form-control form-control-sm  {{ $errors->first('pob') ? 'form-error' : '' }}" />
                                             @error('pob')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -288,12 +237,14 @@
                                             <div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                        id="inlineRadio1" value="Male" {{ $f2_data->gender=="Male" ? "checked" : "" }}>
+                                                        id="inlineRadio1" value="Male"
+                                                        {{ $f2_data->gender == 'Male' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="inlineRadio1">Male</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="gender"
-                                                        id="inlineRadio2" value="Female" {{ $f2_data->gender=="Female" ? "checked" : "" }}>
+                                                        id="inlineRadio2" value="Female"
+                                                        {{ $f2_data->gender == 'Female' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="inlineRadio2">Female</label>
                                                 </div>
                                             </div>
@@ -306,29 +257,34 @@
                                     </div>
 
                                     <div class="row mb-2 mt-2 p-1">
-                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Civil Status, Spouse and Mothers Maiden Name</b></h6>
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Civil Status, Spouse and Mothers
+                                                Maiden Name</b></h6>
                                         <div class="col-md-5">
                                             <label for="lname" class="form-label"><span
                                                     class="text-red">*</span>&nbsp;Civil Status</label>
                                             <div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="civilstatus"
-                                                        id="civilstatus" value="Single" {{ $f2_data->civilstatus=="Single" ? "checked" : "" }}>
+                                                        id="civilstatus" value="Single"
+                                                        {{ $f2_data->civilstatus == 'Single' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="inlineRadio1">Single</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="civilstatus"
-                                                        id="civilstatus" value="Married" {{ $f2_data->civilstatus=="Married" ? "checked" : "" }}>
+                                                        id="civilstatus" value="Married"
+                                                        {{ $f2_data->civilstatus == 'Married' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="inlineRadio2">Married</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="civilstatus"
-                                                        id="civilstatus" value="Separated" {{ $f2_data->civilstatus=="Separated" ? "checked" : "" }}>
+                                                        id="civilstatus" value="Separated"
+                                                        {{ $f2_data->civilstatus == 'Separated' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="inlineRadio2">Separated</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="civilstatus"
-                                                        id="civilstatus" value="Widow/Widower" {{ $f2_data->civilstatus=="Widow/Widower" ? "checked" : "" }}>
+                                                        id="civilstatus" value="Widow/Widower"
+                                                        {{ $f2_data->civilstatus == 'Widow/Widower' ? 'checked' : '' }}>
                                                     <label class="form-check-label"
                                                         for="inlineRadio2">Widow/Widower</label>
                                                 </div>
@@ -344,7 +300,8 @@
                                                             married(*)</small></i></span></label>
                                             <input type="text" name="name_of_spouse"
                                                 value="{{ $f2_data->name_of_spouse }}" placeholder="Name of Spouse"
-                                                class="form-control form-control-sm  {{($errors->first('name_of_spouse') ? "form-error" : "")}}" id="name_of_spouse" readonly />
+                                                class="form-control form-control-sm  {{ $errors->first('name_of_spouse') ? 'form-error' : '' }}"
+                                                id="name_of_spouse" readonly />
                                             @error('name_of_spouse')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -354,7 +311,8 @@
                                                     class="text-red">*</span>&nbsp;Mother's Maiden Name</label>
                                             <input type="text" name="mothers_maidenname"
                                                 value="{{ $f2_data->mothers_maidenname }}" placeholder="Name of Spouse"
-                                                class="form-control form-control-sm  {{($errors->first('mothers_maidenname') ? "form-error" : "")}}" id="mothers_maidenname" />
+                                                class="form-control form-control-sm  {{ $errors->first('mothers_maidenname') ? 'form-error' : '' }}"
+                                                id="mothers_maidenname" />
                                             @error('mothers_maidenname')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -368,14 +326,17 @@
                                                     class="text-red">*</span>&nbsp;Mobile Number</label>
                                             <input type="text" name="contactno" value="{{ $f2_data->contactno }}"
                                                 placeholder="0000-000-0000" data-inputmask='"mask": "9999-999-9999"'
-                                                data-mask class="form-control form-control-sm  {{($errors->first('contactno') ? "form-error" : "")}}" id="contactno" />
+                                                data-mask
+                                                class="form-control form-control-sm  {{ $errors->first('contactno') ? 'form-error' : '' }}"
+                                                id="contactno" />
                                             @error('contactno')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
                                         </div>
                                         <div class="col-md-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="text" name="email" value="{{ $f2_data->email==="." ? "" : $f2_data->email }}"
+                                            <input type="text" name="email"
+                                                value="{{ $f2_data->email === '.' ? '' : $f2_data->email }}"
                                                 placeholder="Enter email" class="form-control form-control-sm" />
                                             @error('email')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
@@ -386,7 +347,7 @@
                                             <input type="file" name="picture" value="{{ $f2_data->picture }}"
                                                 placeholder="Enter email" class="form-control form-control-sm"
                                                 accept="image/png, image/gif, image/jpeg" />
-                                                <input type="hidden" name="imageHolder" value="{{ $f2_data->picture }}">
+                                            <input type="hidden" name="imageHolder" value="{{ $f2_data->picture }}">
                                             @error('picture')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -399,7 +360,7 @@
                                                     class="text-red">*</span>&nbsp;House/Lot/Bldg. No/Purok</label>
                                             <input type="type" name="a_purok" value="{{ $f2_data->a_purok }}"
                                                 id="a_purok" placeholder="Enter House/Lot/Bldg. No/Purok"
-                                                class="form-control form-control-sm  {{($errors->first('a_purok') ? "form-error" : "")}}" />
+                                                class="form-control form-control-sm  {{ $errors->first('a_purok') ? 'form-error' : '' }}" />
                                             @error('a_purok')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -409,7 +370,7 @@
                                                     class="text-red">*</span>&nbsp;Street/Sition/Subdv</label>
                                             <input type="type" name="a_sitio" value="{{ $f2_data->a_sitio }}"
                                                 id="a_sitio" placeholder="Enter Street/Sition/Subdv"
-                                                class="form-control form-control-sm  {{($errors->first('a_sitio') ? "form-error" : "")}}" />
+                                                class="form-control form-control-sm  {{ $errors->first('a_sitio') ? 'form-error' : '' }}" />
                                             @error('a_sitio')
                                                 <span class="text-red"><small>{{ $message }}</small></span>
                                             @enderror
@@ -476,7 +437,8 @@
                                             <div class="form-group">
                                                 <label for="a_barangay"><span class="text-red">*</span>&nbsp;
                                                     Barangay</label>
-                                                <select name="a_barangay" class="form-select form-select-sm  {{($errors->first('a_barangay') ? "form-error" : "")}}">
+                                                <select name="a_barangay"
+                                                    class="form-select form-select-sm  {{ $errors->first('a_barangay') ? 'form-error' : '' }}">
                                                     <option value="">[Select]</option>
                                                     @foreach ($barangay as $item)
                                                         <option value="{{ $item->id }}"
@@ -495,20 +457,22 @@
 
                                     <div class="row mb-2 mt-2 p-1">
                                         <div class="col ">
-                                            <input type="submit" value="Update"
-                                                class="btn btn-warning float-right">
+                                            <input type="submit" value="Update" class="btn btn-warning float-right">
                                         </div>
                                     </div>
 
                                 </form>
+
+
+                                <div style="position: absolute; top:0; right:0; z-index:10">
+                                    @include('_message')
+                                </div>
                             </div>
 
                         </div>
 
 
-                        <div style="position: absolute; top:0; right:0; z-index:10">
-                            @include('_message')
-                        </div>
+
                     </div>
 
 

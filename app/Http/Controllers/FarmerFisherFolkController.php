@@ -28,6 +28,7 @@ class FarmerFisherFolkController extends Controller
         $data['data'] = "F2 List - FFIMS Systems";
         return view('administrator.f2.list', $data);
     }
+   
     public function information($id)
     {
         $f2_id = FarmerFisherfolk::find($id);
@@ -74,14 +75,58 @@ class FarmerFisherFolkController extends Controller
         $f2_id = FarmerFisherfolk::find($id);
         if (!empty($f2_id)) {
             $data['f2_data'] = $f2_id;
-        
+            $data['livelihood'] = livelihood::showLivelihoodByF2($id);
             $data['identifier'] = "Welcome to " . $f2_id->fname . "'s - Livelihood Details";
-            $data['data'] = "F2 Details - FFIMS Systems";
+            $data['data'] = "F2 Livelihood - FFIMS Systems";
             return view('administrator.f2.livelihood', $data);
         } else {
             return back();
         }
     }
+
+    public function updateLivelihood($id, Request $request)
+    {
+
+        $request->validate([
+            "main_livelihood" => "required",
+            "type_of_activity" => "required",
+            "crops_specify" => "required",
+            "livestock_specify" => "required",
+            "poultry_specify" => "required",
+            "kind_of_work" => "required",
+            "kind_of_work_others" => "required",
+            "fishing_activity" => "required",
+            "fishing_activity_others" => "required",
+            "involvement" => "required",
+            "involvement_others" => "required",
+            "income_farming" => "required",
+            "income_non_farming" => "required",
+        ]);
+
+        $l_id = livelihood::showLivelihoodByF2($id)->l_id;//get the ID by user
+        $livelihood = livelihood::find($l_id);
+
+
+        $livelihood->main_livelihood = json_encode($request->main_livelihood);
+        $livelihood->crops_specify = empty($request->crops_specify) ? "None" : strtoupper(trim($request->crops_specify));
+        $livelihood->type_of_activity = json_encode($request->type_of_activity);
+        $livelihood->livestock_specify = empty($request->livestock_specify) ? "None" : strtoupper(trim($request->livestock_specify));
+        $livelihood->poultry_specify = empty($request->poultry_specify) ? "None" : strtoupper(trim($request->poultry_specify));
+        $livelihood->kind_of_work = json_encode($request->kind_of_work);
+        $livelihood->kind_of_work_others = empty($request->kind_of_work_others) ? "None" : strtoupper(trim($request->kind_of_work_others));
+        $livelihood->fishing_activity = json_encode($request->fishing_activity);
+        $livelihood->fishing_activity_others = empty($request->fishing_activity_others) ? "None" : strtoupper(trim($request->fishing_activity_others));
+        $livelihood->involvement = json_encode($request->involvement);
+        $livelihood->involvement_others = empty($request->involvement_others) ? "None" : strtoupper(trim($request->involvement_others));
+        $livelihood->income_farming = empty($request->income_farming) ? 0.0 : $request->income_farming;
+        $livelihood->income_non_farming = empty($request->income_non_farming) ? 0.0 : $request->income_non_farming;
+        $livelihood->created_by = Auth::user()->id;
+        $livelihood->touch();
+
+        return back()->with('success', 'Livelihood details was successfully saved!');
+        // dd($request->all());
+    }
+
     public function create()
     {
         //calling the location - fixed location of the user or head of office
@@ -180,18 +225,18 @@ class FarmerFisherFolkController extends Controller
         $ffDetails = new FFDetails();
 
         $ffDetails->ff_id = $ffId;
-        $ffDetails->education = "None";
-        $ffDetails->religion = "Others";
+        $ffDetails->education = "Nones";
+        $ffDetails->religion = "None";
         $ffDetails->others_religion = "None";
-        $ffDetails->is_house_head = "No";
+        $ffDetails->is_house_head = "None";
         $ffDetails->name_househead = "None";
-        $ffDetails->relationship = "Others";
+        $ffDetails->relationship = "None";
         $ffDetails->num_of_household = 0;
         $ffDetails->no_male = 0;
         $ffDetails->no_female = 0;
-        $ffDetails->is_pwd = "No";
-        $ffDetails->is_4ps = "No";
-        $ffDetails->is_ip = "No";
+        $ffDetails->is_pwd = "None";
+        $ffDetails->is_4ps = "None";
+        $ffDetails->is_ip = "None";
         $ffDetails->name_of_group = "None";
         $ffDetails->with_gov_id = "None";
         $ffDetails->id_type = "No ID";
@@ -205,27 +250,27 @@ class FarmerFisherFolkController extends Controller
         $ffDetails->save();
 
 
-//auto saving the livelihood
-$livelihood =  new livelihood();
+        //auto saving the livelihood
+        $livelihood =  new livelihood();
 
-$livelihood->main_livelihood="None";
-$livelihood->crops_specify="None";
-$livelihood->type_of_activity="None";
-$livelihood->livestock_specify="None";
-$livelihood->poultry_specify="None";
-$livelihood->kind_of_work="None";
-$livelihood->kind_of_work_others="None";
-$livelihood->fishing_activity="None";
-$livelihood->fishing_activity_others="None";
-$livelihood->involvement="None";
-$livelihood->involvement_others="None";
-$livelihood->income_farming="None";
-$livelihood->income_non_farming="None";
-$livelihood->created_by=Auth::user()->id;
-$livelihood->livelihoodby=$ffId;
-$livelihood->save();
+        $livelihood->main_livelihood = '["None"]';
+        $livelihood->crops_specify = "None";
+        $livelihood->type_of_activity = '["None"]';
+        $livelihood->livestock_specify = "None";
+        $livelihood->poultry_specify = "None";
+        $livelihood->kind_of_work = '["None"]';
+        $livelihood->kind_of_work_others = "None";
+        $livelihood->fishing_activity = '["None"]';
+        $livelihood->fishing_activity_others = "None";
+        $livelihood->involvement = '["None"]';
+        $livelihood->involvement_others = "None";
+        $livelihood->income_farming = 0.0;
+        $livelihood->income_non_farming = 0.0;
+        $livelihood->created_by = Auth::user()->id;
+        $livelihood->livelihoodby = $ffId;
+        $livelihood->save();
 
-        
+
         return redirect()->route('f2.information', $ffId)->with('success', $f2->fname . ' was successfully added!');
     }
 
@@ -322,7 +367,7 @@ $livelihood->save();
             "is_pwd" => "required",
             "is_4ps" => "required",
             "is_ip" => "required",
-           
+
             "with_gov_id" => "required",
             "id_type" => "required",
             "id_number" => "required",
@@ -343,7 +388,7 @@ $livelihood->save();
             "is_pwd" => "PWD is required",
             "is_4ps" => "4P's is required",
             "is_ip" => "IP is required",
-    
+
             "with_gov_id" => "This field is required",
             "id_type" => "This field is required",
             "id_number" => "This field is required",
@@ -354,7 +399,7 @@ $livelihood->save();
             "contact_relation" => "Contact Relationship is required",
         ]);
 
-     
+
 
         $ffd_id = FFDetails::showDetailsByF2($id)->ffd_id;
 
