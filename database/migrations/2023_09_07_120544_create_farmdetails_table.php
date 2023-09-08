@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('long');
             $table->string('is_rotation');
             $table->string('farm_status');
+            $table->string('name_rotation_farmer');
             $table->unsignedBigInteger('registered_to');
             $table->unsignedBigInteger('created_by'); 
             $table->foreign('registered_to')->references('ff_id')->on('farmerfisherfolk');

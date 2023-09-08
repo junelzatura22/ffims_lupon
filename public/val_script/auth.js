@@ -451,6 +451,20 @@ $(document).ready(function () {
         checkingProps(this, "#livelihood #involvement_others");
     });
 
+    /**For the Farm Details**/
+    $("#add_name_of_owner").on("click", function (e) {
+        e.preventDefault();
+
+        $("#more_owner").append(
+            "<div class='row' id='row'><div class='col d-flex align-items-center'> <input type='text' name='name_of_owner[]' id='name_of_owner' class='form-control mr-1 mb-1' placeholder='Name of Owner'> <a href='#' id='remove_name_of_owner'> <i class='fa-solid fa-xmark'></i></a></label></div></div>"
+        );
+    });
+
+   
+    $("body").on("click", "#remove_name_of_owner", function (e) {
+        e.preventDefault();
+        $(this).parents('#row').remove();
+    })
     /******* FUNCTIONS *******/
     function upperCase(input) {
         return input.val().toUpperCase();

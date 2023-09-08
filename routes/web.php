@@ -93,6 +93,9 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     Route::post('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'updateLivelihood'])->name('f2.livelihoodupdate');
     //farm details
     Route::get('f2/list/farm/{id}', [FarmDetailController::class, 'index'])->name('f2.farm');
+    //farm details form
+    Route::get('f2/list/farm/{id}/create', [FarmDetailController::class, 'registerFarmDetails'])->name('f2.registerfarmdetails');
+
     //farm activity
     Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
     
