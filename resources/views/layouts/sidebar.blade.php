@@ -114,7 +114,7 @@
                                            <a href="{{ route('f2.index') }}"
                                                class="nav-link @if (Request::segment(3) == 'list') active @endif">
                                                <i class="fa-solid fa-users-between-lines nav-icon"></i>
-                                               <p>List</p>
+                                               <p>F2 List</p>
                                            </a>
                                        </li>
                                        <li class="nav-item">

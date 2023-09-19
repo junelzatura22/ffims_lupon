@@ -23,35 +23,9 @@
                 <div class="row">
                     <div class="col-md-3">
 
-                        <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
-                                <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ asset('asset/f2/' . $f2_data->picture . '') }}" alt="User profile picture">
-                                </div>
-
-                                @php
-                                    $extname = $f2_data->extname === '[Select]' ? '' : $f2_data->extname;
-                                    $mname = substr($f2_data->mname, 0, 1) . '.';
-                                    $fullname = $f2_data->fname . ' ' . ($mname === '..' ? '' : $mname) . ' ' . $f2_data->lname . ' ' . $extname;
-                                    
-                                @endphp
-
-                                <h3 class="profile-username text-center">{{ $fullname }}</h3>
-                                <h6 class="text-muted text-center">
-                                    <strong>{{ $f2_data->reg_type === 'All' ? 'Farmer and Fisherfolk' : $f2_data->reg_type }}</strong>
-                                </h6>
-                                <a href="{{ route('f2.index') }}" class="btn btn-primary btn-block"><b><i
-                                            class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to List</b></a>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                      {{-- menu start  --}}
+                    
                       @include('layouts/farmsidebar')
-                      {{-- menu end  --}}
-
+                      
 
                     </div>
 

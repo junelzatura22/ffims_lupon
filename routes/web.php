@@ -29,7 +29,7 @@ Route::post('/', [AuthController::class, 'login'])->name('auth.log');
 
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'administrator'], function () {
+Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'administrator'], function () {
     //administrator
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('administrator.dashboard');
     //progam
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     Route::get('user/assignment/delete/{id}', [AssignmentController::class, 'deletestatus'])->name('user.deletestatus');
     //
     Route::post('user/assignment/crba/{id}', [AssignmentController::class, 'storeBarAssigned'])->name('user.storebarassigned');
-    Route::get('user/assignment/updatebarstatus/{id}', [AssignmentController::class, 'updateBarStatus'])->name('user.updatebarstatus');    
+    Route::get('user/assignment/updatebarstatus/{id}', [AssignmentController::class, 'updateBarStatus'])->name('user.updatebarstatus');
     Route::get('user/assignment/deletebar/{id}', [AssignmentController::class, 'deleteBar'])->name('user.deletebar');
     //
     Route::get('location/location', [LocationController::class, 'index'])->name('location.index');
@@ -95,20 +95,22 @@ Route::group(['middleware' => ['administrator','nohistory'], 'prefix' => 'admini
     Route::get('f2/list/farm/{id}', [FarmDetailController::class, 'index'])->name('f2.farm');
     //farm details form
     Route::get('f2/list/farm/{id}/create', [FarmDetailController::class, 'registerFarmDetails'])->name('f2.registerfarmdetails');
-
+    Route::post('f2/list/farm/{id}/create', [FarmDetailController::class, 'storeFarmDetails'])->name('f2.storefarmdetails');
+    Route::get('f2/list/farm/updatefarm/{id}', [FarmDetailController::class, 'getFarmDetails'])->name('f2.getfarmdetails');
+    Route::post('f2/list/farm/updatefarm/{id}', [FarmDetailController::class, 'updateFarmDetails'])->name('f2.updatefarmdetails');
+    Route::get('f2/list/farm/updatefarmstatus/{id}', [FarmDetailController::class, 'updateFarmStatus'])->name('f2.updatefarmstatus');
     //farm activity
     Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
-    
 });
-Route::group(['middleware' => ['nohistory','technician'], 'prefix' => 'technician'], function () {
+Route::group(['middleware' => ['nohistory', 'technician'], 'prefix' => 'technician'], function () {
     //technician
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('technician.dashboard');
 });
-Route::group(['middleware' => ['nohistory','guest'], 'prefix' => 'guest'], function () {
+Route::group(['middleware' => ['nohistory', 'guest'], 'prefix' => 'guest'], function () {
     //guest
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('guest.dashboard');
 });
-Route::group(['middleware' => ['nohistory','officehead'], 'prefix' => 'officehead'], function () {
+Route::group(['middleware' => ['nohistory', 'officehead'], 'prefix' => 'officehead'], function () {
     //officehead
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('ho.dashboard');
 });

@@ -8,9 +8,16 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-                    </div><!-- /.col -->
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ Breadcrumbs::render() }}
+                        </div><!-- /.col -->
+                    </div>
+
+
                     {{-- <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
                             <li class="breadcrumb-item"><a href="{{route('administrator.dashboard')}}">Home</a></li>
@@ -90,7 +97,7 @@
                                     <div class="small-box bg-red">
                                         <div class="inner">
                                             <h3>{{ !empty($totalTechnician) ? $totalTechnician : '0' }}</h3>
-                                           
+
 
                                             <p>Technician</p>
                                         </div>
@@ -105,9 +112,9 @@
                                     <!-- small box -->
                                     <div class="small-box bg-gradient-fuchsia">
                                         <div class="inner">
-                                            
+
                                             <h3>{{ !empty($totalAdministrator) ? $totalAdministrator : '0' }}</h3>
-                                           
+
                                             <p>Administrator</p>
                                         </div>
                                         <div class="icon">
@@ -121,9 +128,9 @@
                                     <!-- small box -->
                                     <div class="small-box bg-gradient-green">
                                         <div class="inner">
-                                            
+
                                             <h3>{{ !empty($totalOfficeHead) ? $totalOfficeHead : '0' }}</h3>
-                                           
+
                                             <p>Office Head</p>
                                         </div>
                                         <div class="icon">
@@ -138,7 +145,7 @@
                                     <div class="small-box bg-gradient-indigo">
                                         <div class="inner">
                                             <h3>{{ !empty($totalGuest) ? $totalGuest : '0' }}</h3>
-                                          
+
 
                                             <p>Guest</p>
                                         </div>
@@ -180,9 +187,9 @@
                                     <!-- small box -->
                                     <div class="small-box bg-gradient-green">
                                         <div class="inner">
-                                   
+
                                             <h3>{{ !empty($totalAssociationActive) ? $totalAssociationActive : '0' }}</h3>
-                                          
+
                                             <p>Association (Active)</p>
                                         </div>
                                         <div class="icon">
@@ -196,9 +203,10 @@
                                     <!-- small box -->
                                     <div class="small-box bg-gradient-teal">
                                         <div class="inner">
-                                            <h3>{{ !empty($totalAssociationInactive) ? $totalAssociationInactive : '0' }}</h3>
-                                          
-                                           
+                                            <h3>{{ !empty($totalAssociationInactive) ? $totalAssociationInactive : '0' }}
+                                            </h3>
+
+
                                             <p>Association (Inactive)</p>
                                         </div>
                                         <div class="icon">

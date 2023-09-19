@@ -8,9 +8,14 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{-- {{ Breadcrumbs::render() }} --}}
+                            {{ Breadcrumbs::render('f2.livelihood',$f2_data) }}
+                        </div><!-- /.col -->
                     </div>
                 </div>
             </div>
@@ -23,32 +28,7 @@
                 <div class="row">
                     <div class="col-md-3">
 
-                        <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
-                                <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ asset('asset/f2/' . $f2_data->picture . '') }}" alt="User profile picture">
-                                </div>
-
-                                @php
-                                    $extname = $f2_data->extname === '[Select]' ? '' : $f2_data->extname;
-                                    $mname = substr($f2_data->mname, 0, 1) . '.';
-                                    $fullname = $f2_data->fname . ' ' . ($mname === '..' ? '' : $mname) . ' ' . $f2_data->lname . ' ' . $extname;
-                                    
-                                @endphp
-
-                                <h3 class="profile-username text-center">{{ $fullname }}</h3>
-                                <h6 class="text-muted text-center">
-                                    <strong>{{ $f2_data->reg_type === 'All' ? 'Farmer and Fisherfolk' : $f2_data->reg_type }}</strong>
-                                </h6>
-                                <a href="{{ route('f2.index') }}" class="btn btn-primary btn-block"><b><i
-                                            class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to List</b></a>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                      {{-- menu start  --}}
+                       
                       @include('layouts/farmsidebar')
                       {{-- menu end  --}}
 
@@ -73,11 +53,13 @@
 
                                 <form action="" method="post" id="livelihood">
                                     @csrf
-                                    <div class="row mb-2 mt-2 p-1">
+                                  
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b><span
+                                            class="text-red">*</span>&nbsp;Main Involvement to Agri-Fishery Sector</b></h6>
 
                                         <div class="col">
-                                            <label for="" class="form-label"><span
-                                                    class="text-red">*</span>&nbsp;Main Activity</label>
+                                            
                                             <div>
 
                                                 @php
@@ -130,11 +112,13 @@
 
                                     </div>
 
-                                    <div class="row mb-2 mt-2 p-1">
+                                    
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b><span
+                                            class="text-red">*</span>&nbsp;Farm Activity</b></h6>
 
                                         <div class="col">
-                                            <label for="" class="form-label"><span
-                                                    class="text-red">*</span>&nbsp;Type of Activity</label>
+                                           
                                             <div>
 
                                                 <div class="form-check form-check-inline col-md-1">
@@ -226,11 +210,13 @@
 
                                     {{-- For the kind of work --}}
 
-                                    <div class="row mb-2 mt-2 p-1">
+                                   
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b><span
+                                                    class="text-red">*</span>&nbsp;What you do?</b></h6>
 
                                         <div class="col-md-12">
-                                            <label for="" class="form-label"><span
-                                                    class="text-red">*</span>&nbsp;Kind of Activity</label>
+                                          
                                             <div>
 
                                                 <div class="form-check form-check-inline">
@@ -295,11 +281,12 @@
                                     </div>
 
                                     {{--  Start of fishing activity --}}
-                                    <div class="row mb-2 mt-2 p-1">
-
+                                    
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b><span
+                                            class="text-red">*</span>&nbsp;Fishing Activity</b></h6>
                                         <div class="col-md-12">
-                                            <label for="" class="form-label"><span
-                                                    class="text-red">*</span>&nbsp;Fishing Activity</label>
+                                           
                                             <div>
 
                                                 <div class="form-check form-check-inline">
@@ -374,11 +361,13 @@
 
                                     {{--  End of fishing activity --}}
                                     {{-- Start of involvement --}}
-                                    <div class="row mb-2 mt-2 p-1">
+                                    
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b><span
+                                            class="text-red">*</span>&nbsp;Agri-youth Involvement</b></h6>
 
                                         <div class="col-md-12">
-                                            <label for="" class="form-label"><span
-                                                    class="text-red">*</span>&nbsp;involvement</label>
+                                            
                                             <div>
 
                                                 <div class="form-check form-check-inline">
@@ -444,7 +433,9 @@
 
                                     {{-- End of involvement --}}
                                     {{-- start annual income --}}
-                                    <div class="row mb-2 mt-2 p-1">
+                                   
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Income Details for farming and non-farming</b></h6>
                                         <div class="col-md-6">
                                             <label for="income_farming"><span class="text-red">*</span>&nbsp;
                                                 Farming Income</label>

@@ -8,8 +8,14 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ Breadcrumbs::render() }}
+                            {{-- {{ Breadcrumbs::render('management.getdtoupdate',$programData) }} --}}
+                        </div><!-- /.col -->
                     </div>
                 </div>
             </div>

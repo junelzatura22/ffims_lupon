@@ -8,9 +8,14 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{-- {{ Breadcrumbs::render() }} --}}
+                            {{ Breadcrumbs::render('f2.information',$f2_data) }}
+                        </div><!-- /.col -->
                     </div>
                 </div>
             </div>
@@ -23,34 +28,9 @@
                 <div class="row">
                     <div class="col-md-3">
 
-                        <!-- Profile Image -->
-                        <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
-                                <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle"
-                                        src="{{ asset('asset/f2/' . $f2_data->picture . '') }}" alt="User profile picture">
-                                </div>
-
-                                @php
-                                    $extname = $f2_data->extname === '[Select]' ? '' : $f2_data->extname;
-                                    $mname = substr($f2_data->mname, 0, 1) . '.';
-                                    $fullname = $f2_data->fname . ' ' . ($mname === '..' ? '' : $mname) . ' ' . $f2_data->lname . ' ' . $extname;
-                                    
-                                @endphp
-
-                                <h3 class="profile-username text-center">{{ $fullname }}</h3>
-                                <h6 class="text-muted text-center">
-                                    <strong>{{ $f2_data->reg_type === 'All' ? 'Farmer and Fisherfolk' : $f2_data->reg_type }}</strong>
-                                </h6>
-                                <a href="{{ route('f2.index') }}" class="btn btn-primary btn-block"><b><i
-                                            class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to List</b></a>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                        {{-- menu start  --}}
+                      
                         @include('layouts/farmsidebar')
-                        {{-- menu end  --}}
+                       
                     </div>
 
                     <div class="col-md-9">
@@ -70,7 +50,8 @@
                             <div class="card-body">
                                 <form action="" method="post" enctype="multipart/form-data" id="farmerForm">
                                     @csrf
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Registration</b></h6>
                                         <div class="col-md-8">
                                             <label for="reg_type" class="form-label">
                                                 <span class="text-red">*</span>&nbsp;Registration Type
@@ -112,7 +93,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>RSBSA and FishR Number</b></h6>
                                         <div class="col-md-3">
                                             <label for="rsbsa_nat" class="form-label">RSBSA Nat.&nbsp;<i
                                                     class="text-red"><small>Optional</small></i></label>
@@ -144,7 +126,8 @@
                                                 class="form-control form-control-sm" />
                                         </div>
                                     </div>
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
+                                        <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Personal Information</b></h6>
                                         <div class="col-md-3">
                                             <label for="fname" class="form-label"><span
                                                     class="text-red">*</span>&nbsp;First
@@ -203,7 +186,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
                                         @php
                                             $curdates = date('Y-m-d');
                                             $date = strtotime($curdates . ' -12 year'); //to accept the agri-youth
@@ -256,7 +239,7 @@
 
                                     </div>
 
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
                                         <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Civil Status, Spouse and Mothers
                                                 Maiden Name</b></h6>
                                         <div class="col-md-5">
@@ -319,7 +302,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
                                         <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Contact and Image</b></h6>
                                         <div class="col-md-3">
                                             <label for="contactno " class="form-label"><span
@@ -353,7 +336,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="row mb-2 mt-2 p-1">
+                                    <div class="row mb-2 mt-2 p-2 bg-gray-light">
                                         <h6 class="mb-2 mt-2 text-info text-uppercase"><b>Address Information</b></h6>
                                         <div class="col-md-6">
                                             <label for="a_purok" class="form-label"><span

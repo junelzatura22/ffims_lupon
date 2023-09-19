@@ -15,7 +15,7 @@
                             </div><!-- /.col -->
                             <div>
                                 {{-- {{ Breadcrumbs::render() }} --}}
-                                {{ Breadcrumbs::render('farmdetails', $f2_data) }}
+                                {{ Breadcrumbs::render('updateFarmDetails', $f2_data) }}
                             </div><!-- /.col -->
                         </div>
                     </div>
@@ -59,8 +59,7 @@
                                             <div class="form-group">
                                                 <label for="Farm Name">Farm Name</label>
                                                 <input type="text" name="farm_name" id="farm_name" class="form-control"
-                                                    placeholder="Farm Name" readonly
-                                                    value="{{ $farmId . '_farm' . ($noOfFarms + 1) }}">
+                                                    placeholder="Farm Name" readonly value="{{ $farmDetails->farm_name }}">
                                                 {{-- validation not used  --}}
                                                 @error('farm_name')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
@@ -78,7 +77,8 @@
                                                 <label for="No. of Parcel"><strong class="text-red">*</strong>&nbsp;No. of
                                                     Parcel</label>
                                                 <input type="number" name="no_of_parcel" id="no_of_parcel"
-                                                    class="form-control" placeholder="No. of Parcel"  value="{{old('no_of_parcel')}}"> @error('no_of_parcel')
+                                                    class="form-control" placeholder="No. of Parcel"
+                                                    value="{{ $farmDetails->no_of_parcel }}"> @error('no_of_parcel')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
                                                 @enderror
                                             </div>
@@ -89,7 +89,8 @@
                                                 <label for="Area"><strong class="text-red">*</strong>&nbsp;Total Area
                                                     (hectares)</label>
                                                 <input type="text" name="total_area" id="total_area" class="form-control"
-                                                    placeholder="Total Area" value="{{old('total_area')}}"> @error('total_area')
+                                                    placeholder="Total Area" value="{{ $farmDetails->total_area }}">
+                                                @error('total_area')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
                                                 @enderror
                                             </div>
@@ -103,9 +104,15 @@
                                                         class="text-red">*</strong>&nbsp;Ownership</label>
                                                 <select name="ownership_type" id="ownership_type" class="form-select">
                                                     <option value="">[Select Ownership]</option>
-                                                    <option value="Registered Owner" {{ old('ownership_type') == "Registered Owner" ? "selected" : ""}}>Registered Owner</option>
-                                                    <option value="Tenant" {{ old('ownership_type') == "Tenant" ? "selected" : ""}}>Tenant</option>
-                                                    <option value="Lessee" {{ old('ownership_type') == "Lessee" ? "selected" : ""}}>Lessee</option>
+                                                    <option value="Registered Owner"
+                                                        {{ $farmDetails->ownership_type == 'Registered Owner' ? 'selected' : '' }}>
+                                                        Registered Owner</option>
+                                                    <option value="Tenant"
+                                                        {{ $farmDetails->ownership_type == 'Tenant' ? 'selected' : '' }}>
+                                                        Tenant</option>
+                                                    <option value="Lessee"
+                                                        {{ $farmDetails->ownership_type == 'Lessee' ? 'selected' : '' }}>
+                                                        Lessee</option>
                                                 </select> @error('ownership_type')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
                                                 @enderror
@@ -116,20 +123,67 @@
                                             <div class="form-group">
                                                 <div class="d-flex justify-content-between">
                                                     <label for="Area"><strong class="text-red">*</strong>&nbsp;Name of
-                                                        Farmers</label><a href="#" id="add_name_of_owner"
+                                                        Farmers</label><a href="#" id="update_add_name_of_owner"
                                                         class="">
                                                         <i class="fa-solid fa-plus pointer"></i>&nbsp;More Names
                                                     </a>
                                                 </div>
 
+                                                @php
+                                                    $nameOfOwner = json_decode($farmDetails->name_of_owner);
+                                                @endphp
+
+
+                                                @php
+                                                    $loopCounter = 0;
+                                                @endphp
+
+
+
+                                                @foreach ($nameOfOwner as $ownser)
+                                                    @php
+                                                        $loopCounter++;
+                                                    @endphp
+
+                                                    @if ($loopCounter < 2)
+                                                        <div class="row" id="">
+                                                            <div class="col d-flex align-items-center">
+                                                                <input type="text" name="name_of_owner[]"
+                                                                    id="name_of_owner" class="form-control mr-1 mb-1"
+                                                                    placeholder="Name of Owner"
+                                                                    value="{{ $ownser }}">
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="row" id="row" class="">
+                                                            <div class="col d-flex align-items-center">
+                                                                <input type="text" name="name_of_owner[]"
+                                                                    id="name_of_owner" class="form-control mr-1 mb-1"
+                                                                    placeholder="Name of Owner"
+                                                                    value="{{ $ownser }}">
+                                                                <a href='#' id='update_remove_name_of_owner'> <i
+                                                                        class='fa-solid fa-xmark text-red'></i></a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+
+                                                    {{-- <div class="row" id="">
+                                                        <div class="col d-flex align-items-center">
+                                                            <input type="text" name="name_of_owner[]" id="name_of_owner"
+                                                                class="form-control mr-1 mb-1" placeholder="Name of Owner"
+                                                                value="{{ $ownser }}">
+                                                            <a href='#' id='remove_name_of_owner'> <i
+                                                                    class='fa-solid fa-xmark text-red'></i></a></label>
+                                                        </div>
+                                                    </div> --}}
+                                                @endforeach
+
                                                 <div class="row" id="more_owner">
 
-                                                    <div class="col d-flex align-items-center">
-                                                        <input type="text" name="name_of_owner[]" id="name_of_owner"
-                                                            class="form-control mr-1 mb-1" placeholder="Name of Owner" >
-                                                    </div>
-
                                                 </div>
+
+
                                                 @error('name_of_owner')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
                                                 @enderror
@@ -142,7 +196,7 @@
                                             <div class="form-group">
                                                 <label for="Area">Lattitude</label>
                                                 <input type="number" name="lat" id="lat" class="form-control"
-                                                    placeholder="Lattitude" value="{{old('lat')}}">
+                                                    placeholder="Lattitude" value="{{ $farmDetails->lat }}">
                                                 {{-- not used  --}}
                                                 @error('lat')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
@@ -155,7 +209,7 @@
                                             <div class="form-group">
                                                 <label for="Area">Longitude</label>
                                                 <input type="number" name="long" id="long" class="form-control"
-                                                    placeholder="Longitude" value="{{old('long')}}">
+                                                    placeholder="Longitude" value="{{ $farmDetails->long }}">
                                                 {{-- not used  --}}
                                                 @error('long')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
@@ -172,7 +226,8 @@
                                                 <label for="Purok/Sition/Street"><strong
                                                         class="text-red">*</strong>&nbsp;Purok/Sition/Street</label>
                                                 <input type="text" name="location_purok" id="location_purok"
-                                                    class="form-control" placeholder="Total Area" value="{{old('location_purok')}}">
+                                                    class="form-control" placeholder="Total Area"
+                                                    value="{{ $farmDetails->location_purok }}">
                                                 @error('location_purok')
                                                     <span class="text-red"><small>{{ $message }}</small></span>
                                                 @enderror
@@ -187,7 +242,9 @@
                                                 <select name="location_bar_id" id="location_bar_id" class="form-select">
                                                     <option value="">[Select Banangay]</option>
                                                     @foreach ($barangay as $item)
-                                                        <option value="{{ $item->id }}" {{ old('location_bar_id') ==   $item->id ? 'selected' : ''}}>{{ $item->brgyDesc }}
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $farmDetails->location_bar_id == $item->id ? 'selected' : '' }}>
+                                                            {{ $item->brgyDesc }}
                                                         </option>
                                                     @endforeach
 
@@ -203,7 +260,7 @@
                                             <a href="{{ route('f2.farm', $f2_data->ff_id) }}"><i
                                                     class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to Farm Details</a>
                                             <input type="submit" class="col-md-1 form-control btn btn-success"
-                                                value="Register">
+                                                value="Update">
 
                                         </div>
 
@@ -212,6 +269,11 @@
 
                                 </form>
 
+
+
+                                <div style="position: absolute; top:0; right:0; z-index:10">
+                                    @include('_message')
+                                </div>
 
                             </div>
 

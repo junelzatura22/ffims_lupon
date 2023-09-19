@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    //start of jquery
+    // Global variables
+    var letters = /^[A-Za-z]+$/;
+
     $("#success-alert")
         .delay(2000)
         .fadeIn("slow", function () {
@@ -285,7 +289,7 @@ $(document).ready(function () {
     jQuery.each(farmerFormLettersOnly, function (i, val) {
         $("#farmerForm #" + val).keyup(function (e) {
             /// ===
-            var letters = /^[A-Za-z]+$/;
+            // var letters = /^[A-Za-z]+$/;
             var node = $(this);
             if (node.val().match(letters)) {
                 node.val(node.val().toUpperCase());
@@ -311,7 +315,7 @@ $(document).ready(function () {
     jQuery.each(farmerDetails, function (i, val) {
         $("#farmerDetails #" + val).keyup(function (e) {
             /// ===
-            var letters = /^[A-Za-z]+$/;
+            // var letters = /^[A-Za-z]+$/;
             var node = $(this);
             if (node.val().match(letters)) {
                 node.val(node.val().toUpperCase());
@@ -442,16 +446,54 @@ $(document).ready(function () {
     });
 
     $("#livelihood #kind_of_work").on("change", function () {
-        checkingProps(this, "#livelihood #kind_of_work_others");
+        const value = $(this).val();
+
+        if (value == "Others") {
+            if ($(this).prop("checked") == true) {
+                $("#livelihood #kind_of_work_others").attr("readonly", false);
+            } else {
+                $("#livelihood #kind_of_work_others").attr("readonly", true);
+            }
+        }
     });
     $("#livelihood #fishing_activity").on("change", function () {
-        checkingProps(this, "#livelihood #fishing_activity_others");
+        const value = $(this).val();
+
+        if (value == "Others") {
+            if ($(this).prop("checked") == true) {
+                $("#livelihood #fishing_activity_others").attr(
+                    "readonly",
+                    false
+                );
+            } else {
+                $("#livelihood #fishing_activity_others").attr(
+                    "readonly",
+                    true
+                );
+            }
+        }
     });
     $("#livelihood #involvement").on("change", function () {
-        checkingProps(this, "#livelihood #involvement_others");
+        const value = $(this).val();
+
+        if (value == "Others") {
+            if ($(this).prop("checked") == true) {
+                $("#livelihood #involvement_others").attr(
+                    "readonly",
+                    false
+                );
+            } else {
+                $("#livelihood #involvement_others").attr(
+                    "readonly",
+                    true
+                );
+            }
+        }
+
+       
     });
 
-    /**For the Farm Details**/
+    /**For the Farm Details add more name of farmer**/
     $("#add_name_of_owner").on("click", function (e) {
         e.preventDefault();
 
@@ -460,12 +502,142 @@ $(document).ready(function () {
         );
     });
 
-   
+    /**for the update add more**/
+    $("#update_add_name_of_owner").on("click", function (e) {
+        e.preventDefault();
+
+        $("#more_owner").append(
+            "<div class='row' id='row'><div class='col d-flex align-items-center'> <input type='text' name='name_of_owner[]' id='name_of_owner' class='form-control mr-1 mb-1' placeholder='Name of Owner'> <a href='#' id='remove_name_of_owner'> <i class='fa-solid fa-xmark'></i></a></label></div></div>"
+        );
+    });
+
     $("body").on("click", "#remove_name_of_owner", function (e) {
         e.preventDefault();
-        $(this).parents('#row').remove();
-    })
+        $(this).parents("#row").remove();
+    });
+
+    $("body").on("click", "#update_remove_name_of_owner", function (e) {
+        e.preventDefault();
+
+        $(this).parents("#row").remove();
+    });
+
+    $("#admin_farmdetails #location_purok").keyup(function () {
+        const node = $(this);
+        node.val(upperCase(node));
+    });
+
+    $("#admin_farmdetails #name_of_owner").keyup(function () {
+        var node = $(this);
+
+        if (node.val().match(letters)) {
+            node.val(node.val().toUpperCase());
+        } else {
+            // If you want to filter strings that are URL friendly and do not contain any special characters  /^[^ !"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+$/
+            node.val(
+                node
+                    .val()
+                    .toUpperCase()
+                    .replace(/[0-9]/, "")
+                    .replace(
+                        /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
+                        ""
+                    )
+            );
+        }
+    });
+
+    $("#admin_farmdetails #ownership_type").on("change", function () {
+        const node = $(this).val();
+
+        if (node == "") {
+            $("#admin_farmdetails #name_of_owner").val("");
+        } else {
+            switch (node) {
+                case "Registered Owner":
+                    const ownerName = $(
+                        "#admin_farmdetails #farm_owner_name"
+                    ).val();
+                    $("#admin_farmdetails #name_of_owner").val(ownerName);
+                    $("#admin_farmdetails #name_of_owner").attr(
+                        "readonly",
+                        true
+                    );
+                    $("#admin_farmdetails #add_name_of_owner").css(
+                        "display",
+                        "none"
+                    );
+                    break;
+
+                default:
+                    $("#admin_farmdetails #name_of_owner").val("");
+                    $("#admin_farmdetails #add_name_of_owner").css(
+                        "display",
+                        "block"
+                    );
+                    $("#admin_farmdetails #name_of_owner").attr(
+                        "readonly",
+                        false
+                    );
+                    break;
+            }
+        }
+    });
+
+    $("#admin_farmdetails #total_area").keyup(function () {
+        var val = $(this).val();
+        // if (isNaN(val)) {
+        //     val = val.replace(/[^0-9\.]/g, "");
+        //     if (val.split(".").length > 2) val = val.replace(/\.+$/, "");
+        // }
+        // $(this).val(val);
+        doubleValueOnly(val, $(this));
+    });
+
+    //ajax for updating farm detail status
+    $("#update_farmdetails_status #farmdetails_status").on(
+        "change",
+        function () {
+            var farmDetailsUrl = $(this).parents("table tr").attr("id");
+
+            swal({
+                title: "Are you sure you want to change farm details status?",
+                text: "Inactive farm details will not be accessable.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: farmDetailsUrl,
+                        type: "get",
+                        dataType: "json",
+                        success: function (response) {
+                            swal("Farm status was successfully updated!", {
+                                icon: "success",
+                            });
+                        },
+                        error: function () {
+                            swal("OPPS!", "Error changing status", "error");
+                        },
+                    });
+                }
+            });
+        }
+    );
+
     /******* FUNCTIONS *******/
+
+    function doubleValueOnly(value, selectors) {
+        var dataVal = value;
+        if (isNaN(dataVal)) {
+            dataVal = dataVal.replace(/[^0-9\.]/g, "");
+            if (dataVal.split(".").length > 2)
+                dataVal = dataVal.replace(/\.+$/, "");
+        }
+        $(selectors).val(dataVal);
+    }
+
     function upperCase(input) {
         return input.val().toUpperCase();
     }
@@ -477,4 +649,6 @@ $(document).ready(function () {
             $(specify).attr("readonly", true).val("None");
         }
     }
+
+    //end of jquery
 });

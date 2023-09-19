@@ -122,7 +122,7 @@
                                                             class="fa-solid fa-square-phone"></i></span>
                                                 </div>
                                                 <input type="text" class="form-control" name="contact"
-                                                    data-inputmask='"mask": "11-25-07-000-000000"' data-mask id="contact"
+                                                    data-inputmask='"mask": "9999-999-9999"' data-mask id="contact"
                                                     placeholder="0000-000-0000" value="{{ old('contact') }}" />
                                             </div>
                                             @error('contact')
