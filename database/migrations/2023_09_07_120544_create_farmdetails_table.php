@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('name_of_owner');
             $table->string('lat');
             $table->string('long');
-            $table->string('is_rotation');
-            $table->string('farm_status');
+            $table->string('is_rotation')->default('Yes');
+            $table->string('farm_status')->default('Active');
             $table->string('name_rotation_farmer');
             $table->unsignedBigInteger('registered_to');
             $table->unsignedBigInteger('created_by'); 

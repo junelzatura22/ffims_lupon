@@ -67,7 +67,7 @@
                 </button>
             </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-0 mb-1">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item active">
                     <a href="{{ route('f2.farm', $f2_data->ff_id) }}"

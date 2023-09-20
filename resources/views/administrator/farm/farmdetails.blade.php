@@ -95,6 +95,7 @@
                                             <th style="width: 10px">#</th>
                                             <th>Farm Name</th>
                                             <th>Location</th>
+                                            <th class="text-center">Farm Size</th>
                                             <th>Status</th>
                                             <th></th>
                                         </tr>
@@ -105,6 +106,7 @@
                                                 <td>{{ $index + 1 }}.</td>
                                                 <td>{{ $item->farm_name }}</td>
                                                 <td>{{ $item->location_purok . ', ' . strtoupper($item->BarName) }}
+                                                <td class="text-center">{{ $item->total_area}}
                                                 </td>
                                                 <td>
                                                     <select name="farm_status" id="farmdetails_status"
@@ -122,9 +124,7 @@
                                                     <a href="{{ route('f2.getfarmdetails', $item->id) }}"
                                                         class="btn btn-sm btn-success p-1"><i
                                                             class="fa-solid fa-pen-to-square " title="Edit Program"></i></a>
-                                                    <a href="" class="btn btn-sm btn-primary p-1"><i
-                                                            class="fa-solid fa-pen-to-square"
-                                                            title="Edit Program"></i>&nbsp;Add Activity</a>
+                                                    
 
                                                 </td>
                                             </tr>
