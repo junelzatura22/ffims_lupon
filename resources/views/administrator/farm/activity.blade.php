@@ -8,9 +8,15 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{-- {{ Breadcrumbs::render() }} --}}
 
+                            {{ Breadcrumbs::render('farmactivity', $f2_data) }}
+                        </div><!-- /.col -->
                     </div>
                 </div>
             </div>
@@ -46,7 +52,7 @@
                             <div class="card-body">
                                 {{-- start of the card body  --}}
                                 @foreach ($farmdetails as $item)
-                                    <div class="row mb-3 shadow-sm pb-2">
+                                    <div class="row mb-3 shadow pb-2 pt-2">
 
                                         <div class="col-md-3 border border-success rounded">
                                             <div class="card" style="font-size: 90%">
@@ -55,10 +61,12 @@
 
                                                 <div class="card-body">
                                                     <strong>{{ $item->farm_name }}</strong>
-                                                    
+
                                                     <ul class="list-group">
-                                                        <li class="list-group-item p-1">Area: {{ $item->total_area }}&nbsp;(has)</li>
-                                                        <li class="list-group-item p-1">Location: {{ $item->total_area }}&nbsp;(has)</li>
+                                                        <li class="list-group-item p-1">Area:
+                                                            {{ $item->total_area }}&nbsp;(has)</li>
+                                                        <li class="list-group-item p-1">Barangay: {{ $item->BarName }}</li>
+                                                        <li class="list-group-item p-1"> {{ $item->id }}</li>
                                                     </ul>
 
                                                 </div>
@@ -67,17 +75,58 @@
 
 
 
+
                                         <div class="col-md-9">
-                                            <div class="card">
+                                            <div class="card card-default collapsed-card ">
                                                 <div class="card-header">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h3 class="card-title">List of activity</h3>
-                                                        <a href="#" class="btn btn-sm btn-primary">Add Activity</a>
+
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-sm btn-primary"
+                                                            data-card-widget="collapse"><i class="fas fa-plus"></i>&nbsp;Add
+                                                            Activity
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label for="" class="form-label">Commodity</label>
+                                                            <select name="program_id" id="program_id"
+                                                                class="form-select form-select-sm">
+                                                                <option value="">[Select Programs]</option>
+                                                                @foreach ($programData as $programs)
+                                                                    <option value="{{ $programs->program_id }}">
+                                                                        {{ $programs->program_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="" class="form-label">Sub-Commodity</label>
+                                                            <select name="pc_id" id="pc_id"
+                                                                class="form-select form-select-sm">
+                                                                <option value="">[Sub-Commodity]</option>
+
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="" class="form-label">Area (Has)</label>
+                                                            <input type="text" name="area" id="area"
+                                                                placeholder="Enter Area" class="form-control form-control-sm">
+                                                        </div>
                                                     </div>
                                                 </div>
+
+                                            </div>
+
+                                            <div class="card">
+
                                                 <!-- /.card-header -->
                                                 <div class="card-body p-0">
-                                                    <table class="table table-sm">
+
+                                                    <table class="table table-sm ">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width: 10px">#</th>
@@ -121,12 +170,20 @@
                                                 <!-- /.card-body -->
                                             </div>
                                         </div>
+
+
+
+
                                     </div>
                                 @endforeach
 
 
 
                                 {{-- end of the card body  --}}
+
+
+
+
                             </div>
                         </div>
                     </div>

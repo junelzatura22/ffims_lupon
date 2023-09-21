@@ -18,4 +18,5 @@ class Barangay extends Model
         ->where('citymun_id',$id)
         ->orderBy('brgyDesc', 'asc')->get();        
     }
+
 }

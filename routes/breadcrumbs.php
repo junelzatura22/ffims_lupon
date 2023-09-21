@@ -56,6 +56,12 @@ Breadcrumbs::for('updateFarmDetails', function (BreadcrumbTrail $trail, $f2_data
     $trail->push("Update Farm", route('f2.getfarmdetails', $f2_data->ff_id));
 });
 
+Breadcrumbs::for('farmactivity', function (BreadcrumbTrail $trail, $f2_data): void {
+    $trail->parent('f2.index');
+    $trail->push("Farm Activity", route('f2.activity', $f2_data->ff_id));
+   
+});
+
 
 // Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user): void {
 //     $trail->parent('users.index');

@@ -626,6 +626,24 @@ $(document).ready(function () {
         }
     );
 
+    // Adding Farm Activity Using A modal 
+    // #modalFarmName, #modalFarmName
+
+    $("#modalAddActivity").on('click', function(){
+       
+        // const id = $(this).attr('id');
+        
+
+        // $("#modalAddActivity #farmName").html("sample");
+        // $("#modalAddActivity #farmID").val(id);
+
+        // alert( id);
+        
+    });
+    
+
+
+
     /******* FUNCTIONS *******/
 
     function doubleValueOnly(value, selectors) {
