@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barangay;
 use App\Models\CityMun;
+use App\Models\FarmDetails;
 use App\Models\FarmerFisherfolk;
 use App\Models\FixedLocation;
 use App\Models\Province;
@@ -33,6 +34,8 @@ class FarmActivityController extends Controller
             $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
             $data['identifier'] = "Welcome to " . $f2_id->fname . "'s - Farm Activity";
             $data['data'] = "F2 Activity - FFIMS Systems";
+            $data['farmdetails'] = FarmDetails::getFarmDetailsOf($id, 'display');
+
             return view('administrator.farm.activity', $data);
         } else {
             return back();
