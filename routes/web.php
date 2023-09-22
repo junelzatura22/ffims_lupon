@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmActivityController;
 use App\Http\Controllers\FarmDetailController;
-use App\Http\Controllers\FarmDetails;
 use App\Http\Controllers\FarmerFisherFolkController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', [AuthController::class, 'getLogin'])->name('auth.login');
 Route::post('/', [AuthController::class, 'login'])->name('auth.log');
@@ -46,6 +45,9 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::get('management/pc/procat/{pc_id}', [ManagementController::class, 'getProgramCategory'])->name('management.getprogramcategory');
     Route::post('management/pc/procat/{pc_id}', [ManagementController::class, 'updateProgramCategory'])->name('management.updateprogramcategory');
     Route::post('management/pc/delete', [ManagementController::class, 'deleteProgramCategory'])->name('management.deleteprogramcategory');
+    //create url for loadProgramCategory($program_id)
+    Route::get('management/pc/programcat/{pc_id}', [ManagementController::class, 'loadProgramCategory'])
+        ->name('management.loadprogramcategory');
     //admin creating use
     Route::get('user/user', [UserController::class, 'index'])->name('user.index');
     Route::get('user/user/add', [UserController::class, 'createUser'])->name('user.createuser');
@@ -101,6 +103,8 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::get('f2/list/farm/updatefarmstatus/{id}', [FarmDetailController::class, 'updateFarmStatus'])->name('f2.updatefarmstatus');
     //farm activity
     Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
+    Route::post('f2/list/activity/{id}', [FarmActivityController::class, 'storeActivity'])->name('f2.storeactivity'); 
+
 });
 Route::group(['middleware' => ['nohistory', 'technician'], 'prefix' => 'technician'], function () {
     //technician

@@ -478,19 +478,11 @@ $(document).ready(function () {
 
         if (value == "Others") {
             if ($(this).prop("checked") == true) {
-                $("#livelihood #involvement_others").attr(
-                    "readonly",
-                    false
-                );
+                $("#livelihood #involvement_others").attr("readonly", false);
             } else {
-                $("#livelihood #involvement_others").attr(
-                    "readonly",
-                    true
-                );
+                $("#livelihood #involvement_others").attr("readonly", true);
             }
         }
-
-       
     });
 
     /**For the Farm Details add more name of farmer**/
@@ -586,12 +578,17 @@ $(document).ready(function () {
 
     $("#admin_farmdetails #total_area").keyup(function () {
         var val = $(this).val();
-        // if (isNaN(val)) {
-        //     val = val.replace(/[^0-9\.]/g, "");
-        //     if (val.split(".").length > 2) val = val.replace(/\.+$/, "");
-        // }
-        // $(this).val(val);
         doubleValueOnly(val, $(this));
+    });
+
+    $("#saveActivity #area,#saveActivity #hills").keyup(function () {
+        var val = $(this).val();
+        doubleValueOnly(val, $(this));
+    });
+
+    $("#saveActivity #remarks").keyup(function () {
+        const node = $(this);
+        node.val(upperCase(node));
     });
 
     //ajax for updating farm detail status
@@ -626,23 +623,99 @@ $(document).ready(function () {
         }
     );
 
-    // Adding Farm Activity Using A modal 
+    // Adding Farm Activity Using A modal
     // #modalFarmName, #modalFarmName
 
-    $("#modalAddActivity").on('click', function(){
-       
-        // const id = $(this).attr('id');
-        
-
-        // $("#modalAddActivity #farmName").html("sample");
-        // $("#modalAddActivity #farmID").val(id);
-
-        // alert( id);
-        
+    $("#saveActivity #program_id").on("change", function () {
+        const progUrm = $(this).val(); //the url
+        const url = progUrm.split("@");
+        $("#saveActivity #pc_id").html("");
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            success: function (response) {
+                $.each(response.programCategory, function (key, value) {
+                    $("#saveActivity #pc_id").append(
+                        '<option value="' +
+                            value.pc_id +
+                            '">' +
+                            value.pc_name +
+                            "</option>"
+                    );
+                });
+            },
+            error: function () {
+                swal("OPPS!", "Error Loading Region ", "error");
+            },
+        });
     });
-    
 
-
+    $("#saveActivity").validate({
+        rules: {
+            program_id: {
+                required: true,
+            },
+            pc_id: {
+                required: true,
+            },
+            area: {
+                required: true,
+            },
+            hills: {
+                required: true,
+            },
+            no_of_heads: {
+                required: true,
+            },
+            farmtype: {
+                required: true,
+            },
+            is_organic: {
+                required: true,
+            },
+            remarks: {
+                required: true,
+            },
+        },
+        messages: {
+            program_id: {
+                required: "This field is required",
+            },
+            pc_id: {
+                required: "This field is required",
+            },
+            area: {
+                required: "This field is required",
+            },
+            hills: {
+                required: "This field is required",
+            },
+            no_of_heads: {
+                required: "This field is required",
+            },
+            farmtype: {
+                required: "This field is required",
+            },
+            is_organic: {
+                required: "This field is required",
+            },
+            remarks: {
+                required: "This field is required",
+            },
+        },
+        errorElement: "span",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass("is-invalid");
+        },
+    });
 
     /******* FUNCTIONS *******/
 

@@ -19,9 +19,9 @@ class ManagementController extends Controller
 
     public function createprogram()
     {
-        $identifier = "Management | Program | Create Program";
+        $data['$identifier'] = "Management | Program | Create Program";
         $data['data'] = "Register Program - FFIMS Systems";
-        return view('administrator.management.createprogram',$data);
+        return view('administrator.management.createprogram', $data);
     }
 
     public function getdtoupdate($id)
@@ -31,7 +31,7 @@ class ManagementController extends Controller
             $data['programData'] = Program::where('program_id', '=', $id)->first();
             $data['identifier'] = "Management | Program | Update Program";
             $data['data'] = "Update Program - FFIMS Systems";
-            return view('administrator.management.updateprogram',  $data);
+            return view('administrator.management.updateprogram', $data);
         } else {
             return back();
         }
@@ -40,7 +40,7 @@ class ManagementController extends Controller
     public function storeProgram(Request $request)
     {
         $request->validate([
-            'program_name' => 'required|unique:program'
+            'program_name' => 'required|unique:program',
         ], [
             'program_name' => 'Program is required!',
             'program_name.unique' => 'Progam already taken!',
@@ -55,7 +55,7 @@ class ManagementController extends Controller
     public function updateProgram(Request $request, $id)
     {
         $request->validate([
-            'program_name' => 'required'
+            'program_name' => 'required',
         ]);
         $prog = Program::find($id);
         $prog->program_name = strtoupper(trim($request->program_name));
@@ -64,14 +64,12 @@ class ManagementController extends Controller
         return redirect()->route('management.program')->with('success', "Program was successfully updated!");
     }
 
-
     public function deleteProgram(Request $request)
     {
         $program = Program::find($request->program_id);
         $program->delete();
         return redirect()->route('management.program')->with('success', "Program was successfully removed!");
     }
-
 
     // Program Category ************************************************************************
     // Program Category ************************************************************************
@@ -92,7 +90,7 @@ class ManagementController extends Controller
         $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
             ->orderBy('program.created_at', 'desc')->get();
         $data['data'] = "Register Category - FFIMS Systems";
-        return view('administrator.management.createprogramcat',  $data);
+        return view('administrator.management.createprogramcat', $data);
     }
     public function getProgramCategory($id)
     {
@@ -103,7 +101,7 @@ class ManagementController extends Controller
             $data['programCategory'] = ProgamCategory::where('pc_id', '=', $id)->first();
             $data['identifier'] = "Management | Program Category | Update Category";
             $data['data'] = "Update Category - FFIMS Systems";
-            return view('administrator.management.updateprogramcat',  $data);
+            return view('administrator.management.updateprogramcat', $data);
         } else {
 
             return back();
@@ -114,11 +112,11 @@ class ManagementController extends Controller
     {
         $request->validate([
             'pc_name' => 'required|unique:program_category',
-            'prog_id' => 'required'
+            'prog_id' => 'required',
         ], [
             'pc_name' => 'Category is required!',
             'pc_name.unique' => 'Category name was already taken!',
-            'prog_id' => 'Program Field is required!'
+            'prog_id' => 'Program Field is required!',
         ]);
 
         $progCat = new ProgamCategory();
@@ -132,10 +130,10 @@ class ManagementController extends Controller
     {
         $request->validate([
             'pc_name' => 'required',
-            'prog_id' => 'required'
+            'prog_id' => 'required',
         ], [
             'pc_name' => 'Category is required!',
-            'prog_id' => 'Program Field is required!'
+            'prog_id' => 'Program Field is required!',
         ]);
         $programCategory = ProgamCategory::find($id);
         $programCategory->pc_name = strtoupper(trim($request->pc_name));
@@ -147,13 +145,17 @@ class ManagementController extends Controller
     public function deleteProgramCategory(Request $request)
     {
         $program = ProgamCategory::find($request->pc_id);
-        $program->is_deleted =  1;
+        $program->is_deleted = 1;
         $program->touch();
         return redirect()->route('management.programcategory')->with('success', "Program was successfully removed!");
     }
     // Program Category ************************************************************************
+    public function loadProgramCategory($program_id)
+    {
+        $data['programCategory'] = ProgamCategory::loadProgramCategory($program_id);
+        return response()->json($data);
+    }
+
     // Program Category ************************************************************************
-
-
 
 }

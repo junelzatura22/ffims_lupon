@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Request;
 class ProgamCategory extends Model
 {
     use HasFactory;
-    
-    protected $table='program_category';
+
+    protected $table = 'program_category';
     protected $primaryKey = 'pc_id';
 
-
-    public static function loadAndSearchProgramCategory(){
+    public static function loadAndSearchProgramCategory()
+    {
         $query = self::where('program_category.is_deleted', '=', '0')
             ->join('users', 'program_category.created_by', 'users.id')
             ->join('program', 'prog_id', 'program.program_id');
@@ -25,7 +25,13 @@ class ProgamCategory extends Model
         if (!empty(Request::get('program_id'))) {
             $query = $query->where('prog_id', '=', Request::get('program_id'));
         }
-        $query = $query->where('program.program_id','!=',37)->orderBy('program_category.created_at', 'desc')->paginate(10);
+        $query = $query->where('program.program_id', '!=', 37)->orderBy('program_category.created_at', 'desc')->paginate(10);
+        return $query;
+    }
+
+    public static function loadProgramCategory($program_id)
+    {
+        $query = self::where(["prog_id"=> $program_id,"is_deleted"=>0])->orderBy("pc_name", "asc")->get();
         return $query;
     }
 }
