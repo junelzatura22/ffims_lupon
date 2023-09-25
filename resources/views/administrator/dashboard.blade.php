@@ -13,7 +13,7 @@
                             <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
                         </div><!-- /.col -->
                         <div>
-                            {{ Breadcrumbs::render() }}
+                            {{ Breadcrumbs::render("dashboard") }}
                         </div><!-- /.col -->
                     </div>
 

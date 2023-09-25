@@ -4,7 +4,7 @@ use App\Models\Program;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-Breadcrumbs::for('administrator.dashboard', function (BreadcrumbTrail $trail): void {
+Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail): void {
     $trail->push('Dashboard', route('administrator.dashboard'));
 });
 Breadcrumbs::for('management.program', function (BreadcrumbTrail $trail): void {
@@ -22,7 +22,7 @@ Breadcrumbs::for('management.getdtoupdate', function (BreadcrumbTrail $trail, $p
 // for the farmer and fisherfolk breadcrumbs 
 
 Breadcrumbs::for('f2.index', function (BreadcrumbTrail $trail): void {
-    $trail->parent('administrator.dashboard');
+    $trail->parent('dashboard');
     $trail->push('F2 List', route('f2.index'));
 });
 Breadcrumbs::for('f2.create', function (BreadcrumbTrail $trail): void {
@@ -60,6 +60,16 @@ Breadcrumbs::for('farmactivity', function (BreadcrumbTrail $trail, $f2_data): vo
     $trail->parent('f2.index');
     $trail->push("Farm Activity", route('f2.activity', $f2_data->ff_id));
    
+});
+Breadcrumbs::for('createActivity', function (BreadcrumbTrail $trail, $f2_data): void {
+    $trail->parent('f2.index');
+    $trail->push($f2_data->fname."'s Farm Activity", route('f2.activity', $f2_data->ff_id));
+    $trail->push("Create Activity");
+});
+Breadcrumbs::for('updateActivity', function (BreadcrumbTrail $trail, $f2_data): void {
+    $trail->parent('f2.index');
+    $trail->push($f2_data->fname."'s Farm Activity", route('f2.activity', $f2_data->ff_id));
+    $trail->push("Update Activity");
 });
 
 

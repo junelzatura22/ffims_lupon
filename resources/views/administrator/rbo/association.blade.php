@@ -54,52 +54,55 @@
 
 
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-1">
-                                <div class="table-responsive">
-                                    <table class="table table-hover" id="associationTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center text-sm bg-gradient-green font-weight-bold">#</th>
-                                                <th class="text-sm">Name</th>
-                                                <th class="text-sm">Description</th>
-                                                <th class="text-sm">President</th>
+                        </div>
 
-                                                <th width="130px" class="text-center text-sm">Status</th>
-                                                <th class="text-sm">Program</th>
-                                                <th class="text-center text-sm">Members</th>
-                                                <th class="text-sm">Barangay</th>
-                                                <th width="130px"></th>
+                        <!-- /.card-header -->
+                        <div class="card-body p-1">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="associationTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center text-sm bg-gradient-green font-weight-bold">#</th>
+                                            <th class="text-sm">Name</th>
+                                            <th class="text-sm">Description</th>
+                                            <th class="text-sm">President</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($association as $index => $item)
-                                                <tr id="{{ route('rbo.updatestatus', $item->as_id) }}">
-                                                    <td class="text-center text-sm bg-gradient-green font-weight-bold">
-                                                        {{ $association->firstItem() + $index }}
-                                                    </td>
-                                                    <td class="text-sm"> {{ $item->nameabbr }} </td>
-                                                    <td class="text-sm"> {{ $item->namedesc }} </td>
-                                                    <td class="text-sm"></td>
+                                            <th width="130px" class="text-center text-sm">Status</th>
+                                            <th class="text-sm">Program</th>
+                                            <th class="text-center text-sm">Members</th>
+                                            <th class="text-sm">Barangay</th>
+                                            <th></th>
 
-                                                    <td class="text-center text-sm">
-                                                        <select name="as_status" id="as_status"
-                                                            class="form-select form-select-sm">
-                                                            <option value="Active"
-                                                                {{ $item->as_status == 'Active' ? 'selected' : '' }}>
-                                                                Active</option>
-                                                            <option value="Inactive"
-                                                                {{ $item->as_status == 'Inactive' ? 'selected' : '' }}>
-                                                                Inactive</option>
-                                                        </select>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($association as $index => $item)
+                                            <tr id="{{ route('rbo.updatestatus', $item->as_id) }}">
+                                                <td class="text-center text-sm bg-gradient-green font-weight-bold">
+                                                    {{ $association->firstItem() + $index }}
+                                                </td>
+                                                <td class="text-sm"> {{ $item->nameabbr }} </td>
+                                                <td class="text-sm"> {{ $item->namedesc }} </td>
+                                                <td class="text-sm"></td>
 
-                                                    </td>
-                                                    <td class="text-sm">{{ $item->pName }}</td>
-                                                    <td class="text-center text-sm"><a href=""
-                                                            class="text-danger text-lg">0</a></td>
-                                                    <td class="text-sm">{{ $item->barName }}</td>
-                                                    <td width="130px">
+                                                <td class="text-center text-sm">
+                                                    <select name="as_status" id="as_status"
+                                                        class="form-select form-select-sm">
+                                                        <option value="Active"
+                                                            {{ $item->as_status == 'Active' ? 'selected' : '' }}>
+                                                            Active</option>
+                                                        <option value="Inactive"
+                                                            {{ $item->as_status == 'Inactive' ? 'selected' : '' }}>
+                                                            Inactive</option>
+                                                    </select>
+
+                                                </td>
+                                                <td class="text-sm">{{ $item->pName }}</td>
+                                                <td class="text-center text-sm"><a href=""
+                                                        class="text-danger text-lg">0</a></td>
+                                                <td class="text-sm">{{ $item->barName }}</td>
+                                                <td>
+                                                    <div class="d-flex gap-1">
                                                         <a href="" class="btn btn-sm btn-primary "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Add Member">
@@ -110,27 +113,30 @@
                                                             data-bs-placement="top" title="Edit Association">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
+                                                    </div>
 
-                                                    </td>
+                                                </td>
 
-                                                </tr>
-                                            @endforeach
+                                            </tr>
+                                        @endforeach
 
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="card-footer clearfix">
-                                <ul class="pagination pagination-md m-0 float-right">
-                                    {!! $association->links() !!}
-                                </ul>
+                                    </tbody>
+                                </table>
                             </div>
                             <div style="position: absolute; top:0; right:0; z-index:10">
                                 @include('_message')
                             </div>
                         </div>
+
+                        <div class="card-footer clearfix">
+                            <ul class="pagination pagination-md m-0 float-right">
+                                {!! $association->links() !!}
+                            </ul>
+                        </div>
+
+
+
                     </div>
 
                     {{-- display message in this row  --}}
