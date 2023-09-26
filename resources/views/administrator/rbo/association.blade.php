@@ -8,9 +8,17 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
+                    {{-- <div class="col">
                         <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-                    </div><!-- /.col -->
+                    </div><!-- /.col --> --}}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ Breadcrumbs::render('Association') }}
+                        </div><!-- /.col -->
+                    </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -21,12 +29,53 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    <div class="card">
+                    <div class="card card-outline card-success">
                         <div class="card-header">
-                            <h3 class="card-title">Search</h3>
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                </i>&nbsp;Search&nbsp;
+                            </h3>
                         </div>
                         <div class="card-body">
+                            <form action="" method="get">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="search" name="assoc" id="assoc"
+                                            placeholder="Search Association..." value="{{ Request::get('assoc') }}"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
 
+                                        <select name="pid" class="form-select">
+                                            <option value="">[Select Progam]</option>
+                                            @foreach ($listOfProgram as $item)
+                                                <option value="{{ $item->program_id }}"
+                                                    {{ Request::get('pid') == $item->program_id ? 'selected' : '' }}>
+                                                    {{ $item->program_name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <select name="barid" id="barid" class="form-select">
+                                            <option value="">[ Barangay ]</option>
+                                            @foreach ($barangay as $item)
+                                                <option value={{ $item->id }}
+                                                    {{ Request::get('barid') == $item->id ? 'selected' : '' }}>
+                                                    {{ $item->brgyDesc }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2 d-flex gap-1 align-items-center">
+                                        <input type="submit" class="btn btn-success" value="Search">
+                                        <a href="{{ route('rbo.association') }}" class="form-control btn-success text-center">
+                                            <i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;Reset</a>
+                                    </div>
+
+                                </div>
+                            </form>
 
                         </div>
 
@@ -43,7 +92,7 @@
                                         <i class="fa-solid fa-users"></i>
                                         </i>&nbsp;List of Association&nbsp; <span class="badge badge-success p-2"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Total Association">
-                                            {{ $association->total() }} </span>
+                                            {{ $association->count() }} </span>
                                     </h3>
                                 </div>
                                 <div class="card-tools">

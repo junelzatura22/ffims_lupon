@@ -8,12 +8,12 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
                         </div><!-- /.col -->
                         <div>
-                            {{ Breadcrumbs::render('management.getdtoupdate',$programData) }}
+                            {{ Breadcrumbs::render('management.getdtoupdate', $programData) }}
                         </div><!-- /.col -->
                     </div>
                 </div>
@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-12">
+                    <div class="d-flex align-items-center justify-content-center">
                         <!-- jquery validation -->
                         <div class="card card-success">
                             <div class="card-header">
@@ -40,7 +40,8 @@
                                     <div class="form-group">
                                         <label for="program_name">*&nbsp;Program Name</label>
                                         <input type="text" name="program_name" class="form-control" id="program_name"
-                                            placeholder="Enter Program/Commodity/Sector Name" value="{{$programData->program_name}}">
+                                            placeholder="Enter Program/Commodity/Sector Name"
+                                            value="{{ $programData->program_name }}">
                                         <input type="hidden" name="created_by" id="created_by" placeholder="created_by"
                                             value="{{ Auth::user()->id }}">
                                     </div>
@@ -49,25 +50,17 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center gap-2">
                                         <a href="{{ route('management.program') }}" class="btn btn-primary"><i
                                                 class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to Program List</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Update</button>
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="fa-solid fa-floppy-disk"></i>&nbsp;Update</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!--/.col (left) -->
-                    <!-- right column -->
-                    <div class="col-md-6">
-
-                    </div>
-                    <!--/.col (right) -->
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

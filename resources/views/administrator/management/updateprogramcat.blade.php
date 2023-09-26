@@ -8,9 +8,17 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
+                    {{-- <div class="col">
                         <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-                    </div><!-- /.col -->
+                    </div><!-- /.col --> --}}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ Breadcrumbs::render('ProgramCategoryUpdate') }}
+                        </div><!-- /.col -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,7 +29,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-12">
+                    <div class="d-flex justify-content-center align-items-center">
                         <!-- jquery validation -->
                         <div class="card card-success">
                             <div class="card-header">
@@ -50,7 +58,9 @@
                                         <select name="prog_id" class="form-select">
                                             <option value="">[Select]</option>
                                             @foreach ($listOfProgram as $item)
-                                                <option value="{{$item->program_id}}" {{ $programCategory->prog_id == $item->program_id ? "selected" : "" }}>{{ $item->program_name }}</option>
+                                                <option value="{{ $item->program_id }}"
+                                                    {{ $programCategory->prog_id == $item->program_id ? 'selected' : '' }}>
+                                                    {{ $item->program_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('prog_id')
@@ -60,28 +70,21 @@
                                         @enderror
                                     </div>
 
-                                </div>
-
-                                
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center gap-2">
                                         <a href="{{ route('management.programcategory') }}" class="btn btn-primary"><i
                                                 class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to Program Category
                                             List</a>
-                                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Update</button>
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="fa-solid fa-floppy-disk"></i>&nbsp;Update</button>
                                     </div>
+
                                 </div>
+
                             </form>
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!--/.col (left) -->
-                    <!-- right column -->
-                    <div class="col-md-6">
-
-                    </div>
-                    <!--/.col (right) -->
+               
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

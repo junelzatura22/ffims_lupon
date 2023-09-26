@@ -19,7 +19,7 @@ class ManagementController extends Controller
 
     public function createprogram()
     {
-        $data['$identifier'] = "Management | Program | Create Program";
+        $data['identifier'] = "Management | Program | Create Program";
         $data['data'] = "Register Program - FFIMS Systems";
         return view('administrator.management.createprogram', $data);
     }

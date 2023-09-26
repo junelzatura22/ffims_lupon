@@ -27,7 +27,7 @@
             <div class="container-fluid">
 
                 <div class="row mt-1 mb-3 p-2">
-                    <div class="card">
+                    <div class="card card-outline card-success">
                         <div class="card-header">
                             <div class="card-title">
                                 <h3 class="card-title">

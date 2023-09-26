@@ -18,6 +18,31 @@ Breadcrumbs::for('management.getdtoupdate', function (BreadcrumbTrail $trail, $p
     $trail->parent('management.program');
     $trail->push($program->program_name, route('management.getdtoupdate', $program->program_id));
 });
+//For the program category
+Breadcrumbs::for('ProgramCategory', function (BreadcrumbTrail $trail): void {
+    $trail->push('Program Category', route('management.programcategory'));
+});
+Breadcrumbs::for('ProgramCategoryCreate', function (BreadcrumbTrail $trail): void {
+    $trail->parent('ProgramCategory');
+    $trail->push('Create Category');
+});
+Breadcrumbs::for('ProgramCategoryUpdate', function (BreadcrumbTrail $trail): void {
+    $trail->parent('ProgramCategory');
+    $trail->push('Update Category');
+});
+
+//for the association 
+Breadcrumbs::for('Association', function (BreadcrumbTrail $trail): void {
+    $trail->push('Association List', route('rbo.association'));
+});
+Breadcrumbs::for('createAssociation', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Association');
+    $trail->push('Register Association');
+});
+Breadcrumbs::for('updateAssociation', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Association');
+    $trail->push('Update Association');
+});
 
 // for the farmer and fisherfolk breadcrumbs 
 

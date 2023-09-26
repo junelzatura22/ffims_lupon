@@ -8,9 +8,9 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
                         </div><!-- /.col -->
                         <div>
                             {{ !empty(Breadcrumbs::render("Dashboard")) ? Breadcrumbs::render("Dashboard") : "" }}

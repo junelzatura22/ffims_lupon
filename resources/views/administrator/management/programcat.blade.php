@@ -8,9 +8,17 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
+                    {{-- <div class="col">
                         <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-                    </div><!-- /.col -->
+                    </div><!-- /.col --> --}}
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ Breadcrumbs::render('ProgramCategory') }}
+                        </div><!-- /.col -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,19 +39,20 @@
                             </div>
                             <div class="card-body">
                                 <form action="" method="get" id="searchProductCategory">
-                                   
-                                    <div class="row">
-                                        <div class="col-md-5">
 
-                                            <label for="category">Program Category</label>
-                                            <input type="text" class="form-control form-control-sm" name="searchKey" id="searchKey"
-                                                value="{{Request::get('searchKey')}}" />
+                                    <div class="row">
+                                        <div class="col-md-5 ">
+
+
+                                            <input type="text" class="form-control" name="searchKey"
+                                                id="searchKey" value="{{ Request::get('searchKey') }}"
+                                                placeholder="Enter Category" />
 
                                         </div>
                                         <div class="col-md-5">
-                                            <label for="program">Program</label>
-                                            <select name="program_id" class="form-select form-select-sm">
-                                                <option value="">[Select]</option>
+
+                                            <select name="program_id" class="form-select">
+                                                <option value="">[Select Progam]</option>
                                                 @foreach ($listOfProgram as $item)
                                                     <option value="{{ $item->program_id }}"
                                                         {{ Request::get('program_id') == $item->program_id ? 'selected' : '' }}>
@@ -52,16 +61,15 @@
 
                                             </select>
                                         </div>
-                                        <div class="col-md-1">
-                                            <label for="" class="d-none d-md-block text-white">DUMMY</label> 
-                                            <input type="submit" 
-                                            value="Search" class="form-control form-control-sm  bg-gradient-green " />
-                                        </div>
-                                        <div class="col-md-1">
-                                            <label for="" class="d-none d-md-block text-white">DUMMY</label>
-                                            <a href="{{ route('management.programcategory') }}" class="form-control form-control-sm btn-success text-center">
+                                        <div class="col-md-2 d-flex gap-1">
+
+                                            <input type="submit" value="Search"
+                                                class="form-control   bg-gradient-green " />
+                                            <a href="{{ route('management.programcategory') }}"
+                                                class="form-control  btn-success text-center">
                                                 <i class="fa-solid fa-arrow-rotate-right"></i>&nbsp;Reset</a>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>

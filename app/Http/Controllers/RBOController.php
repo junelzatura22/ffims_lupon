@@ -27,8 +27,12 @@ class RBOController extends Controller
     public function association()
     {
         $data['data'] = "Association - FFIMS Systems";
+        $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
+        ->orderBy('program.created_at', 'desc')->get();
         $data['association'] = Association::showAllAssociations();
         $data['identifier'] = "RBO | RBO List of Association";
+        $citymun_id = FixedLocation::showMyLocation()->citymun_id;
+        $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
         return view('administrator.rbo.association', $data);
     }
 

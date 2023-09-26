@@ -11,12 +11,12 @@
                     {{-- <div class="col">
                         <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
                     </div><!-- /.col --> --}}
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
                         </div><!-- /.col -->
                         <div>
-                            {{ Breadcrumbs::render() }}
+                            {{ Breadcrumbs::render() }} 
                         </div><!-- /.col -->
                     </div>
                 </div>
@@ -29,7 +29,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-12">
+                    <div class="d-flex align-items-center justify-content-center">
                         <!-- jquery validation -->
                         <div class="card card-success">
                             <div class="card-header">
@@ -52,25 +52,18 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center gap-2">
                                         <a href="{{ route('management.program') }}" class="btn btn-primary"><i
                                                 class="fa-solid fa-arrow-left-long"></i>&nbsp;Back to Program List</a>
                                         <button type="submit" class="btn bg-gradient-green">Save</button>
                                     </div>
                                 </div>
+                               
                             </form>
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!--/.col (left) -->
-                    <!-- right column -->
-                    <div class="col-md-6">
-
-                    </div>
-                    <!--/.col (right) -->
+                    
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
