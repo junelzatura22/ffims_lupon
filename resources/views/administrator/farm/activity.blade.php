@@ -82,128 +82,17 @@
 
 
                                                     <div class="card-tools">
-                                                        <button type="button" class="btn btn-sm btn-primary"
-                                                            data-card-widget="collapse"><i class="fas fa-plus"></i>&nbsp;Add
+
+                                                        <a href="{{ route('f2.createActivity', ['id' => $f2_data->ff_id, 'fid' => $item->id]) }}"
+                                                            class="btn btn-sm btn-success"><i
+                                                                class="fas fa-plus"></i>&nbsp;Add
                                                             Activity
-                                                        </button>
+                                                        </a>
                                                     </div>
 
                                                 </div>
 
-                                                <div class="card-body">
 
-                                                    <form action="" method="post" id="saveActivity">
-                                                        @csrf
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Commodity</label>
-                                                                <select name="program_id" id="program_id"
-                                                                    class="form-select form-select-sm">
-                                                                    <option value="">[Select Programs]</option>
-                                                                    @foreach ($programData as $programs)
-                                                                        <option
-                                                                            value="{{ route('management.loadprogramcategory', $programs->program_id) . '@' . $programs->program_id }}">
-                                                                            {{ $programs->program_name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Sub-Commodity</label>
-                                                                <select name="pc_id" id="pc_id"
-                                                                    class="form-select form-select-sm">
-                                                                    <option value="">[Sub-Commodity]</option>
-
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Area (Has)</label>
-                                                                <input type="text" name="area" id="area"
-                                                                    placeholder="Enter Area"
-                                                                    class="form-control form-control-sm">
-                                                                <input type="hidden" name="farm_id" id="farm_id"
-                                                                    value="{{ $item->id }}">
-                                                            </div>
-
-                                                            <div class="col-md-4">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Hills</label>
-                                                                <input type="text" name="hills" id="hills"
-                                                                    placeholder="Enter No. of Hills"
-                                                                    class="form-control form-control-sm">
-                                                            </div>
-
-                                                            <div class="col-md-4">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;No. of
-                                                                    Heads</label>
-                                                                <input type="number" name="no_of_heads" id="no_of_heads"
-                                                                    placeholder="Enter No. of Heads"
-                                                                    class="form-control form-control-sm" min="0">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Farm Type</label>
-
-                                                                <select name="farmtype" id="farmtype"
-                                                                    class="form-select form-select-sm">
-                                                                    <option value="">[ Select ]</option>
-                                                                    <option value="Irrigated">Irrigated</option>
-                                                                    <option value="Rainfed Upland">Rainfed Upland</option>
-                                                                    <option value="Rainfed Lowland">Rainfed Lowland
-                                                                    </option>
-                                                                    <option value="None">None</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-md-4">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Is Organic?</label>
-                                                                <select name="is_organic" id="is_organic"
-                                                                    class="form-select form-select-sm">
-                                                                    <option value="">[ Select ]</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label for="" class="form-label"><span
-                                                                        class="text-red">*</span>&nbsp;Remarks</label>
-                                                                <input type="text" name="remarks" id="remarks"
-                                                                    placeholder="Enter Remarks"
-                                                                    class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row mt-2">
-                                                            <div>
-                                                                <span class="float-start">
-                                                                    <small> <strong class="text-red">All fields (*) are
-                                                                            required!</strong></small>
-                                                                </span>
-                                                                <input type="submit"
-                                                                    class="btn btn-sm btn-success float-end"
-                                                                    value="Save">
-                                                            </div>
-                                                        </div>
-
-                                                    </form>
-
-                                                  
-
-                                                </div>
 
                                             </div>
 
@@ -224,24 +113,55 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>1.</td>
-                                                                <td>Rice</td>
-                                                                <td class="text-center">O.5</td>
-                                                                <td class="text-center">Irrigated</td>
-                                                                <td class="text-center">No</td>
 
+                                                            @php
+                                                                
+                                                                $modelData = \App\Models\FarmActivity::showAllFarmActivity($item->id);
+                                                                $totalArea = 0;
+                                                            @endphp
 
-                                                                <td>
-                                                                    <a href=""
-                                                                        class="btn btn-sm btn-success p-1"><i
-                                                                            class="fa-solid fa-pen-to-square "
-                                                                            title="Edit Program"></i></a>
+                                                            @foreach ($modelData as $index => $farmActivity)
+                                                                <tr>
+                                                                    <td>{{ $index + 1 . '.' }}</td>
 
+                                                                    @php
+                                                                        $farmCommodity = $farmActivity->commodity . ', ' . $farmActivity->subcommododity;
+                                                                        $farmComName = '';
+                                                                        
+                                                                        switch ($farmCommodity) {
+                                                                            case 'RICE, RICE':
+                                                                                $farmComName = 'RICE';
+                                                                                break;
+                                                                            case 'CORN, CORN':
+                                                                                $farmComName = 'CORN';
+                                                                                break;
+                                                                            default:
+                                                                                $farmComName = $farmCommodity;
+                                                                                break;
+                                                                        }
+                                                                        
+                                                                    @endphp
 
-                                                                </td>
-                                                            </tr>
+                                                                    <td>{{ $farmComName }}
+                                                                    </td>
+                                                                    <td class="text-center">{{ $farmActivity->area }}</td>
 
+                                                                    @php
+                                                                        $totalArea += $farmActivity->area;
+                                                                    @endphp
+
+                                                                    <td class="text-center">{{ $farmActivity->farmtype }}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        {{ $farmActivity->is_organic }}</td>
+                                                                    <td>
+                                                                        <a href="{{ route('f2.updateactivity', ['id' => $f2_data->ff_id, 'fid' => $item->id, 'aid' => $farmActivity->id]) }}"
+                                                                            class="btn btn-sm btn-success p-1"><i
+                                                                                class="fa-solid fa-pen-to-square "
+                                                                                title="Edit Program"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
 
 
                                                         </tbody>
@@ -250,7 +170,7 @@
 
                                                 </div>
                                                 <div class="card-footer">
-                                                    <h6>Total Area: <strong>0</strong>&nbsp;(has)</h6>
+                                                    <h6>Total Area: <strong>{{ $totalArea }}</strong>&nbsp;(has)</h6>
                                                 </div>
 
 
@@ -258,11 +178,11 @@
                                             </div>
 
 
-                                            
+
 
                                         </div>
 
-                                      
+
 
 
 

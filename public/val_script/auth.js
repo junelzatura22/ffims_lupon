@@ -581,12 +581,14 @@ $(document).ready(function () {
         doubleValueOnly(val, $(this));
     });
 
-    $("#saveActivity #area,#saveActivity #hills").keyup(function () {
-        var val = $(this).val();
-        doubleValueOnly(val, $(this));
-    });
+    $("#saveCreateActivity #area,#saveCreateActivity #hills, #updateCreateActivity #area, #updateCreateActivity #hills").keyup(
+        function () {
+            var val = $(this).val();
+            doubleValueOnly(val, $(this));
+        }
+    );
 
-    $("#saveActivity #remarks").keyup(function () {
+    $("#saveCreateActivity #remarks,#updateCreateActivity #remarks").keyup(function () {
         const node = $(this);
         node.val(upperCase(node));
     });
@@ -626,17 +628,17 @@ $(document).ready(function () {
     // Adding Farm Activity Using A modal
     // #modalFarmName, #modalFarmName
 
-    $("#saveActivity #program_id").on("change", function () {
+    $("#saveCreateActivity #program_id").on("change", function () {
         const progUrm = $(this).val(); //the url
         const url = progUrm.split("@");
-        $("#saveActivity #pc_id").html("");
+        $("#saveCreateActivity #pc_id").html("");
         $.ajax({
             url: url,
             type: "get",
             dataType: "json",
             success: function (response) {
                 $.each(response.programCategory, function (key, value) {
-                    $("#saveActivity #pc_id").append(
+                    $("#saveCreateActivity #pc_id").append(
                         '<option value="' +
                             value.pc_id +
                             '">' +
@@ -651,7 +653,32 @@ $(document).ready(function () {
         });
     });
 
-    $("#saveActivity").validate({
+    $("#updateCreateActivity #program_id").on("change", function () {
+        const progUrm = $(this).val(); //the url
+        const url = progUrm.split("@");
+        $("#updateCreateActivity #pc_id").html("");
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            success: function (response) {
+                $.each(response.programCategory, function (key, value) {
+                    $("#updateCreateActivity #pc_id").append(
+                        '<option value="' +
+                            value.pc_id +
+                            '">' +
+                            value.pc_name +
+                            "</option>"
+                    );
+                });
+            },
+            error: function () {
+                swal("OPPS!", "Error Loading Region ", "error");
+            },
+        });
+    });
+
+    $("#saveCreateActivity").validate({
         rules: {
             program_id: {
                 required: true,
@@ -715,8 +742,99 @@ $(document).ready(function () {
         unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass("is-invalid");
         },
+        submitHandler: function (form) {
+            var actualArea = $("#saveCreateActivity #area").val(); //not used, just for reference
+            var remainingArea = $("#createActivity #remainingArea").html();
+
+            if (actualArea <= remainingArea) {
+                form.submit();
+            } else {
+                swal("OPPS!", "The area should be least or equal to claimable area!", "error");
+                $("#saveCreateActivity #area").addClass("is-invalid");
+            }
+        },
+    });
+    $("#updateCreateActivity").validate({
+        rules: {
+            program_id: {
+                required: true,
+            },
+            pc_id: {
+                required: true,
+            },
+            area: {
+                required: true,
+            },
+            hills: {
+                required: true,
+            },
+            no_of_heads: {
+                required: true,
+            },
+            farmtype: {
+                required: true,
+            },
+            is_organic: {
+                required: true,
+            },
+            remarks: {
+                required: true,
+            },
+        },
+        messages: {
+            program_id: {
+                required: "This field is required",
+            },
+            pc_id: {
+                required: "This field is required",
+            },
+            area: {
+                required: "This field is required",
+            },
+            hills: {
+                required: "This field is required",
+            },
+            no_of_heads: {
+                required: "This field is required",
+            },
+            farmtype: {
+                required: "This field is required",
+            },
+            is_organic: {
+                required: "This field is required",
+            },
+            remarks: {
+                required: "This field is required",
+            },
+        },
+        errorElement: "span",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass("is-invalid");
+        },
+        submitHandler: function (form) {
+            var actualArea = $("#updateCreateActivity #area").val(); //not used, just for reference
+            var remainingArea = $("#createActivity #remainingArea").html();
+
+            if (actualArea <= remainingArea) {
+                form.submit();
+            } else {
+                swal("OPPS!", "The area should be least or equal to the updatable area!", "error");
+                $("#updateCreateActivity #area").addClass("is-invalid");
+            }
+        },
     });
 
+    $("#saveCreateActivity #area, #updateCreateActivity #area").keyup(function () {
+        $(this).removeClass("is-invalid");
+    });
+ 
     /******* FUNCTIONS *******/
 
     function doubleValueOnly(value, selectors) {

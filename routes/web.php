@@ -75,14 +75,14 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::post('location/location', [LocationController::class, 'store'])->name('location.store');
     Route::post('location/update/', [LocationController::class, 'update'])->name('location.update');
     //for the RBO - List
-    Route::get('management/rbo/list', [RBOController::class, 'index'])->name('rbo.index');
-    Route::get('management/rbo/cluster', [RBOController::class, 'cluster'])->name('rbo.cluster');
-    Route::get('management/rbo/association', [RBOController::class, 'association'])->name('rbo.association');
-    Route::get('management/rbo/association/create', [RBOController::class, 'createAssociation'])->name('rbo.createassociation');
-    Route::post('management/rbo/association/create', [RBOController::class, 'storeAssociation'])->name('rbo.storeassociation');
-    Route::get('management/rbo/association/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
-    Route::get('management/rbo/association/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
-    Route::post('management/rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
+    Route::get('rbo/list', [RBOController::class, 'index'])->name('rbo.index');
+    Route::get('rbo/cluster', [RBOController::class, 'cluster'])->name('rbo.cluster');
+    Route::get('rbo/association', [RBOController::class, 'association'])->name('rbo.association');
+    Route::get('rbo/association/create', [RBOController::class, 'createAssociation'])->name('rbo.createassociation');
+    Route::post('rbo/association/create', [RBOController::class, 'storeAssociation'])->name('rbo.storeassociation');
+    Route::get('rbo/association/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
+    Route::get('rbo/association/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
+    Route::post('rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
     Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');
@@ -103,8 +103,11 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::get('f2/list/farm/updatefarmstatus/{id}', [FarmDetailController::class, 'updateFarmStatus'])->name('f2.updatefarmstatus');
     //farm activity
     Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
-    Route::post('f2/list/activity/{id}', [FarmActivityController::class, 'storeActivity'])->name('f2.storeactivity'); 
-
+    //route for creating new activity
+    Route::get('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'createActivity'])->name('f2.createActivity'); 
+    Route::post('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'storeActivity'])->name('f2.storeactivity');
+    Route::get('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'updateActivity'])->name('f2.updateactivity');  
+    Route::post('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'getDataToUpdate'])->name('f2.getdatatoupdate');  
 });
 Route::group(['middleware' => ['nohistory', 'technician'], 'prefix' => 'technician'], function () {
     //technician

@@ -26,6 +26,8 @@ class FarmerFisherFolkController extends Controller
         $data['f2'] = FarmerFisherfolk::showFarmerFisherfolk();
         $data['identifier'] = "Farmer and Fisherfolk List";
         $data['data'] = "F2 List - FFIMS Systems";
+        $citymun_id = FixedLocation::showMyLocation()->citymun_id;
+        $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
         return view('administrator.f2.list', $data);
     }
    
