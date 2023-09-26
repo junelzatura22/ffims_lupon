@@ -30,6 +30,7 @@ class DashboardController extends Controller
             $data['totalAssociationInactive'] = Association::where('as_status', '=', 'Inactive')->count();
             $data['data'] = "Admin Dashboard - FFIMS Systems";
             return view('administrator.dashboard', $data);
+            
         } else if (Auth::user()->role == "Technician") {
             $data['data'] = "Technician Dashboard - FFIMS Systems";
 

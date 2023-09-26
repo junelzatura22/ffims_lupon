@@ -4,7 +4,7 @@ use App\Models\Program;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-Breadcrumbs::for('administrator.dashboard', function (BreadcrumbTrail $trail): void {
+Breadcrumbs::for('Dashboard', function (BreadcrumbTrail $trail): void {
     $trail->push('Dashboard', route('administrator.dashboard'));
 });
 Breadcrumbs::for('management.program', function (BreadcrumbTrail $trail): void {
@@ -22,7 +22,7 @@ Breadcrumbs::for('management.getdtoupdate', function (BreadcrumbTrail $trail, $p
 // for the farmer and fisherfolk breadcrumbs 
 
 Breadcrumbs::for('f2.index', function (BreadcrumbTrail $trail): void {
-    $trail->parent('administrator.dashboard');
+    $trail->parent('Dashboard');
     $trail->push('F2 List', route('f2.index'));
 });
 Breadcrumbs::for('f2.create', function (BreadcrumbTrail $trail): void {

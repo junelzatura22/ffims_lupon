@@ -35,6 +35,8 @@ class AuthController extends Controller
                 $data = "FFIMS | Guest Dashboard";
                 return view('guest.dashboard', compact('data', 'identifier'));
             }
+        }else{
+            self::logout();
         }
 
         return view('auth.login');
