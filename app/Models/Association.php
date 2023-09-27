@@ -16,9 +16,11 @@ class Association extends Model
 
     public static function showAllAssociations()
     {
-        $data = DB::table('association')->select('association.*', 'refbrgy.brgyDesc as barName', 'program.program_name as pName')
+        $data = DB::table('association')->select('association.*', 'refbrgy.brgyDesc as barName',
+         'program.program_name as pName', DB::raw("IFNULL((select count(*) from ffdetails f where association.as_id = f.assoc_id),0) as regToAssoc"))
             ->join('refbrgy', 'refbrgy.id', 'association.barangay_id')
-            ->join('program', 'program.program_id', 'association.belongs_to_program');
+            ->join('program', 'program.program_id', 'association.belongs_to_program')
+            ->where("association.as_id","!=",14);
 
         if (!empty(Request::get('barid'))) {
             $data = $data->where('association.barangay_id', '=', Request::get('barid'));
@@ -27,8 +29,9 @@ class Association extends Model
             $data = $data->where('association.belongs_to_program', '=', Request::get('pid'));
         }
         if (!empty(Request::get('assoc'))) {
-            $data = $data->orWhere(DB::raw("concat(`nameabbr`,' ',`namedesc`)"), 'like', '%' . Request::get('assoc') . '%');
+            $data = $data->where(DB::raw("concat(`nameabbr`,' ',`namedesc`)"), 'like', '%' . Request::get('assoc') . '%');
         }
+
         $data = $data->orderBy('association.created_at', 'desc')->paginate(10);
         return $data;
     }

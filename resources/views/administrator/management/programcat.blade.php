@@ -44,9 +44,8 @@
                                         <div class="col-md-5 ">
 
 
-                                            <input type="text" class="form-control" name="searchKey"
-                                                id="searchKey" value="{{ Request::get('searchKey') }}"
-                                                placeholder="Enter Category" />
+                                            <input type="text" class="form-control" name="searchKey" id="searchKey"
+                                                value="{{ Request::get('searchKey') }}" placeholder="Enter Category" />
 
                                         </div>
                                         <div class="col-md-5">
@@ -100,45 +99,58 @@
 
                             <!-- /.card-header -->
                             <div class="card-body p-2">
-                                <div class="table-responsive-sm">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-sm text-center">#</th>
-                                                <th class="text-sm ">Category</th>
-                                                <th class="text-sm">Program</th>
-                                                <th class="text-sm ">Date Created</th>
-                                                <th class="text-sm ">Created By</th>
-                                                <th class="text-center text-sm">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($programCatData as $index => $dataItem)
-                                                <tr id="{{ $dataItem->pc_id }}" class="{{ $dataItem->pc_name }}">
-                                                    <td class="bg-gradient-green text-sm font-weight-bold text-center">
-                                                        {{ $programCatData->firstItem() + $index }}</td>
-                                                    <td class="">{{ $dataItem->pc_name }}</td>
-                                                    <td class="text-sm">{{ $dataItem->program_name }}</td>
-                                                    <td class="text-sm ">
-                                                        {{ date('F, d Y h:i A', strtotime($dataItem->created_at)) }}</td>
-                                                    <td class="text-sm">{{ $dataItem->name . ' ' . $dataItem->lastname }}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a href="{{ route('management.getprogramcategory', ['pc_id' => $dataItem->pc_id]) }}"
-                                                            data-bs-toggle="tooltip"><i
-                                                                class="fa-solid fa-pen-to-square bg-gradient-green p-1"
-                                                                data-bs-placement="bottom" title="Edit Program"></i></a>
 
-
-                                                        <a href="#" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteStatusModal" class="deleteStatusModal"><i
-                                                                class="fa-solid fa-trash-can-arrow-up bg-danger p-1"></i></a>
-                                                    </td>
+                                @if ($programCatData->count() == 0)
+                                    <div class="col text-center p-2">
+                                        <h6>Sorry, no result found!</h6>
+                                    </div>
+                                @else
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-sm text-center">#</th>
+                                                    <th class="text-sm ">Category</th>
+                                                    <th class="text-sm">Program</th>
+                                                    <th class="text-sm ">Date Created</th>
+                                                    <th class="text-sm ">Created By</th>
+                                                    <th class="text-center text-sm">Action</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($programCatData as $index => $dataItem)
+                                                    <tr id="{{ $dataItem->pc_id }}" class="{{ $dataItem->pc_name }}">
+                                                        <td class="bg-gradient-green text-sm font-weight-bold text-center">
+                                                            {{ $programCatData->firstItem() + $index }}</td>
+                                                        <td class="">{{ $dataItem->pc_name }}</td>
+                                                        <td class="text-sm">{{ $dataItem->program_name }}</td>
+                                                        <td class="text-sm ">
+                                                            {{ date('F, d Y h:i A', strtotime($dataItem->created_at)) }}
+                                                        </td>
+                                                        <td class="text-sm">
+                                                            {{ $dataItem->name . ' ' . $dataItem->lastname }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="{{ route('management.getprogramcategory', ['pc_id' => $dataItem->pc_id]) }}"
+                                                                data-bs-toggle="tooltip"><i
+                                                                    class="fa-solid fa-pen-to-square bg-gradient-green p-1"
+                                                                    data-bs-placement="bottom" title="Edit Program"></i></a>
+
+
+                                                            <a href="#" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteStatusModal"
+                                                                class="deleteStatusModal"><i
+                                                                    class="fa-solid fa-trash-can-arrow-up bg-danger p-1"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+
+
+
                             </div>
                             <div class="card-footer clearfix">
                                 <ul class="pagination pagination-md m-0 float-right">
