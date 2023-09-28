@@ -69,7 +69,7 @@ class AuthController extends Controller
                 return redirect('/')->with('error', 'Invalid Username/Password!');
             }
         } catch (Exception $e) {
-            echo 'Database connection failed...';
+            return back();
           
         }
         

@@ -62,21 +62,21 @@
                                                <p>Program Category</p>
                                            </a>
                                        </li>
-                                      
+
                                    </ul>
                                </li>
 
-                                {{-- Start Multiple level dropdown   --}}
-                                <li class="nav-item @if (Request::segment(2) == 'rbo') menu-open @endif">
-                                    <a href="#" class="nav-link @if (Request::segment(2) == 'rbo') active @endif">
-                                        <i class="fa-solid fa-house-user nav-icon"></i>
-                                        <p>
-                                            RBO
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
+                               {{-- Start Multiple level dropdown   --}}
+                               <li class="nav-item @if (Request::segment(2) == 'rbo') menu-open @endif">
+                                   <a href="#" class="nav-link @if (Request::segment(2) == 'rbo') active @endif">
+                                       <i class="fa-solid fa-house-user nav-icon"></i>
+                                       <p>
+                                           RBO
+                                           <i class="right fas fa-angle-left"></i>
+                                       </p>
+                                   </a>
+                                   <ul class="nav nav-treeview">
+                                       {{-- <li class="nav-item">
                                             <a href="{{ route('rbo.index') }}"
                                                 class="nav-link @if (Request::segment(3) == 'list') active @endif">
                                                 <i class="fa-solid fa-highlighter nav-icon"></i>
@@ -89,18 +89,42 @@
                                                 <i class="fa-solid fa-highlighter nav-icon"></i>
                                                 <p>Cluster</p>
                                             </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('rbo.association') }}"
-                                                class="nav-link @if (Request::segment(3) == 'association') active @endif">
-                                                <i class="fa-solid fa-highlighter nav-icon"></i>
-                                                <p>Association</p>
-                                            </a>
-                                        </li>
+                                        </li> --}}
 
-                                    </ul>
-                                </li>
-                                {{-- End Multiple level dropdown   --}}
+                                       <li class="nav-item @if (Request::segment(2) == 'rbo') menu-open @endif">
+                                           <a href="#" class="nav-link @if (Request::segment(2) == 'rbo') active @endif">
+                                               <i class="fa-solid fa-house-user nav-icon"></i>
+                                               <p>
+                                                   Association
+                                                   <i class="right fas fa-angle-left"></i>
+                                               </p>
+                                           </a>
+
+                                           <ul class="nav nav-treeview">
+                                               <li class="nav-item">
+                                                   <a href="{{ route('rbo.association') }}"
+                                                       class="nav-link @if (Request::segment(3) == 'association') active @endif">
+                                                       <i class="fa-regular fa-circle-stop nav-icon"></i>
+                                                       <p>List</p>
+                                                   </a>
+                                               </li>
+                                               <li class="nav-item">
+                                                   <a href="{{ route('rbo.associationprofileindex') }}"
+                                                       class="nav-link @if (Request::segment(4) == 'profile') active @endif">
+                                                       <i class="fa-regular fa-circle-stop nav-icon"></i>
+                                                       <p>Association Profile</p>
+
+                                                   </a>
+                                               </li>
+                                           </ul>
+                                       </li>
+
+
+
+
+                                   </ul>
+                               </li>
+                               {{-- End Multiple level dropdown   --}}
 
 
                                <li class="nav-item  @if (Request::segment(2) == 'f2') menu-open @endif">
@@ -120,7 +144,7 @@
                                                <p>Profile List</p>
                                            </a>
                                        </li>
-                                      
+
                                    </ul>
                                </li>
 

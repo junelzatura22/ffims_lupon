@@ -8,6 +8,7 @@ Breadcrumbs::for('Dashboard', function (BreadcrumbTrail $trail): void {
     $trail->push('Dashboard', route('administrator.dashboard'));
 });
 Breadcrumbs::for('management.program', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Dashboard');
     $trail->push('Program', route('management.program'));
 });
 Breadcrumbs::for('management.createprogram', function (BreadcrumbTrail $trail): void {
@@ -20,6 +21,7 @@ Breadcrumbs::for('management.getdtoupdate', function (BreadcrumbTrail $trail, $p
 });
 //For the program category
 Breadcrumbs::for('ProgramCategory', function (BreadcrumbTrail $trail): void {
+        $trail->parent('management.program');
     $trail->push('Program Category', route('management.programcategory'));
 });
 Breadcrumbs::for('ProgramCategoryCreate', function (BreadcrumbTrail $trail): void {
@@ -33,6 +35,7 @@ Breadcrumbs::for('ProgramCategoryUpdate', function (BreadcrumbTrail $trail): voi
 
 //for the association 
 Breadcrumbs::for('Association', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Dashboard');
     $trail->push('Association List', route('rbo.association'));
 });
 Breadcrumbs::for('createAssociation', function (BreadcrumbTrail $trail): void {
@@ -43,6 +46,12 @@ Breadcrumbs::for('updateAssociation', function (BreadcrumbTrail $trail): void {
     $trail->parent('Association');
     $trail->push('Update Association');
 });
+//Association Profile
+Breadcrumbs::for('associationProfile', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Association');
+    $trail->push('Association Profile', route('rbo.associationprofileindex'));
+});
+
 
 // for the farmer and fisherfolk breadcrumbs 
 

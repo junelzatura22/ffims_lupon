@@ -159,11 +159,11 @@
                                                     <td class="text-sm">{{ $item->barName }}</td>
                                                     <td>
                                                         <div class="d-flex gap-1">
-                                                            <a href="" class="btn btn-sm btn-primary "
+                                                            {{-- <a href="" class="btn btn-sm btn-primary "
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Add Member">
                                                                 <i class="fa-solid fa-user-plus"></i>
-                                                            </a>
+                                                            </a> --}}
                                                             <a href="{{ route('rbo.update', $item->as_id) }}"
                                                                 class="btn btn-sm btn-warning " data-bs-toggle="tooltip"
                                                                 data-bs-placement="top" title="Edit Association">

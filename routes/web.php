@@ -83,6 +83,8 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::get('rbo/association/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
     Route::get('rbo/association/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
     Route::post('rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
+    //association profile route
+    Route::get('rbo/association/profile', [RBOController::class, 'associationProfileIndex'])->name('rbo.associationprofileindex');
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
     Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');

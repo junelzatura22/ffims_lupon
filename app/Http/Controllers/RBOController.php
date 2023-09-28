@@ -151,4 +151,13 @@ class RBOController extends Controller
         $associationData->touch();
         return response()->json(['success' => 'Status was successfully modified to ' . $status]);
     }
+
+
+    //for the association controller
+    public function associationProfileIndex()
+    {
+        $data['identifier'] = "Association | Profile";
+       
+        return view('administrator.rbo.associationprofile', $data);
+    }
 }
