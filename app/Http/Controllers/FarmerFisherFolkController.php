@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Association;
+use App\Models\AssociationProfile;
 use App\Models\Barangay;
 use App\Models\CityMun;
 use App\Models\FarmerFisherfolk;
@@ -30,7 +31,7 @@ class FarmerFisherFolkController extends Controller
         $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
         return view('administrator.f2.list', $data);
     }
-   
+
     public function information($id)
     {
         $f2_id = FarmerFisherfolk::find($id);
@@ -105,7 +106,7 @@ class FarmerFisherFolkController extends Controller
             "income_non_farming" => "required",
         ]);
 
-        $l_id = livelihood::showLivelihoodByF2($id)->l_id;//get the ID by user
+        $l_id = livelihood::showLivelihoodByF2($id)->l_id; //get the ID by user
         $livelihood = livelihood::find($l_id);
 
 
@@ -424,12 +425,24 @@ class FarmerFisherFolkController extends Controller
         $ffDetails->id_type = $request->id_type;
         $ffDetails->id_number = $request->id_number;
         $ffDetails->is_assoc_member = $request->is_assoc_member;
-        $ffDetails->assoc_id = $request->assoc_id;
+        $ffDetails->assoc_id = 14;//disable this function
         $ffDetails->contact_person = $request->contact_person;
         $ffDetails->contact_number = $request->contact_number;
         $ffDetails->contact_relation = $request->contact_relation;
         $ffDetails->created_by = Auth::user()->id;
         $ffDetails->touch();
+
+        if ($request->assoc_id != 0) {
+            $associationProfile = new AssociationProfile();
+            $associationProfile->assoc_id = $request->assoc_id;
+            $associationProfile->entity = $id;
+            $associationProfile->membersince = "0000";
+            $associationProfile->status = "Active";
+            $associationProfile->register_by = Auth::user()->id;
+            $associationProfile->save();
+        }
+
+
         return back()->with('success', 'Detailed was successfully updated!');
     }
 }

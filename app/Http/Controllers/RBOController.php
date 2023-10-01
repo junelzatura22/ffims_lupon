@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Association;
+use App\Models\AssociationProfile;
 use App\Models\Barangay;
 use App\Models\FixedLocation;
 use App\Models\Program;
@@ -157,7 +158,10 @@ class RBOController extends Controller
     public function associationProfileIndex()
     {
         $data['identifier'] = "Association | Profile";
-       
+        $data['assProfile'] = AssociationProfile::showAll();  
         return view('administrator.rbo.associationprofile', $data);
     }
+
+    // insert association profile 
+    
 }

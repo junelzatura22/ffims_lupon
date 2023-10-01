@@ -40,128 +40,127 @@
                             {{-- start of card body  --}}
                             <div class="row">
 
-                                <div class="col-md-6">
-                                    <!-- Box Comment -->
-                                    <div class="card card-widget">
-                                        <div class="card-header">
-                                            <div>
-                                                <h6 class="text-center"><strong>Association Name</strong></h6>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <div class="user-block">
-                                                    <img class="img-circle" src="{{ asset('/dist/img/user1-128x128.jpg') }}"
-                                                        alt="User Image">
-                                                    <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
-                                                    <span class="description">Association President</span>
+
+                                @foreach ($assProfile as $profile)
+                                    <div class="col-md-6">
+                                        <!-- Box Comment -->
+                                        <div class="card card-widget card-outline card-success">
+                                            <div class="card-header">
+                                                <div>
+                                                    <h5 class="text-center mb-2"><strong>
+
+                                                            {{ $profile->name }}</strong></h5>
                                                 </div>
-                                                <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
+
+                                                @php
+                                                    $presidentName = \App\Models\AssociationProfile::getPresidentDetails($profile->assoc_id);
+                                                    
+                                                    $image = empty($presidentName->imahe) ? 'avatar.png' : $presidentName->imahe;
+                                                @endphp
+
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="user-block">
+                                                        <img class="img-circle border shadow p-1" src="{{ asset('asset/f2/' . $image . '') }}"
+                                                            alt="User Image">
+
+
+                                                        <span class="username">
+                                                            <a href="#">
+                                                                {{ empty($presidentName->farmer) ? 'No President Assigned' : $presidentName->farmer }}
+                                                            </a></span>
+                                                        <span class="description">Association President</span>
+                                                    </div>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
+
                                             </div>
+                                            <div class="card-body">
+                                                @php
+                                                    
+                                                    $forOfficials = \App\Models\AssociationProfile::loadMembers($profile->assoc_id, 'Sort');
+                                                    
+                                                    $counter = 1;
+                                                @endphp
 
-                                        </div>
-                                        <div class="card-body">
 
-                                            <div class="card">
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <div class="card-header">
-                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                <h3 class="card-title text-primary">List of Officials</h3>
 
-                                                                <div class="card-tools">
-                                                                    <a href="" class="btn btn-sm btn-primary "
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                        title="Add Member">
-                                                                        <i class="fa-solid fa-user-plus"></i>
-                                                                    </a>
+                                                <div class="card">
+                                                    <div class="row mb-2">
+                                                        <div class="col">
+                                                            <div class="card-header">
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-between">
+                                                                    <h6 class="card-title text-primary">List of Officials
+                                                                    </h6>
+
+                                                                    <div class="card-tools">
+                                                                        <a href="" class="btn btn-sm btn-primary "
+                                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                            title="Add Member">
+                                                                            <i class="fa-solid fa-user-plus"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body">
+                                                                <table class="table table-sm">
+                                                                    <thead>
+
+                                                                        <tr>
+                                                                            <th style="width: 10px">#</th>
+                                                                            {{-- <th>Image</th> --}}
+                                                                            <th>Name</th>
+                                                                            <th>Position</th>
+                                                                            <th>Member Since</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+
+                                                                        @foreach ($forOfficials as $item)
+                                                                            <tr>
+                                                                                <td>{{ $counter++ }}.</td>
+                                                                                {{-- <td>
+                                                                                    <div class="user-block">
+                                                                                        <img class="img-circle"
+                                                                                            src="{{ asset('/dist/img/user1-128x128.jpg') }}"
+                                                                                            alt="User Image">
+                                                                                    </div>
+                                                                                </td> --}}
+                                                                                <td>{{ $item->farmer }}</td>
+                                                                                <td> {{ $item->assoc_position }}</td>
+                                                                                <td>{{ $item->membersince }}</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+
+
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.card-body -->
+
+
                                                         </div>
-                                                        <!-- /.card-header -->
-                                                        <div class="card-body">
-                                                            <table class="table table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Task</th>
-                                                                        <th>Progress</th>
-                                                                        <th style="width: 40px">Label</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1.</td>
-                                                                        <td>Update software</td>
-                                                                        <td>
-                                                                            <div class="progress progress-xs">
-                                                                                <div class="progress-bar progress-bar-danger"
-                                                                                    style="width: 55%"></div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td><span class="badge bg-danger">55%</span></td>
-                                                                    </tr>
-
-
-
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <!-- /.card-body -->
-
-
                                                     </div>
+
+
                                                 </div>
-
-                                                <div class="row mt-2">
-                                                    <div class="col">
-                                                        <div class="card-header">
-                                                            <h3 class="card-title text-primary">List of Members</h3>
-                                                        </div>
-                                                        <!-- /.card-header -->
-                                                        <div class="card-body p-0">
-                                                            <table class="table table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Task</th>
-                                                                        <th>Progress</th>
-                                                                        <th style="width: 40px">Label</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>1.</td>
-                                                                        <td>Update software</td>
-                                                                        <td>
-                                                                            <div class="progress progress-xs">
-                                                                                <div class="progress-bar progress-bar-danger"
-                                                                                    style="width: 55%"></div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td><span class="badge bg-danger">55%</span></td>
-                                                                    </tr>
-
-
-
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <!-- /.card-body -->
-
-                                                    </div>
-                                                </div>
-
-
-
 
                                             </div>
-
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
+
+
 
                                 {{-- end of card body  --}}
                             </div>

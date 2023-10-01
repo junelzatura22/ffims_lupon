@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('register_by');
             $table->string("membersince");
             $table->string("status")->default('Active');
+            $table->string("assoc_position")->default('Member');
+            $table->unsignedInteger('assoc_order')->default(0);
             $table->foreign('assoc_id')->references('as_id')->on('association');
             $table->foreign('entity')->references('ff_id')->on('farmerfisherfolk');
             $table->foreign('register_by')->references('id')->on('users');
