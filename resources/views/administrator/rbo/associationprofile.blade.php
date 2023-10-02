@@ -99,10 +99,10 @@
                                                                     </h6>
 
                                                                     <div class="card-tools">
-                                                                        <a href="" class="btn btn-sm btn-primary "
+                                                                        <a href="{{ route('rbo.associationprofiledata',$profile->assoc_id) }}" class="btn btn-sm btn-primary "
                                                                             data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                            title="Add Member">
-                                                                            <i class="fa-solid fa-user-plus"></i>
+                                                                            title="View Association">
+                                                                            <i class="fa-solid fa-building-wheat"></i>&nbsp;View Association
                                                                         </a>
                                                                     </div>
                                                                 </div>

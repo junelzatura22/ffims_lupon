@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Association;
 use App\Models\AssociationProfile;
 use App\Models\Barangay;
+use App\Models\FarmerFisherfolk;
 use App\Models\FixedLocation;
 use App\Models\Program;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class RBOController extends Controller
     {
         $data['data'] = "Association - FFIMS Systems";
         $data['listOfProgram'] = Program::where(['program_status' => 'Active', 'program.is_deleted' => '0'])->where('program_id', '!=', 37)
-        ->orderBy('program.created_at', 'desc')->get();
+            ->orderBy('program.created_at', 'desc')->get();
         $data['association'] = Association::showAllAssociations();
         $data['identifier'] = "RBO | RBO List of Association";
         $citymun_id = FixedLocation::showMyLocation()->citymun_id;
@@ -77,7 +78,6 @@ class RBOController extends Controller
             "barangay_id.required" => "Please select Barangay",
         ]);
 
-
         $association = new Association();
         $association->nameabbr = trim(strtoupper($request->nameabbr));
         $association->namedesc = trim(strtoupper($request->namedesc));
@@ -117,7 +117,7 @@ class RBOController extends Controller
             return view('administrator.rbo.updateass', $data);
         } else {
             return redirect()->back();
-        }    
+        }
     }
     public function updateAssociation(Request $request, $id)
     {
@@ -153,15 +153,52 @@ class RBOController extends Controller
         return response()->json(['success' => 'Status was successfully modified to ' . $status]);
     }
 
-
     //for the association controller
     public function associationProfileIndex()
     {
         $data['identifier'] = "Association | Profile";
-        $data['assProfile'] = AssociationProfile::showAll();  
+        $data['assProfile'] = AssociationProfile::showAll();
         return view('administrator.rbo.associationprofile', $data);
     }
+    //for the association controller
+    public function associationProfileData($id)
+    {
 
-    // insert association profile 
-    
+        $associationData = Association::find($id);
+
+        if (!empty($associationData)) {
+            $data['identifier'] = "Association | " . $associationData->nameabbr;
+            $data['association'] = $associationData;
+            return view('administrator.rbo.associationdata', $data);
+        } else {
+            return redirect()->back();
+        }
+
+    }
+    public function registerToAssoc($id)
+    {
+
+        $associationData = Association::find($id);
+
+        if (!empty($associationData)) {
+            $citymun_id = FixedLocation::showMyLocation()->citymun_id;
+            $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
+            $data['f2'] = FarmerFisherfolk::searchFarmerFisherFolkByBarangay();
+            $data['identifier'] = "Association | " . $associationData->nameabbr;
+            $data['association'] = $associationData;
+            return view('administrator.rbo.registertoassoc', $data);
+        } else {
+            return redirect()->back();
+        }
+
+    }
+
+    public function saveToAssoc($id, Request $request)
+    {
+        dd($request->all());
+
+    }
+
+    // insert association profile
+
 }

@@ -835,6 +835,9 @@ $(document).ready(function () {
         $(this).removeClass("is-invalid");
     });
  
+      //Bootstrap Duallistbox
+      $('.duallistbox').bootstrapDualListbox();
+
     /******* FUNCTIONS *******/
 
     function doubleValueOnly(value, selectors) {

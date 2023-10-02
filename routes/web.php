@@ -77,14 +77,18 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     //for the RBO - List
     Route::get('rbo/list', [RBOController::class, 'index'])->name('rbo.index');
     Route::get('rbo/cluster', [RBOController::class, 'cluster'])->name('rbo.cluster');
-    Route::get('rbo/association', [RBOController::class, 'association'])->name('rbo.association');
-    Route::get('rbo/association/create', [RBOController::class, 'createAssociation'])->name('rbo.createassociation');
-    Route::post('rbo/association/create', [RBOController::class, 'storeAssociation'])->name('rbo.storeassociation');
-    Route::get('rbo/association/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
-    Route::get('rbo/association/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
-    Route::post('rbo/association/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
+    Route::get('rbo/association/list', [RBOController::class, 'association'])->name('rbo.association');
+    Route::get('rbo/association/list/create', [RBOController::class, 'createAssociation'])->name('rbo.createassociation');
+    Route::post('rbo/association/list/create', [RBOController::class, 'storeAssociation'])->name('rbo.storeassociation');
+    Route::get('rbo/association/list/updatestatus/{id}', [RBOController::class, 'updateStatus'])->name('rbo.updatestatus');
+    Route::get('rbo/association/list/update/{id}', [RBOController::class, 'update'])->name('rbo.update');
+    Route::post('rbo/association/list/update/{id}', [RBOController::class, 'updateAssociation'])->name('rbo.updateassociation');
     //association profile route
     Route::get('rbo/association/profile', [RBOController::class, 'associationProfileIndex'])->name('rbo.associationprofileindex');
+    Route::get('rbo/association/profile/{id}', [RBOController::class, 'associationProfileData'])->name('rbo.associationprofiledata');
+    Route::get('rbo/association/profile/{id}/register', [RBOController::class, 'registerToAssoc'])->name('rbo.registertoassoc');
+    Route::post('rbo/association/profile/{id}/register', [RBOController::class, 'saveToAssoc'])->name('rbo.savetoassoc');
+   
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
     Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');

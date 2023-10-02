@@ -51,6 +51,15 @@ Breadcrumbs::for('associationProfile', function (BreadcrumbTrail $trail): void {
     $trail->parent('Association');
     $trail->push('Association Profile', route('rbo.associationprofileindex'));
 });
+Breadcrumbs::for('associationData', function (BreadcrumbTrail $trail, $association): void {
+    $trail->parent('associationProfile');
+    $trail->push($association->nameabbr);
+});
+Breadcrumbs::for('associationReg', function (BreadcrumbTrail $trail,$association): void {
+    $trail->parent('associationProfile');
+    $trail->push($association->nameabbr, route('rbo.associationprofiledata',$association->as_id));
+    $trail->push("Register");
+});
 
 
 // for the farmer and fisherfolk breadcrumbs 

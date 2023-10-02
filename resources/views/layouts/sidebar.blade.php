@@ -103,7 +103,7 @@
                                            <ul class="nav nav-treeview">
                                                <li class="nav-item">
                                                    <a href="{{ route('rbo.association') }}"
-                                                       class="nav-link @if (Request::segment(3) == 'association') active @endif">
+                                                       class="nav-link @if (Request::segment(4) == 'list') active @endif">
                                                        <i class="fa-regular fa-circle-stop nav-icon"></i>
                                                        <p>List</p>
                                                    </a>

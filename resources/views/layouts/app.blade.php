@@ -74,7 +74,8 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 
-
+{{-- for the dual list  --}}
+<script src="{{ asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
 
 {{-- validations  --}}
 <script src="{{ asset('val_script/auth.js') }}"></script>

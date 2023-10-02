@@ -32,20 +32,36 @@ class AssociationProfile extends Model
             ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
             ->where('association_profiles.assoc_id', '=', $associationId)
             ->orderBy('association_profiles.assoc_order', 'asc')->get();
+        return $query;
+    }
 
-        // $members = DB::table('association_profiles')->select(
-        //     "association_profiles.*",
-        //     'association_profiles.assoc_id',
-        //     "association.namedesc as name",
-        //     DB::RAW("concat(fname,' ',lname,' ',extname) as farmer")
-        // )
-        //     ->join('association', 'association.as_id', 'association_profiles.assoc_id',)
-        //     ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
-        //     ->where('association_profiles.assoc_id', '=', $associationId)
-        //     ->where('assoc_position', '=', 'Member')
-        //     ->orderBy('created_at', 'asc')->get();
+    public static function loadData($associationId, $type)
+    {
+        $officials = DB::table('association_profiles')->select(
+            "association_profiles.*",
+            'association_profiles.assoc_id',
+            "association.namedesc as name",
+            DB::RAW("concat(fname,' ',lname,' ',extname) as farmer")
+        )
+            ->join('association', 'association.as_id', 'association_profiles.assoc_id')
+            ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
+            ->where('association_profiles.assoc_id', '=', $associationId)
+            ->where('assoc_position','!=','Member')
+            ->orderBy('association_profiles.assoc_order', 'asc')->get();
 
-        // $query = $type == "Member" ? $members : $officials;
+        $members = DB::table('association_profiles')->select(
+            "association_profiles.*",
+            'association_profiles.assoc_id',
+            "association.namedesc as name",
+            DB::RAW("concat(fname,' ',lname,' ',extname) as farmer")
+        )
+            ->join('association', 'association.as_id', 'association_profiles.assoc_id',)
+            ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
+            ->where('association_profiles.assoc_id', '=', $associationId)
+            ->where('assoc_position', '=', 'Member')
+            ->orderBy('created_at', 'asc')->get();
+
+        $query = $type == "Member" ? $members : $officials;
         return $query;
     }
 
