@@ -129,14 +129,14 @@
                                                             $extname = $item->extname === '[Select]' ? '' : $item->extname;
                                                             $mname = substr($item->mname, 0, 1) . '.';
                                                             $fullname = $item->fname . ' ' . ($mname === '..' ? '' : $mname) . ' ' . $item->lname . ' ' . $extname;
-                                                            $date = date_create($item->dob);
-                                                            $dobs = date_format($date, 'F d, Y');
+                                                            // $date = date_create($item->dob);
+                                                            // $dobs = date_format($date, 'F d, Y');
                                                         @endphp
 
                                                         <h3 class="profile-username text-center">
                                                             {{ $fullname }}</h3>
-                                                        <h5 class="text-center"><small><strong>
-                                                                    {{ $dobs }}</strong></small></h5>
+                                                        {{-- <h5 class="text-center"><small><strong>
+                                                                    {{ $dobs }}</strong></small></h5> --}}
 
                                                         <p class="text-muted text-center">
                                                             {{ $item->reg_type === 'All' ? 'Farmer and Fisherfolk' : $item->reg_type }}&nbsp;

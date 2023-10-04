@@ -33,6 +33,9 @@ Breadcrumbs::for('ProgramCategoryUpdate', function (BreadcrumbTrail $trail): voi
     $trail->push('Update Category');
 });
 
+
+
+
 //for the association 
 Breadcrumbs::for('Association', function (BreadcrumbTrail $trail): void {
     $trail->parent('Dashboard');
@@ -68,6 +71,12 @@ Breadcrumbs::for('f2.index', function (BreadcrumbTrail $trail): void {
     $trail->parent('Dashboard');
     $trail->push('F2 List', route('f2.index'));
 });
+
+Breadcrumbs::for('import', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Dashboard');
+    $trail->push('Import F2 Data', route('f2.import'));
+});
+
 Breadcrumbs::for('f2.create', function (BreadcrumbTrail $trail): void {
     $trail->parent('f2.index');
     $trail->push('Create', route('f2.create'));

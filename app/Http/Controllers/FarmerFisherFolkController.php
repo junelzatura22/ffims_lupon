@@ -6,17 +6,17 @@ use App\Models\Association;
 use App\Models\AssociationProfile;
 use App\Models\Barangay;
 use App\Models\CityMun;
+use App\Models\EntityVer;
 use App\Models\FarmerFisherfolk;
 use App\Models\FFDetails;
 use App\Models\FixedLocation;
+use App\Models\livelihood;
 use App\Models\Province;
 use App\Models\Region;
-use App\Models\livelihood;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use Str;
 use Image;
+use Str;
 
 class FarmerFisherFolkController extends Controller
 {
@@ -30,6 +30,140 @@ class FarmerFisherFolkController extends Controller
         $citymun_id = FixedLocation::showMyLocation()->citymun_id;
         $data['barangay'] = Barangay::showBarangayByMunicipality($citymun_id);
         return view('administrator.f2.list', $data);
+    }
+
+    public function import()
+    {
+        // $data['f2'] = FarmerFisherfolk::showFarmerFisherfolk();
+        $data['identifier'] = "Import Farmer and Fisherfolk Data";
+        $data['data'] = "F2 Import - FFIMS Systems";
+        $data['entityVer'] = EntityVer::where('is_loaded', '=', '0')->paginate(5);
+        return view('administrator.f2.importfarmer', $data);
+    }
+
+    //temporary unused
+    public function importExcel(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required',
+        // ]);
+
+        // /**
+        //  * extracting the file
+        //  * 1. Get the file
+        //  * 2. Get the original file extension
+        //  * 3. Set the filename
+        //  * 4. Move the file upload with a new filename
+        //  * 5. Get the full path and access it
+        //  */
+        // $file = $request->file;
+        // $extension = $file->getClientOriginalExtension();
+        // $fileName = time() . '.' . $extension;
+        // $file->move(public_path() . '/asset/imports/', $fileName);
+        // $path = public_path() . '/asset/imports/' . $fileName;
+        // Excel::import(new FarmerfisherfolksImport(), $path);
+        // return back()->with('success', "File uploaded successfully.");
+
+        $data = EntityVer::find($request->id);
+
+        foreach ($data as $key => $value) {
+            // Decode the JSON
+            $datas = json_decode($value, true);
+            $enver = EntityVer::find($datas['id']);
+            $enver->is_loaded = '1';
+            $enver->save();
+            //update the data set
+
+            $f2 = new FarmerFisherfolk();
+            $f2->reg_type = $datas['reg_type'];
+            $f2->rsbsa_nat = $datas['rsbsa_nat'];
+            $f2->rsbsa_loc = $datas['rsbsa_loc'];
+            $f2->fishr_nat = $datas['fishr_nat'];
+            $f2->fishr_loc = $datas['fishr_loc'];
+            $f2->fname = $datas['fname'];
+            $f2->mname = $datas['mname'];
+            $f2->lname = $datas['lname'];
+            $f2->extname = $datas['extname'];
+
+            $date = explode("/",$datas['dob']);
+            $year = $date[2];
+            $month = $date[1];
+            $day = $date[0];
+            $dobs = $year.'-'.$day.'-'.$month;
+
+            // $f2->dob = $datas['dob'];
+            $f2->dob = $dobs;
+            //
+            $f2->pob = $datas['pob'];
+            $f2->gender = $datas['gender'];
+            $f2->civilstatus = "None";
+            $f2->name_of_spouse = "None";
+            $f2->mothers_maidenname = "None";
+            $f2->contactno = $datas['contactno'];
+            $f2->email = "None";
+            $f2->picture = "avatar.png";
+            $f2->a_purok = "None";
+            $f2->a_sitio = "None";
+            $f2->a_region = $datas['a_region'];
+            $f2->a_province = $datas['a_province'];
+            $f2->a_citymun = $datas['a_citymun'];
+            $f2->a_barangay = $datas['a_barangay'];
+            $f2->created_by = Auth::user()->id;
+            $f2->save();
+            //get the user id
+            $ffId = FarmerFisherfolk::getId($f2->fname, $f2->lname, $f2->dob)->ff_id;
+            //auto add the  other details
+            $ffDetails = new FFDetails();
+
+            $ffDetails->ff_id = $ffId;
+            $ffDetails->education = "Nones";
+            $ffDetails->religion = "None";
+            $ffDetails->others_religion = "None";
+            $ffDetails->is_house_head = "None";
+            $ffDetails->name_househead = "None";
+            $ffDetails->relationship = "None";
+            $ffDetails->num_of_household = 0;
+            $ffDetails->no_male = 0;
+            $ffDetails->no_female = 0;
+            $ffDetails->is_pwd = "None";
+            $ffDetails->is_4ps = "None";
+            $ffDetails->is_ip = "None";
+            $ffDetails->name_of_group = "None";
+            $ffDetails->with_gov_id = "None";
+            $ffDetails->id_type = "No ID";
+            $ffDetails->id_number = "000000000000";
+            $ffDetails->is_assoc_member = "None";
+            $ffDetails->assoc_id = 14; //this is the default id of association
+            $ffDetails->contact_person = "None";
+            $ffDetails->contact_number = "0000-000-0000";
+            $ffDetails->contact_relation = "None";
+            $ffDetails->created_by = Auth::user()->id;
+            $ffDetails->save();
+
+            //auto saving the livelihood
+            $livelihood = new livelihood();
+
+            $livelihood->main_livelihood = '["None"]';
+            $livelihood->crops_specify = "None";
+            $livelihood->type_of_activity = '["None"]';
+            $livelihood->livestock_specify = "None";
+            $livelihood->poultry_specify = "None";
+            $livelihood->kind_of_work = '["None"]';
+            $livelihood->kind_of_work_others = "None";
+            $livelihood->fishing_activity = '["None"]';
+            $livelihood->fishing_activity_others = "None";
+            $livelihood->involvement = '["None"]';
+            $livelihood->involvement_others = "None";
+            $livelihood->income_farming = 0.0;
+            $livelihood->income_non_farming = 0.0;
+            $livelihood->created_by = Auth::user()->id;
+            $livelihood->livelihoodby = $ffId;
+            $livelihood->save();
+
+        }
+
+        return back()->with('success', "Done Data Added!");
+
     }
 
     public function information($id)
@@ -72,7 +206,7 @@ class FarmerFisherFolkController extends Controller
         }
     }
 
-    // display the livelihood components 
+    // display the livelihood components
     public function livelihood($id)
     {
         $f2_id = FarmerFisherfolk::find($id);
@@ -108,7 +242,6 @@ class FarmerFisherFolkController extends Controller
 
         $l_id = livelihood::showLivelihoodByF2($id)->l_id; //get the ID by user
         $livelihood = livelihood::find($l_id);
-
 
         $livelihood->main_livelihood = json_encode($request->main_livelihood);
         $livelihood->crops_specify = empty($request->crops_specify) ? "None" : strtoupper(trim($request->crops_specify));
@@ -187,7 +320,7 @@ class FarmerFisherFolkController extends Controller
         $f2->rsbsa_nat = empty($request->rsbsa_nat) ? '11-25-07-000-000000' : $request->rsbsa_nat;
         $f2->rsbsa_loc = empty($request->rsbsa_loc) ? '11-25-07-000-000000' : $request->rsbsa_loc;
         $f2->fishr_nat = empty($request->fishr_nat) ? '----' : $request->fishr_nat;
-        $f2->fishr_loc =  empty($request->fishr_loc) ? '----' : $request->fishr_loc;
+        $f2->fishr_loc = empty($request->fishr_loc) ? '----' : $request->fishr_loc;
         $f2->fname = $request->fname;
         $f2->mname = empty($request->mname) ? '.' : $request->mname;
         $f2->lname = $request->lname;
@@ -252,9 +385,8 @@ class FarmerFisherFolkController extends Controller
         $ffDetails->created_by = Auth::user()->id;
         $ffDetails->save();
 
-
         //auto saving the livelihood
-        $livelihood =  new livelihood();
+        $livelihood = new livelihood();
 
         $livelihood->main_livelihood = '["None"]';
         $livelihood->crops_specify = "None";
@@ -272,7 +404,6 @@ class FarmerFisherFolkController extends Controller
         $livelihood->created_by = Auth::user()->id;
         $livelihood->livelihoodby = $ffId;
         $livelihood->save();
-
 
         return redirect()->route('f2.information', $ffId)->with('success', $f2->fname . ' was successfully added!');
     }
@@ -315,7 +446,7 @@ class FarmerFisherFolkController extends Controller
         $f2->rsbsa_nat = empty($request->rsbsa_nat) ? '11-25-07-000-000000' : $request->rsbsa_nat;
         $f2->rsbsa_loc = empty($request->rsbsa_loc) ? '11-25-07-000-000000' : $request->rsbsa_loc;
         $f2->fishr_nat = empty($request->fishr_nat) ? '----' : $request->fishr_nat;
-        $f2->fishr_loc =  empty($request->fishr_loc) ? '----' : $request->fishr_loc;
+        $f2->fishr_loc = empty($request->fishr_loc) ? '----' : $request->fishr_loc;
         $f2->fname = $request->fname;
         $f2->mname = empty($request->mname) ? '.' : $request->mname;
         $f2->lname = $request->lname;
@@ -354,7 +485,6 @@ class FarmerFisherFolkController extends Controller
 
         return back()->with('success', $f2->fname . ' was successfully modified!');
     }
-
 
     public function updateDetails(Request $request, $id)
     {
@@ -402,15 +532,13 @@ class FarmerFisherFolkController extends Controller
             "contact_relation" => "Contact Relationship is required",
         ]);
 
-
-
         $ffd_id = FFDetails::showDetailsByF2($id)->ffd_id;
 
         $ffDetails = FFDetails::find($ffd_id);
 
         $ffDetails->education = $request->education;
         $ffDetails->religion = $request->religion;
-        $ffDetails->others_religion =  empty($request->others_religion) ? "None" : strtoupper(trim($request->others_religion));
+        $ffDetails->others_religion = empty($request->others_religion) ? "None" : strtoupper(trim($request->others_religion));
         $ffDetails->is_house_head = $request->is_house_head;
         $ffDetails->name_househead = empty($request->name_househead) ? "None" : strtoupper(trim($request->name_househead));
         $ffDetails->relationship = $request->relationship;
@@ -425,7 +553,7 @@ class FarmerFisherFolkController extends Controller
         $ffDetails->id_type = $request->id_type;
         $ffDetails->id_number = $request->id_number;
         $ffDetails->is_assoc_member = $request->is_assoc_member;
-        $ffDetails->assoc_id = 14;//disable this function
+        $ffDetails->assoc_id = 14; //disable this function
         $ffDetails->contact_person = $request->contact_person;
         $ffDetails->contact_number = $request->contact_number;
         $ffDetails->contact_relation = $request->contact_relation;
@@ -441,7 +569,6 @@ class FarmerFisherFolkController extends Controller
             $associationProfile->register_by = Auth::user()->id;
             $associationProfile->save();
         }
-
 
         return back()->with('success', 'Detailed was successfully updated!');
     }

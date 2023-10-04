@@ -88,7 +88,7 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::get('rbo/association/profile/{id}', [RBOController::class, 'associationProfileData'])->name('rbo.associationprofiledata');
     Route::get('rbo/association/profile/{id}/register', [RBOController::class, 'registerToAssoc'])->name('rbo.registertoassoc');
     Route::post('rbo/association/profile/{id}/register', [RBOController::class, 'saveToAssoc'])->name('rbo.savetoassoc');
-   
+
     //farmer and fisherfolk
     Route::get('f2/list', [FarmerFisherFolkController::class, 'index'])->name('f2.index');
     Route::get('f2/list/information/{id}', [FarmerFisherFolkController::class, 'information'])->name('f2.information');
@@ -99,6 +99,9 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::post('f2/list/details/{id}', [FarmerFisherFolkController::class, 'updateDetails'])->name('f2.updatedetails');
     Route::get('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'livelihood'])->name('f2.livelihood');
     Route::post('f2/list/livelihood/{id}', [FarmerFisherFolkController::class, 'updateLivelihood'])->name('f2.livelihoodupdate');
+    //imports
+    Route::get('f2/list/import', [FarmerFisherFolkController::class, 'import'])->name('f2.import');
+    Route::post('f2/list/import', [FarmerFisherFolkController::class, 'importExcel'])->name('f2.importexcel');
     //farm details
     Route::get('f2/list/farm/{id}', [FarmDetailController::class, 'index'])->name('f2.farm');
     //farm details form
@@ -110,10 +113,10 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     //farm activity
     Route::get('f2/list/activity/{id}', [FarmActivityController::class, 'index'])->name('f2.activity');
     //route for creating new activity
-    Route::get('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'createActivity'])->name('f2.createActivity'); 
+    Route::get('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'createActivity'])->name('f2.createActivity');
     Route::post('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'storeActivity'])->name('f2.storeactivity');
-    Route::get('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'updateActivity'])->name('f2.updateactivity');  
-    Route::post('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'getDataToUpdate'])->name('f2.getdatatoupdate');  
+    Route::get('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'updateActivity'])->name('f2.updateactivity');
+    Route::post('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'getDataToUpdate'])->name('f2.getdatatoupdate');
 });
 Route::group(['middleware' => ['nohistory', 'technician'], 'prefix' => 'technician'], function () {
     //technician

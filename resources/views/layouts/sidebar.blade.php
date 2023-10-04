@@ -144,6 +144,13 @@
                                                <p>Profile List</p>
                                            </a>
                                        </li>
+                                       <li class="nav-item">
+                                           <a href="{{ route('f2.import') }}"
+                                               class="nav-link @if (Request::segment(4) == 'import') active @endif">
+                                               <i class="fa-solid fa-file-import nav-icon"></i>
+                                               <p>Import</p>
+                                           </a>
+                                       </li>
 
                                    </ul>
                                </li>
