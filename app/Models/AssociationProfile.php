@@ -47,7 +47,7 @@ class AssociationProfile extends Model
             ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
             ->where('association_profiles.assoc_id', '=', $associationId)
             ->where('assoc_position','!=','Member')
-            ->orderBy('association_profiles.assoc_order', 'asc')->get();
+            ->orderBy('association_profiles.assoc_order', 'asc')->paginate(10);
 
         $members = DB::table('association_profiles')->select(
             "association_profiles.*",
@@ -59,7 +59,7 @@ class AssociationProfile extends Model
             ->join('farmerfisherfolk', 'farmerfisherfolk.ff_id', 'association_profiles.entity')
             ->where('association_profiles.assoc_id', '=', $associationId)
             ->where('assoc_position', '=', 'Member')
-            ->orderBy('created_at', 'asc')->get();
+            ->orderBy('created_at', 'asc')->paginate(10);
 
         $query = $type == "Member" ? $members : $officials;
         return $query;

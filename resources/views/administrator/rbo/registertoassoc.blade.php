@@ -75,6 +75,8 @@
 
                                     </div>
                                 </form>
+                            
+
                             </div>
                         </div>
                     </div>
@@ -82,9 +84,7 @@
 
                 <div class="row">
                     <div class="card card-outline card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Bootstrap Duallistbox</h3>
-                        </div>
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <form action="" method="post">
@@ -92,12 +92,15 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
+                                            <input type="hidden" name="assoc_id" value="{{ $association->as_id }}">
                                             <label>Select List of Farmer/Fisherfolk</label>
-                                            <select class="duallistbox" multiple="multiple" size="12" name="farmerFisherfolk[]">
+                                            <select class="duallistbox" multiple="multiple" size="12"
+                                                name="farmerFisherfolk[]">
 
                                                 @foreach ($f2 as $item)
                                                     <option value="{{ $item->ff_id . ':' . $item->fname }}">
-                                                        {{ $item->ff_id . ':' . $item->fname }}</option>
+                                                        {{ $item->ff_id . ': ' . $item->fname . ', ' . $item->lname . ' ' . str_replace('[Select]', '', $item->extname) }}
+                                                    </option>
                                                 @endforeach
 
                                             </select>
@@ -106,13 +109,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="submit" 
-                                       class="btn btn-primary float-right" value="Save to {{ $association->nameabbr }}">
+                                        <input type="submit" class="btn btn-primary float-right"
+                                            value="Save to {{ $association->nameabbr }}">
                                     </div>
                                 </div>
 
                             </form>
+
+
+
                         </div>
+
+
                     </div>
                 </div>
 

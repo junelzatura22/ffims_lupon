@@ -77,7 +77,7 @@
                                         <h3 class="card-title">
                                             <i class="fa-solid fa-users"></i>
                                             </i>&nbsp;Total Farmers/Fisherfolks&nbsp; <span class="badge badge-success p-2">
-                                                {{$f2->count()}} </span>
+                                                {{ $f2->total() }} </span>
                                         </h3>
                                     </div>
 
@@ -92,6 +92,15 @@
                                             data-bs-placement="top" title="Request for approval">
                                             <i class="fa-solid fa-person-circle-check"></i>&nbsp;Application&nbsp;
                                             <span class="badge badge-warning p-1">0</span></a>
+
+
+                                        <div class="row">
+                                            <div>
+                                                <ul class="pagination pagination-md m-0 float-right">
+                                                    {!! $f2->links() !!}
+                                                </ul>
+                                            </div>
+                                        </div>
 
 
 
@@ -113,8 +122,6 @@
                                             <h3 class="text-center">No record found!</h3>
                                         </div>
                                     @else
-                                       
-
                                         @foreach ($f2 as $item)
                                             <div class="col-md-3">
                                                 <div class="card card-success card-outline">
@@ -165,6 +172,14 @@
                                     @endif
 
 
+                                    
+                                    <div class="row">
+                                        <div>
+                                            <ul class="pagination pagination-md m-0 float-right">
+                                                {!! $f2->links() !!}
+                                            </ul>
+                                        </div>
+                                    </div>
 
 
                                 </div>

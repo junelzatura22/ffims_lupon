@@ -30,7 +30,7 @@ class FarmerFisherfolk extends Model
             $data = $data->where('a_barangay', '=', Request::get('barid'));
         }
 
-        $data = $data->orderBy('created_at', 'desc')->get();
+        $data = $data->orderBy('created_at', 'desc')->paginate(40);
         return $data;
     }
 

@@ -37,7 +37,7 @@ class FarmerFisherFolkController extends Controller
         // $data['f2'] = FarmerFisherfolk::showFarmerFisherfolk();
         $data['identifier'] = "Import Farmer and Fisherfolk Data";
         $data['data'] = "F2 Import - FFIMS Systems";
-        $data['entityVer'] = EntityVer::where('is_loaded', '=', '0')->paginate(5);
+        $data['entityVer'] = EntityVer::where('is_loaded', '=', '0')->paginate(10);
         return view('administrator.f2.importfarmer', $data);
     }
 
@@ -197,9 +197,17 @@ class FarmerFisherFolkController extends Controller
         if (!empty($f2_id)) {
             $data['f2_data'] = $f2_id;
             $data['association'] = Association::showAllAssociationsWithNone();
-            $data['f2_details'] = FFDetails::showDetailsByF2($id);
+            
             $data['identifier'] = "Welcome to " . $f2_id->fname . "'s - other details";
             $data['data'] = "F2 Details - FFIMS Systems";
+
+            // if(empty(FFDetails::showDetailsByF2($id))){
+
+
+            // }
+            $data['f2_details'] = FFDetails::showDetailsByF2($id);
+
+
             return view('administrator.f2.details', $data);
         } else {
             return back();

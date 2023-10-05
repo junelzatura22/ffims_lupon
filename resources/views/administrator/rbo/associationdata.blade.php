@@ -73,7 +73,6 @@
                                             <div class="card-body">
                                                 <table class="table table-sm">
                                                     <thead>
-
                                                         <tr>
                                                             <th style="width: 30px" class="bg-success p-1 text-center">#
                                                             </th>
@@ -86,8 +85,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
-
                                                         @foreach ($forOfficials as $item)
                                                             <tr>
                                                                 <td style="width: 30px" class="bg-success p-1 text-center">
@@ -158,7 +155,21 @@
 
 
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tfoot>
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <h6>Total Officials: {{ $forOfficials->total() }}</h6>
+                                                                <ul class="pagination pagination-md">
+                                                                    {!! $forOfficials->links() !!}
+                                                                </ul>
+                                                            </div>
+                                                        </tfoot>
+                                                    </tfoot>
+
                                                 </table>
+
+
+
                                             </div>
                                             <!-- /.card-body -->
 
@@ -263,6 +274,15 @@
 
 
                                                     </tbody>
+
+                                                    <tfoot>
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>Total Members: {{ $forMembers->total() }}</h6>
+                                                            <ul class="pagination pagination-md">
+                                                                {!! $forMembers->links() !!}
+                                                            </ul>
+                                                        </div>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                             <!-- /.card-body -->
@@ -270,6 +290,10 @@
 
                                         </div>
                                     </div>
+                                    <div style="position: absolute; top:0; right:0; z-index:10">
+                                        @include('_message')
+                                    </div>
+
                                 </div>
 
                             </div>

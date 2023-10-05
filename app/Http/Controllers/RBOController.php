@@ -195,10 +195,23 @@ class RBOController extends Controller
 
     public function saveToAssoc($id, Request $request)
     {
-        dd($request->all());
+
+        $suite = $request->farmerFisherfolk; //getting the array to upload
+        foreach ($suite as $key => $value) {
+            $getKey = explode(':', $value);
+            //data set -
+            $associationProfile = new AssociationProfile();
+            $associationProfile->assoc_id = $request->assoc_id;
+            $associationProfile->entity = $getKey[0];
+            $associationProfile->membersince = "0000";
+            $associationProfile->status = "Active";
+            $associationProfile->register_by = Auth::user()->id;
+            $associationProfile->save();
+            //data set -
+        }
+        return redirect()->route('rbo.associationprofiledata', $request->assoc_id)
+        ->with('success', "Added successfully.");
 
     }
-
-    // insert association profile
 
 }

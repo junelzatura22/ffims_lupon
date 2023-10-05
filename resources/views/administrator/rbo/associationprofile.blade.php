@@ -60,8 +60,8 @@
 
                                                 <div class="d-flex justify-content-between">
                                                     <div class="user-block">
-                                                        <img class="img-circle border shadow p-1" src="{{ asset('asset/f2/' . $image . '') }}"
-                                                            alt="User Image">
+                                                        <img class="img-circle border shadow p-1"
+                                                            src="{{ asset('asset/f2/' . $image . '') }}" alt="User Image">
 
 
                                                         <span class="username">
@@ -99,10 +99,13 @@
                                                                     </h6>
 
                                                                     <div class="card-tools">
-                                                                        <a href="{{ route('rbo.associationprofiledata',$profile->assoc_id) }}" class="btn btn-sm btn-primary "
+                                                                        <a href="{{ route('rbo.associationprofiledata', $profile->assoc_id) }}"
+                                                                            class="btn btn-sm btn-primary "
                                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                                             title="View Association">
-                                                                            <i class="fa-solid fa-building-wheat"></i>&nbsp;View Association
+                                                                            <i
+                                                                                class="fa-solid fa-building-wheat"></i>&nbsp;View
+                                                                            Association
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -145,13 +148,16 @@
 
                                                                     </tbody>
                                                                 </table>
+
                                                             </div>
                                                             <!-- /.card-body -->
 
 
                                                         </div>
                                                     </div>
-
+                                                    <div style="position: absolute; top:0; right:0; z-index:10">
+                                                        @include('_message')
+                                                    </div>
 
                                                 </div>
 
