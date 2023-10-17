@@ -104,12 +104,13 @@
                                                     <table class="table table-sm ">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 10px">#</th>
-                                                                <th>Activity</th>
-                                                                <th class="text-center">Area</th>
-                                                                <th class="text-center">Farm Type</th>
-                                                                <th class="text-center">Is organic</th>
-                                                                <th>Label</th>
+                                                                <th style="width: 10px; text-sm">#</th>
+                                                                <th class="text-sm">Activity</th>
+                                                                <th class="text-center text-sm">Area</th>
+                                                                <th class="text-center text-sm">Farm Type</th>
+                                                                <th class="text-center text-sm">Is organic</th>
+                                                                <th></th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -122,7 +123,7 @@
 
                                                             @foreach ($modelData as $index => $farmActivity)
                                                                 <tr>
-                                                                    <td>{{ $index + 1 . '.' }}</td>
+                                                                    <td class="text-sm">{{ $index + 1 . '.' }}</td>
 
                                                                     @php
                                                                         $farmCommodity = $farmActivity->commodity . ', ' . $farmActivity->subcommododity;
@@ -142,23 +143,27 @@
                                                                         
                                                                     @endphp
 
-                                                                    <td>{{ $farmComName }}
+                                                                    <td class="text-sm">{{ $farmComName }}
                                                                     </td>
-                                                                    <td class="text-center">{{ $farmActivity->area }}</td>
+                                                                    <td class="text-center text-sm">{{ $farmActivity->area }}</td>
 
                                                                     @php
                                                                         $totalArea += $farmActivity->area;
                                                                     @endphp
 
-                                                                    <td class="text-center">{{ $farmActivity->farmtype }}
+                                                                    <td class="text-center text-sm">{{ $farmActivity->farmtype }}
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class="text-center text-sm">
                                                                         {{ $farmActivity->is_organic }}</td>
-                                                                    <td>
+                                                                    <td class="text-sm">
                                                                         <a href="{{ route('f2.updateactivity', ['id' => $f2_data->ff_id, 'fid' => $item->id, 'aid' => $farmActivity->id]) }}"
                                                                             class="btn btn-sm btn-success p-1"><i
                                                                                 class="fa-solid fa-pen-to-square "
                                                                                 title="Edit Program"></i></a>
+                                                                    </td>
+                                                                    <td class="text-sm">
+                                                                        <a href=""
+                                                                            class="btn btn-sm btn-success p-1">Production</a>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
