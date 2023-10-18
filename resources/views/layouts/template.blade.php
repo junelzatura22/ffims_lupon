@@ -8,24 +8,34 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col">
-                        <h4 class="m-0 text-gray ">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h4>
-
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="m-0 text-info">{{ !empty($identifier) ? $identifier : 'Dashboard' }}</h6>
+                        </div><!-- /.col -->
+                        <div>
+                            {{ !empty(Breadcrumbs::render("Production")) ? Breadcrumbs::render("Production") : "" }}
+                        </div><!-- /.col -->
                     </div>
-                </div>
-            </div>
+
+
+                    {{-- <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-left">
+                            <li class="breadcrumb-item"><a href="{{route('administrator.dashboard')}}">Home</a></li>
+                            <li class="breadcrumb-item active">{{Auth::user()->role}} Dashboard</li>
+                        </ol>
+                    </div><!-- /.col --> --}}
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
+               
 
-                </div>
-            </div>
-            <section>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
-
-    <!-- /.content -->
 @endsection

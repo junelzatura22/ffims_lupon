@@ -124,6 +124,12 @@ Breadcrumbs::for('updateActivity', function (BreadcrumbTrail $trail, $f2_data): 
     $trail->push("Update Activity");
 });
 
+// for the production breadcrumb 
+Breadcrumbs::for('Production', function (BreadcrumbTrail $trail): void {
+    $trail->parent('Dashboard');
+    $trail->push('Production', route('production.index'));
+});
+
 
 // Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user): void {
 //     $trail->parent('users.index');

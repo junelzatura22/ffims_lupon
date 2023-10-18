@@ -155,6 +155,28 @@
                                    </ul>
                                </li>
 
+
+                               <li class="nav-item  @if (Request::segment(2) == 'production') menu-open @endif">
+                                   <a href="#" class="nav-link @if (Request::segment(2) == 'production') active @endif">
+                                       <i class="fa-solid fa-users nav-icon"></i>
+                                       <p>
+                                           Production
+                                           <i class="fas fa-angle-left right"></i>
+
+                                       </p>
+                                   </a>
+                                   <ul class="nav nav-treeview">
+                                       <li class="nav-item">
+                                           <a href="{{ route('production.index') }}"
+                                               class="nav-link @if (Request::segment(3) == 'list') active @endif">
+                                               <i class="fa-solid fa-users-between-lines nav-icon"></i>
+                                               <p>Farm Area List</p>
+                                           </a>
+                                       </li>
+                                       
+                                   </ul>
+                               </li>
+
                                <li class="nav-header">Accounts</li>
                                <li class="nav-item @if (Request::segment(2) == 'user') menu-open @endif">
                                    <a href="#" class="nav-link @if (Request::segment(2) == 'user') active @endif">

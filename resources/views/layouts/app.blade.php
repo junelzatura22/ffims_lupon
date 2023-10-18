@@ -138,7 +138,7 @@
     });
 
 
-
+@stack('scripts')
     
    
 </script>

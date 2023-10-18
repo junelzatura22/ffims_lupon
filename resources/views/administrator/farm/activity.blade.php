@@ -67,7 +67,7 @@
                                                             {{ $item->total_area }}&nbsp;(has)</li>
                                                         <li class="list-group-item p-1">Barangay: {{ $item->BarName }}</li>
 
-                                                    </ul>
+                                                     </ul>
 
                                                 </div>
                                             </div>
@@ -110,7 +110,7 @@
                                                                 <th class="text-center text-sm">Farm Type</th>
                                                                 <th class="text-center text-sm">Is organic</th>
                                                                 <th></th>
-                                                                <th></th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -161,10 +161,7 @@
                                                                                 class="fa-solid fa-pen-to-square "
                                                                                 title="Edit Program"></i></a>
                                                                     </td>
-                                                                    <td class="text-sm">
-                                                                        <a href=""
-                                                                            class="btn btn-sm btn-success p-1">Production</a>
-                                                                    </td>
+                                                                   
                                                                 </tr>
                                                             @endforeach
 
@@ -175,7 +172,7 @@
 
                                                 </div>
                                                 <div class="card-footer">
-                                                    <h6>Total Area: <strong>{{ $totalArea }}</strong>&nbsp;(has)</h6>
+                                                    <h6 class="text-sm">Total Area: <strong>{{ $totalArea }}</strong>&nbsp;(has)</h6>
                                                 </div>
 
 

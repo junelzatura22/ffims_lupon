@@ -9,6 +9,7 @@ use App\Http\Controllers\FarmerFisherFolkController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RBOController;
+use App\Http\Controllers\RiceCornProduction;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -117,6 +118,9 @@ Route::group(['middleware' => ['administrator', 'nohistory'], 'prefix' => 'admin
     Route::post('f2/list/activity/{id}/create/{fid}', [FarmActivityController::class, 'storeActivity'])->name('f2.storeactivity');
     Route::get('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'updateActivity'])->name('f2.updateactivity');
     Route::post('f2/list/activity/{id}/farm/{fid}/mod/{aid}', [FarmActivityController::class, 'getDataToUpdate'])->name('f2.getdatatoupdate');
+    //production
+    Route::get('production/list/',[RiceCornProduction::class, 'index'])->name('production.index');
+
 });
 Route::group(['middleware' => ['nohistory', 'technician'], 'prefix' => 'technician'], function () {
     //technician
