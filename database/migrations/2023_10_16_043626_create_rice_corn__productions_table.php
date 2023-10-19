@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('rice_corn__productions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('pc_id'); //sub program category
+            $table->unsignedInteger('farm_id'); //farm id
             $table->string('seed_type');//inbred or hybrid
             $table->string('variety');//rice variety
             $table->date('dateharvested');//date harvested
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->smallInteger('averagekilo');//average per sack
             $table->float('farmgate_price');//farm gate price
             $table->float('yieldmt');//yield mt
-            $table->foreign('pc_id')->references('pc_id')->on('program_category');
+            $table->foreign('farm_id')->references('farm_id')->on('farmactivity');
             $table->timestamps();
         });
     }
